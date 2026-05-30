@@ -140,7 +140,7 @@ function renderItems() {
           <button class="teal" onclick="addToRun('${item.id}')">${inRun ? 'Added to Run' : 'Add to My Run'}</button>
           <button class="secondary" onclick="copyTerm('${item.id}')">Copy Search</button>
           <a class="button-link" href="${dollarTreeSearchUrl(preferredSearchTerm(item))}" target="_blank" rel="noopener">Open Search</a>
-          <button onclick="addAndCheck('${item.id}')">Check Stores</button>
+          <button onclick="addAndCheck('${item.id}')">Check Item</button>
         </div>
       </article>`;
   }).join('');
@@ -192,7 +192,7 @@ function renderSelected() {
       <div class="chip-actions">
         <button class="secondary" onclick="copyTerm('${item.id}')">Copy</button>
         <a class="mini-link" href="${dollarTreeSearchUrl(preferredSearchTerm(item))}" target="_blank" rel="noopener">Open</a>
-        <button onclick="addAndCheck('${item.id}')">Check</button>
+        <button onclick="addAndCheck('${item.id}')">Check Item</button>
         <button class="secondary" onclick="removeFromRun('${item.id}')">Remove</button>
       </div>
     </div>
@@ -287,44 +287,76 @@ function renderReports() {
 
 function scoreStoreLocal(store) {
   const selectedIds = new Set([...state.selected.keys()]);
-  const storeReports = state.reports.filter(r => r.storeId === store.id && (!selectedIds.size || selectedIds.has(r.itemId)));
-  let score = selectedIds.size ? 35 : 25;
+  const storeReports = state.reports.filter(r => r.storeId === store.id && selectedIds.has(r.itemId));
+
+  if (!selectedIds.size) {
+    return { hasData: false, score: null, reason: 'Add items to My Run first so the app can score this store.' };
+  }
+
+  if (!storeReports.length) {
+    return { hasData: false, score: null, reason: 'Not enough data yet. Add an app stock result or penny scan for this store.' };
+  }
+
+  let score = 45;
   const uniquePositiveItems = new Set();
+  const uniqueNegativeItems = new Set();
+
   for (const r of storeReports) {
     const ageHours = (Date.now() - new Date(r.createdAt).getTime()) / 3600000;
     const freshness = ageHours < 24 ? 1 : ageHours < 72 ? .7 : .35;
-    if (r.scanResult === 'penny') { score += 18 * freshness; uniquePositiveItems.add(r.itemId); }
-    if (r.appStatus === 'in_stock') { score += 9 * freshness; uniquePositiveItems.add(r.itemId); }
-    if (r.appStatus === 'limited_stock') { score += 5 * freshness; uniquePositiveItems.add(r.itemId); }
-    if (r.scanResult === 'normal') score -= 10 * freshness;
-    if (r.appStatus === 'out_of_stock') score -= 8 * freshness;
-    if (r.foundStatus === 'not_found') score -= 8 * freshness;
-    if (r.foundStatus === 'store_pulled') score -= 14 * freshness;
+    if (r.scanResult === 'penny') { score += 22 * freshness; uniquePositiveItems.add(r.itemId); }
+    if (r.appStatus === 'in_stock') { score += 10 * freshness; uniquePositiveItems.add(r.itemId); }
+    if (r.appStatus === 'limited_stock') { score += 6 * freshness; uniquePositiveItems.add(r.itemId); }
+    if (r.scanResult === 'normal') { score -= 14 * freshness; uniqueNegativeItems.add(r.itemId); }
+    if (r.appStatus === 'out_of_stock') { score -= 10 * freshness; uniqueNegativeItems.add(r.itemId); }
+    if (r.foundStatus === 'not_found') { score -= 10 * freshness; uniqueNegativeItems.add(r.itemId); }
+    if (r.foundStatus === 'store_pulled') { score -= 18 * freshness; uniqueNegativeItems.add(r.itemId); }
   }
-  score += Math.min(25, uniquePositiveItems.size * 6);
-  return Math.max(0, Math.min(100, Math.round(score)));
+
+  score += Math.min(25, uniquePositiveItems.size * 7);
+  score -= Math.min(20, uniqueNegativeItems.size * 5);
+
+  let reason = 'Score based on your saved app checks and scan reports.';
+  if (uniquePositiveItems.size && !uniqueNegativeItems.size) reason = `${uniquePositiveItems.size} selected item(s) have positive reports here.`;
+  if (uniqueNegativeItems.size && !uniquePositiveItems.size) reason = `${uniqueNegativeItems.size} selected item(s) have bad/empty-shelf reports here.`;
+  if (uniquePositiveItems.size && uniqueNegativeItems.size) reason = `${uniquePositiveItems.size} positive and ${uniqueNegativeItems.size} bad reports for selected items here.`;
+
+  return { hasData: true, score: Math.max(0, Math.min(100, Math.round(score))), reason };
 }
 
 function renderRouteBuilder() {
   const selected = [...state.selected.values()];
-  const html = state.stores.map(store => {
-    const score = scoreStoreLocal(store);
+  const rows = state.stores.map(store => {
+    const scoreInfo = scoreStoreLocal(store);
     const matches = selected.map(item => {
       const report = latestReportFor(item.id, store.id);
       if (!report) return null;
       const label = report.scanResult !== 'unknown' ? report.scanResult : (report.appStatus !== 'unknown' ? report.appStatus : report.foundStatus);
       return `${item.description}: ${statusLabel(label)}`;
     }).filter(Boolean);
-    return { store, score, matches };
-  }).sort((a,b)=>b.score-a.score).map((row, idx) => `
-    <div class="route-row ${idx===0?'best':''}">
+    return { store, scoreInfo, matches };
+  }).sort((a,b) => {
+    if (a.scoreInfo.hasData && !b.scoreInfo.hasData) return -1;
+    if (!a.scoreInfo.hasData && b.scoreInfo.hasData) return 1;
+    if (a.scoreInfo.hasData && b.scoreInfo.hasData) return b.scoreInfo.score - a.scoreInfo.score;
+    return (a.store.distanceMiles ?? 9999) - (b.store.distanceMiles ?? 9999);
+  });
+
+  const html = rows.map((row, idx) => {
+    const showBest = idx === 0 && row.scoreInfo.hasData;
+    const scoreHtml = row.scoreInfo.hasData
+      ? `<div class="route-score">${row.scoreInfo.score}<div class="small">Worth the Drive</div></div>`
+      : `<div class="route-score no-score">No Score<div class="small">Needs Data</div></div>`;
+    return `
+    <div class="route-row ${showBest?'best':''}">
       <div>
-        <strong>${idx===0?'Start here: ':''}${escapeHtml(row.store.name)} ${row.store.storeNumber ? '#' + escapeHtml(row.store.storeNumber) : ''}</strong>
+        <strong>${showBest?'Start here: ':''}${escapeHtml(row.store.name)} ${row.store.storeNumber ? '#' + escapeHtml(row.store.storeNumber) : ''}</strong>
         <div class="small">${escapeHtml(row.store.address)}, ${escapeHtml(row.store.city)}, ${escapeHtml(row.store.state)} ${escapeHtml(row.store.zip)}${Number.isFinite(row.store.distanceMiles) ? ' · ' + row.store.distanceMiles + ' mi from ' + escapeHtml(state.homeZip) : ''}</div><div class="source-note">Store source: ${state.storeLiveConnected ? 'Live Dollar Tree lookup' : 'starter/cached directory'}</div>
-        <div class="small">${row.matches.length ? escapeHtml(row.matches.join(' · ')) : 'No reports yet for your selected items at this store.'}</div>
+        <div class="small">${row.matches.length ? escapeHtml(row.matches.join(' · ')) : escapeHtml(row.scoreInfo.reason)}</div>
       </div>
-      <div class="route-score">${row.score}<div class="small">Worth the Drive</div></div>
-    </div>`).join('');
+      ${scoreHtml}
+    </div>`;
+  }).join('');
   $('routeBuilder') && ($('routeBuilder').innerHTML = html || '<p class="muted">No stores loaded yet.</p>');
   $('dashboardRoute') && ($('dashboardRoute').innerHTML = html || '<p class="muted">No stores loaded yet.</p>');
 }
