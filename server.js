@@ -251,6 +251,134 @@ function scoreStore(storeId, reports) {
   return Math.max(0, Math.min(100, Math.round(score)));
 }
 
+
+
+function deterministicDemoStock(zip, store, item) {
+  const seed = crypto.createHash('md5').update(`${zip}|${store.id}|${item.id}`).digest('hex');
+  const n = parseInt(seed.slice(0, 2), 16) % 100;
+  if (n < 18) return { status: 'in_stock', confidence: 'demo', reason: 'Demo mode estimate only - not live Dollar Tree inventory.' };
+  if (n < 32) return { status: 'limited_stock', confidence: 'demo', reason: 'Demo mode estimate only - not live Dollar Tree inventory.' };
+  if (n < 45) return { status: 'out_of_stock', confidence: 'demo', reason: 'Demo mode estimate only - not live Dollar Tree inventory.' };
+  return { status: 'unknown', confidence: 'demo', reason: 'No demo stock signal for this item/store.' };
+}
+
+async function lookupDollarTreeItemStockLive({ zip, store, item }) {
+  // Future connection point for live Dollar Tree / same-day inventory.
+  // We do not fake this. If a clean allowed endpoint is confirmed, plug it in here.
+  return null;
+}
+
+function latestReportForItemStore(reports, itemId, storeId) {
+  return reports
+    .filter(r => r.itemId === itemId && r.storeId === storeId)
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0] || null;
+}
+
+function reportToStockSignal(report) {
+  if (!report) return null;
+  if (report.scanResult === 'penny') return { status: 'penny_found', confidence: 'community', reason: 'User/community report: scanned $0.01.' };
+  if (report.scanResult === 'normal') return { status: 'normal_price', confidence: 'community', reason: 'User/community report: scanned normal price.' };
+  if (report.appStatus === 'in_stock') return { status: 'in_stock', confidence: 'community', reason: 'User/community report: app showed in stock.' };
+  if (report.appStatus === 'limited_stock') return { status: 'limited_stock', confidence: 'community', reason: 'User/community report: app showed limited stock.' };
+  if (report.appStatus === 'out_of_stock') return { status: 'out_of_stock', confidence: 'community', reason: 'User/community report: app showed out of stock.' };
+  if (report.appStatus === 'product_not_found') return { status: 'product_not_found', confidence: 'community', reason: 'User/community report: product not found in app.' };
+  if (report.foundStatus === 'not_found') return { status: 'not_found', confidence: 'community', reason: 'User/community report: could not find item in store.' };
+  if (report.foundStatus === 'store_pulled') return { status: 'store_pulled', confidence: 'community', reason: 'User/community report: store pulled item.' };
+  return null;
+}
+
+function stockScoreBoost(status) {
+  if (status === 'penny_found') return 35;
+  if (status === 'in_stock') return 20;
+  if (status === 'limited_stock') return 12;
+  if (status === 'product_not_found') return 3;
+  if (status === 'out_of_stock') return -18;
+  if (status === 'normal_price') return -25;
+  if (status === 'not_found') return -16;
+  if (status === 'store_pulled') return -30;
+  return 0;
+}
+
+async function buildStockRun({ zip, itemIds }) {
+  const db = readDb();
+  const storeLookup = await lookupStoresForZip(zip || '08096');
+  const stores = storeLookup.stores || [];
+  const items = (Array.isArray(itemIds) ? itemIds : [])
+    .map(id => db.items.find(i => i.id === id))
+    .filter(Boolean);
+  const provider = process.env.STOCK_PROVIDER || 'not_connected';
+  const route = [];
+
+  for (const store of stores) {
+    const itemResults = [];
+    let score = 0;
+    let positives = 0;
+    let negatives = 0;
+    let checked = 0;
+
+    for (const item of items) {
+      const report = latestReportForItemStore(db.reports, item.id, store.id);
+      let signal = reportToStockSignal(report);
+      if (!signal) signal = await lookupDollarTreeItemStockLive({ zip, store, item });
+      if (!signal && provider === 'demo') signal = deterministicDemoStock(zip, store, item);
+      if (!signal) signal = { status: 'unknown', confidence: 'not_connected', reason: 'Live Dollar Tree stock lookup is not connected yet.' };
+
+      const boost = stockScoreBoost(signal.status);
+      if (signal.status !== 'unknown') checked += 1;
+      if (boost > 0) positives += 1;
+      if (boost < 0) negatives += 1;
+      score += boost;
+
+      itemResults.push({
+        itemId: item.id,
+        sku: item.sku,
+        description: item.description,
+        searchTerm: (item.searchTerms || [item.description])[0],
+        status: signal.status,
+        confidence: signal.confidence,
+        reason: signal.reason
+      });
+    }
+
+    let worthTheDrive = null;
+    let scoreReason = 'Not enough stock data yet.';
+    if (checked > 0) {
+      const distancePenalty = Math.min(18, Math.round((store.distanceMiles || 0) * 1.2));
+      worthTheDrive = Math.max(0, Math.min(100, Math.round(35 + score + positives * 6 - negatives * 6 - distancePenalty)));
+      scoreReason = `${checked} selected item(s) have stock/report data. ${positives} positive, ${negatives} negative.`;
+    }
+
+    route.push({
+      store,
+      worthTheDrive,
+      scoreReason,
+      checkedCount: checked,
+      positiveCount: positives,
+      negativeCount: negatives,
+      items: itemResults
+    });
+  }
+
+  route.sort((a, b) => {
+    if (a.worthTheDrive !== null && b.worthTheDrive === null) return -1;
+    if (a.worthTheDrive === null && b.worthTheDrive !== null) return 1;
+    if (a.worthTheDrive !== null && b.worthTheDrive !== null) return b.worthTheDrive - a.worthTheDrive;
+    return (a.store.distanceMiles || 9999) - (b.store.distanceMiles || 9999);
+  });
+
+  return {
+    zip,
+    provider,
+    liveConnected: provider === 'live',
+    message: provider === 'demo'
+      ? 'Demo stock mode is on. Results show workflow only and are not real Dollar Tree inventory.'
+      : 'Live Dollar Tree stock lookup is not connected yet. Route uses community/manual reports until the DT stock connector is added.',
+    storesSource: storeLookup.source,
+    itemsCount: items.length,
+    route
+  };
+}
+
 app.get('/api/health', (req, res) => res.json({ ok: true, app: 'DTPennyRoute' }));
 
 app.post('/api/auth/signup', (req, res) => {
@@ -333,6 +461,21 @@ app.get('/api/stores/lookup', async (req, res) => {
   } catch (err) {
     console.error('Store lookup failed:', err);
     res.status(500).json({ error: 'Store lookup failed' });
+  }
+});
+
+
+
+app.post('/api/stock/check-run', async (req, res) => {
+  try {
+    const zip = String(req.body.zip || '08096').replace(/\D/g, '').slice(0, 5) || '08096';
+    const itemIds = Array.isArray(req.body.itemIds) ? req.body.itemIds : [];
+    if (!itemIds.length) return res.status(400).json({ error: 'Add items to My Run first.' });
+    const result = await buildStockRun({ zip, itemIds });
+    res.json(result);
+  } catch (err) {
+    console.error('Stock check failed:', err);
+    res.status(500).json({ error: 'Stock check failed' });
   }
 });
 

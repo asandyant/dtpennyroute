@@ -2,6 +2,7 @@ const state = {
   items: [],
   stores: [],
   reports: [],
+  stockRun: null,
   selected: new Map(),
   user: null,
   homeZip: localStorage.getItem('dtpr_zip') || '08096'
@@ -75,7 +76,7 @@ function setTab(tab) {
   $(`${tab}Tab`)?.classList.remove('hidden');
   if (tab === 'dashboard') renderDashboard();
   if (tab === 'run') { loadHunts(); renderSelected(); renderRouteBuilder(); }
-  if (tab === 'check') { renderQuickSelectors(); renderCheckHelper(); buildRouteView(); }
+  if (tab === 'check') { renderQuickSelectors(); renderCheckHelper(); buildRouteView(); renderStockRouteResults(); }
   if (tab === 'community') renderReports();
 }
 
@@ -115,6 +116,7 @@ async function loadItems() {
   renderItems();
   renderDashboard();
   buildRouteView();
+  renderStockRouteResults();
 }
 
 function renderItems() {
@@ -140,7 +142,7 @@ function renderItems() {
         <div class="actions simple-actions">
           <button class="${inRun ? 'added-btn' : 'teal'}" onclick="addToRun('${item.id}')">${inRun ? 'Added ✓' : 'Add to My Run'}</button>
           <button class="secondary" onclick="copyTerm('${item.id}')">Copy Search</button>
-          <button onclick="addAndCheck('${item.id}')">Build Route</button>
+          <button onclick="addAndCheck('${item.id}')">Check Stock</button>
         </div>
       </article>`;
   }).join('');
@@ -191,7 +193,7 @@ function renderSelected() {
       <div><strong>${escapeHtml(item.description)}</strong><div class="small">Search: ${escapeHtml(preferredSearchTerm(item))}</div></div>
       <div class="chip-actions">
         <button class="secondary" onclick="copyTerm('${item.id}')">Copy Search</button>
-        <button onclick="addAndCheck('${item.id}')">Build Route</button>
+        <button onclick="addAndCheck('${item.id}')">Check Stock</button>
         <button class="secondary" onclick="removeFromRun('${item.id}')">Remove</button>
       </div>
     </div>
@@ -261,7 +263,9 @@ async function quickReport(choice) {
   await api('/api/reports', { method:'POST', body: JSON.stringify(payload) });
   setMessage('quickStatus', `Saved: ${statusLabel(choice)} for ${findItem(itemId)?.description || 'item'}`);
   await loadReports();
+  state.stockRun = null;
   buildRouteView();
+  renderStockRouteResults();
 }
 
 
@@ -362,6 +366,79 @@ function renderRouteBuilder() {
   $('dashboardRoute') && ($('dashboardRoute').innerHTML = html || '<p class="muted">No stores loaded yet.</p>');
 }
 
+
+
+async function checkStockForRun() {
+  const itemIds = [...state.selected.keys()];
+  if (!itemIds.length) {
+    setMessage('stockStatus', 'Add items to My Run first, then check stock.', true);
+    return;
+  }
+  setMessage('stockStatus', `Checking ${itemIds.length} item(s) near ZIP ${state.homeZip}...`);
+  try {
+    const data = await api('/api/stock/check-run', {
+      method: 'POST',
+      body: JSON.stringify({ zip: state.homeZip, itemIds })
+    });
+    state.stockRun = data;
+    setMessage('stockStatus', data.message || 'Stock route built.');
+    renderStockRouteResults();
+    renderDashboard();
+  } catch (e) {
+    setMessage('stockStatus', e.message, true);
+  }
+}
+
+function statusClassForStock(status) {
+  if (status === 'penny_found' || status === 'in_stock') return 'green';
+  if (status === 'limited_stock' || status === 'product_not_found') return 'gold';
+  if (['out_of_stock','normal_price','not_found','store_pulled'].includes(status)) return 'red';
+  return '';
+}
+
+function renderStockRouteResults() {
+  const box = $('stockRouteResults');
+  if (!box) return;
+  const selected = [...state.selected.values()];
+  $('routeZipLabel') && ($('routeZipLabel').textContent = state.homeZip);
+  $('routeItemCount') && ($('routeItemCount').textContent = selected.length);
+  if (!selected.length) {
+    box.innerHTML = '<p class="muted">Add items to My Run first. Then tap Check Stock + Build Route.</p>';
+    return;
+  }
+  if (!state.stockRun) {
+    box.innerHTML = `<div class="empty-stock-box">
+      <h4>Ready to check ${selected.length} item(s)</h4>
+      <p>Tap <strong>Check Stock + Build Route</strong>. The full stock workflow is built here. Live Dollar Tree inventory will plug into this engine once the allowed DT stock connector is confirmed.</p>
+    </div>`;
+    return;
+  }
+  const providerNote = state.stockRun.provider === 'demo'
+    ? '<div class="warning-note">Demo mode is on — results are not live Dollar Tree inventory.</div>'
+    : (!state.stockRun.liveConnected ? '<div class="warning-note">Live Dollar Tree stock is not connected yet. Unknown items are not fake results. Community/manual reports still rank the route.</div>' : '');
+  const rows = (state.stockRun.route || []).map((row, idx) => {
+    const scoreHtml = row.worthTheDrive === null
+      ? '<div class="route-score no-score">No Score<div class="small">Needs Stock</div></div>'
+      : `<div class="route-score">${row.worthTheDrive}<div class="small">Worth the Drive</div></div>`;
+    const itemHtml = row.items.map(it => `
+      <div class="route-item-line">
+        <div><strong>${escapeHtml(it.description)}</strong><span>${escapeHtml(it.reason || '')}</span></div>
+        <span class="pill ${statusClassForStock(it.status)}">${escapeHtml(statusLabel(it.status))}</span>
+      </div>`).join('');
+    return `<div class="route-store-card ${idx === 0 && row.worthTheDrive !== null ? 'best' : ''}">
+      <div class="route-store-head">
+        <div>
+          <h4>${idx === 0 && row.worthTheDrive !== null ? 'Start here: ' : ''}${escapeHtml(row.store.name)} ${row.store.storeNumber ? '#' + escapeHtml(row.store.storeNumber) : ''}</h4>
+          <div class="small">${escapeHtml(row.store.address)}, ${escapeHtml(row.store.city)}, ${escapeHtml(row.store.state)} ${escapeHtml(row.store.zip)}${Number.isFinite(row.store.distanceMiles) ? ' · ' + row.store.distanceMiles + ' mi from ' + escapeHtml(state.homeZip) : ''}</div>
+          <div class="small">${escapeHtml(row.scoreReason || '')}</div>
+        </div>
+        ${scoreHtml}
+      </div>
+      <div class="route-item-grid">${itemHtml}</div>
+    </div>`;
+  }).join('');
+  box.innerHTML = providerNote + rows;
+}
 
 function buildRouteView() {
   const selected = [...state.selected.values()];
@@ -501,6 +578,7 @@ function bindEvents() {
   $('itemSearch').addEventListener('input', () => loadItems());
   $('categoryFilter').addEventListener('change', () => loadItems());
   $('saveHuntBtn').addEventListener('click', saveHunt);
+  $('checkStockRunBtn')?.addEventListener('click', checkStockForRun);
   $('quickItem').addEventListener('change', renderCheckHelper);
   $('quickStore').addEventListener('change', renderCheckHelper);
   $('signupBtn').addEventListener('click', signup);
@@ -522,6 +600,7 @@ async function init() {
   renderQuickSelectors();
   renderDashboard();
   buildRouteView();
+  renderStockRouteResults();
 }
 
 init().catch(err => {

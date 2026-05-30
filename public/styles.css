@@ -49,3 +49,11 @@ button.added-btn{background:#d9f5ea;color:#14543c;border:1px solid #9bd8bf;curso
 .route-item-line{display:flex;justify-content:space-between;gap:10px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px}
 .route-item-line span{display:block;font-size:12px;color:var(--muted);margin-top:3px}
 @media(max-width:760px){.route-controls{grid-template-columns:1fr}.route-store-head,.route-item-line{flex-direction:column;align-items:flex-start}.route-score{text-align:left}}
+
+.big-action { font-size: 1rem; padding: 14px 18px; }
+.stock-hero { border: 2px solid #bad9cf; }
+.warning-note { background:#fff6da; border:1px solid #e8c35b; color:#2b2310; padding:12px 14px; border-radius:14px; margin-bottom:12px; font-weight:700; }
+.empty-stock-box { background:#f7fbff; border:1px dashed #9eb6cf; padding:16px; border-radius:16px; color:#07172d; }
+.pill.red { background:#ffe1dc; color:#7a1c12; border-color:#ffc3ba; }
+.inside-note { display:inline-block; margin-top:8px; color:#163050; font-weight:700; }
+.item-card .added-btn { background:#2f7d54; color:white; border-color:#2f7d54; }
