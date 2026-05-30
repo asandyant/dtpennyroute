@@ -121,21 +121,10 @@ function requireUser(req, res, next) {
 }
 
 function scoreItem(itemId, reports) {
-  const itemReports = reports.filter(r => r.itemId === itemId);
-  let score = 50;
-  for (const r of itemReports) {
-    const ageHours = (Date.now() - new Date(r.createdAt).getTime()) / 3600000;
-    const freshness = ageHours < 24 ? 1 : ageHours < 72 ? 0.7 : 0.35;
-    if (r.scanResult === 'penny') score += 18 * freshness;
-    if (r.scanResult === 'normal') score -= 18 * freshness;
-    if (r.foundStatus === 'not_found') score -= 8 * freshness;
-    if (r.foundStatus === 'store_pulled') score -= 15 * freshness;
-    if (r.appStatus === 'in_stock') score += 8 * freshness;
-    if (r.appStatus === 'limited_stock') score += 4 * freshness;
-  }
-  return Math.max(0, Math.min(100, Math.round(score)));
+  // Starter database items are verified/known penny leads for this first launch.
+  // Community reports will make this dynamic again in a later update.
+  return 100;
 }
-
 function scoreStore(storeId, reports) {
   const storeReports = reports.filter(r => r.storeId === storeId);
   let score = 40;
