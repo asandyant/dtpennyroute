@@ -251,6 +251,41 @@ app.post('/api/hunts', (req, res) => {
   res.json({ hunt });
 });
 
+
+
+function requireAdmin(req, res, next) {
+  const db = readDb();
+  const user = db.users.find(u => u.id === req.session.userId);
+  if (!user || user.role !== 'admin') return res.status(403).json({ error: 'Admin access required' });
+  req.currentUser = user;
+  next();
+}
+
+app.post('/api/admin/items', requireAdmin, (req, res) => {
+  const { sku, description, category, eventNumber, dropDate, source, confidence, searchTerms } = req.body;
+  if (!description || !category) return res.status(400).json({ error: 'Description and category are required' });
+  const db = readDb();
+  const item = {
+    id: crypto.randomUUID(),
+    sku: String(sku || '').trim(),
+    description: String(description || '').trim().toUpperCase(),
+    category: String(category || '').trim(),
+    eventNumber: String(eventNumber || '').trim(),
+    dropDate: String(dropDate || '').trim(),
+    source: String(source || 'manual admin add').trim(),
+    confidence: String(confidence || 'high').trim(),
+    status: 'active',
+    searchTerms: Array.isArray(searchTerms)
+      ? searchTerms.map(t => String(t).trim()).filter(Boolean)
+      : String(searchTerms || '').split(',').map(t => t.trim()).filter(Boolean),
+    createdAt: new Date().toISOString()
+  };
+  if (!item.searchTerms.length) item.searchTerms = [item.description.toLowerCase()];
+  db.items.push(item);
+  writeDb(db);
+  res.json({ item: { ...item, pennyScore: 100 } });
+});
+
 app.listen(PORT, () => {
   console.log(`DTPennyRoute running on port ${PORT}`);
   console.log(`Data file: ${DB_FILE}`);

@@ -3,8 +3,8 @@ const state = {
   stores: [],
   reports: [],
   selected: new Map(),
-  reportItemId: null,
-  user: null
+  user: null,
+  homeZip: localStorage.getItem('dtpr_zip') || '08096'
 };
 
 const $ = (id) => document.getElementById(id);
@@ -25,6 +25,16 @@ function escapeHtml(value) {
 
 function statusLabel(value) {
   return String(value || 'unknown').replaceAll('_',' ');
+}
+
+function setMessage(id, message, isError=false) {
+  const el = $(id);
+  if (!el) return;
+  el.classList.remove('hidden');
+  el.textContent = message;
+  el.style.borderColor = isError ? '#f5b5ad' : '';
+  el.style.background = isError ? '#fff1ef' : '';
+  el.style.color = isError ? '#8a1f16' : '';
 }
 
 function findItem(itemId) {
@@ -49,27 +59,46 @@ function latestReportFor(itemId, storeId) {
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
 }
 
+function reportPayloadFromChoice(choice) {
+  const payload = { appStatus: 'unknown', scanResult: 'unknown', foundStatus: 'unknown' };
+  if (['in_stock', 'limited_stock', 'out_of_stock', 'product_not_found'].includes(choice)) payload.appStatus = choice;
+  if (choice === 'penny') { payload.scanResult = 'penny'; payload.foundStatus = 'found'; }
+  if (choice === 'normal') { payload.scanResult = 'normal'; payload.foundStatus = 'found'; }
+  if (choice === 'not_found') payload.foundStatus = 'not_found';
+  if (choice === 'store_pulled') payload.foundStatus = 'store_pulled';
+  return payload;
+}
+
 function setTab(tab) {
   document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tab));
   document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.add('hidden'));
-  $(`${tab}Tab`).classList.remove('hidden');
-  if (tab === 'reports') loadReports();
-  if (tab === 'stores') loadStores();
-  if (tab === 'run') loadHunts().then(renderRouteBuilder);
-  if (tab === 'stock') renderStockHelper();
+  $(`${tab}Tab`)?.classList.remove('hidden');
+  if (tab === 'dashboard') renderDashboard();
+  if (tab === 'run') { loadHunts(); renderSelected(); renderRouteBuilder(); }
+  if (tab === 'check') { renderQuickSelectors(); renderCheckHelper(); }
+  if (tab === 'community') renderReports();
+}
+
+function updateAccountUi() {
+  const pill = $('accountPill');
+  const adminBtn = $('adminTabButton');
+  if (state.user) {
+    pill.textContent = `${state.user.name} · ${state.user.role}${state.user.paid ? ' · Paid' : ''}`;
+    $('meBox').classList.remove('hidden');
+    $('meBox').textContent = `Logged in as ${state.user.name} (${state.user.email}) — ${state.user.role}${state.user.paid ? ', paid' : ''}`;
+    adminBtn.classList.toggle('hidden', state.user.role !== 'admin');
+  } else {
+    pill.textContent = 'Guest Mode';
+    $('meBox').classList.add('hidden');
+    $('meBox').textContent = '';
+    adminBtn.classList.add('hidden');
+  }
 }
 
 async function loadMe() {
   const data = await api('/api/auth/me');
   state.user = data.user;
-  const box = $('meBox');
-  if (state.user) {
-    box.classList.remove('hidden');
-    box.textContent = `Logged in as ${state.user.name} (${state.user.role}${state.user.paid ? ', paid' : ''})`;
-  } else {
-    box.classList.add('hidden');
-    box.textContent = '';
-  }
+  updateAccountUi();
 }
 
 async function loadCategories() {
@@ -84,12 +113,14 @@ async function loadItems() {
   const data = await api(`/api/items?${params}`);
   state.items = data.items;
   renderItems();
+  renderDashboard();
 }
 
 function renderItems() {
   $('itemCount').textContent = `${state.items.length} items found`;
   $('itemsList').innerHTML = state.items.map(item => {
     const confirmed = item.confidence === 'field-confirmed';
+    const inRun = state.selected.has(item.id);
     return `
       <article class="item-card">
         <div class="item-head">
@@ -97,18 +128,19 @@ function renderItems() {
             <div class="item-title">${escapeHtml(item.description)}</div>
             <div class="sku">SKU: ${escapeHtml(item.sku || 'unknown')} · Event: ${escapeHtml(item.eventNumber || 'n/a')} · Drop: ${escapeHtml(item.dropDate || 'n/a')}</div>
           </div>
-          <div class="score">${item.pennyScore}<span>PennyScore</span></div>
+          <div class="score">100<span>PennyScore</span></div>
         </div>
         <div class="pill-row">
           <span class="pill">${escapeHtml(item.category)}</span>
-          <span class="pill ${confirmed ? 'green' : 'gray'}">${escapeHtml(item.confidence)}</span>
-          <span class="pill amber">${escapeHtml(item.source)}</span>
+          <span class="pill ${confirmed ? 'green' : 'gold'}">${confirmed ? 'Field Confirmed' : 'Penny Drop'}</span>
+          <span class="pill">Source: ${escapeHtml(item.source || 'n/a')}</span>
         </div>
-        <div class="small">Search terms: ${(item.searchTerms || []).map(escapeHtml).join(', ') || 'none yet'}</div>
-        <div class="actions">
-          <button class="teal" onclick="addToRun('${item.id}')">Add to Penny Run</button>
-          <button class="secondary" onclick="copyTerm('${item.id}')">Copy Search Term</button>
-          <button onclick="openReport('${item.id}')">Report Find</button>
+        <div class="small"><strong>Search in Dollar Tree app/site:</strong> ${escapeHtml(preferredSearchTerm(item))}</div>
+        <div class="actions simple-actions">
+          <button class="teal" onclick="addToRun('${item.id}')">${inRun ? 'Added to Run' : 'Add to My Run'}</button>
+          <button class="secondary" onclick="copyTerm('${item.id}')">Copy Search</button>
+          <a class="button-link" href="${dollarTreeSearchUrl(preferredSearchTerm(item))}" target="_blank" rel="noopener">Open Search</a>
+          <button onclick="addAndCheck('${item.id}')">Check Stores</button>
         </div>
       </article>`;
   }).join('');
@@ -118,304 +150,287 @@ function addToRun(itemId) {
   const item = findItem(itemId);
   if (!item) return;
   state.selected.set(itemId, item);
+  saveSelectedLocal();
+  renderItems();
   renderSelected();
-  renderStockHelper();
-  renderRouteBuilder();
-  setTab('run');
+  renderQuickSelectors();
+  renderDashboard();
+}
+
+function addAndCheck(itemId) {
+  addToRun(itemId);
+  $('quickItem').value = itemId;
+  setTab('check');
 }
 
 function removeFromRun(itemId) {
   state.selected.delete(itemId);
+  saveSelectedLocal();
+  renderItems();
   renderSelected();
-  renderStockHelper();
-  renderRouteBuilder();
+  renderQuickSelectors();
+  renderDashboard();
+}
+
+function saveSelectedLocal() {
+  localStorage.setItem('dtpr_selected_ids', JSON.stringify([...state.selected.keys()]));
+}
+
+function restoreSelectedLocal() {
+  const ids = JSON.parse(localStorage.getItem('dtpr_selected_ids') || '[]');
+  ids.forEach(id => {
+    const item = state.items.find(i => i.id === id);
+    if (item) state.selected.set(id, item);
+  });
 }
 
 function renderSelected() {
   const items = [...state.selected.values()];
   $('selectedItems').innerHTML = items.length ? items.map(item => `
     <div class="selected-chip">
-      <div><strong>${escapeHtml(item.description)}</strong><div class="small">Best app search: ${escapeHtml(preferredSearchTerm(item))}</div></div>
+      <div><strong>${escapeHtml(item.description)}</strong><div class="small">Search: ${escapeHtml(preferredSearchTerm(item))}</div></div>
       <div class="chip-actions">
         <button class="secondary" onclick="copyTerm('${item.id}')">Copy</button>
+        <a class="mini-link" href="${dollarTreeSearchUrl(preferredSearchTerm(item))}" target="_blank" rel="noopener">Open</a>
+        <button onclick="addAndCheck('${item.id}')">Check</button>
         <button class="secondary" onclick="removeFromRun('${item.id}')">Remove</button>
       </div>
     </div>
-  `).join('') : '<p class="muted">No items selected yet. Go to Penny List and tap Add to Penny Run.</p>';
+  `).join('') : '<p class="muted">No items selected yet. Go to Penny List and tap Add to My Run.</p>';
 }
 
 async function loadStores() {
   const data = await api('/api/stores');
   state.stores = data.stores;
-  renderStores();
-  populateReportStores();
-}
-
-function renderStores() {
-  $('storesList').innerHTML = state.stores.map(store => `
-    <article class="item-card">
-      <div class="item-head">
-        <div>
-          <div class="item-title">${escapeHtml(store.name)}</div>
-          <div class="sku">${escapeHtml(store.address)}, ${escapeHtml(store.city)}, ${escapeHtml(store.state)} ${escapeHtml(store.zip)} ${store.storeNumber ? '· Store #' + escapeHtml(store.storeNumber) : ''}</div>
-        </div>
-        <div class="score">${store.worthTheDriveScore}<span>Worth Drive</span></div>
-      </div>
-    </article>
-  `).join('');
-}
-
-function populateReportStores() {
-  const options = ['<option value="">Unknown / not listed</option>'].concat(state.stores.map(s => `<option value="${s.id}">${escapeHtml(s.name)}</option>`));
-  $('reportStore').innerHTML = options.join('');
-}
-
-function openReport(itemId) {
-  state.reportItemId = itemId;
-  const item = findItem(itemId);
-  $('reportItemName').textContent = item ? item.description : '';
-  $('reportDialog').showModal();
-}
-
-async function submitReport(event) {
-  event.preventDefault();
-  if (!state.reportItemId) return;
-  await api('/api/reports', {
-    method: 'POST',
-    body: JSON.stringify({
-      itemId: state.reportItemId,
-      storeId: $('reportStore').value,
-      zip: $('huntZip').value || '08096',
-      appStatus: $('reportAppStatus').value,
-      scanResult: $('reportScanResult').value,
-      foundStatus: $('reportFoundStatus').value,
-      priceSeen: $('reportPrice').value,
-      notes: $('reportNotes').value
-    })
-  });
-  $('reportDialog').close();
-  $('reportPrice').value = '';
-  $('reportNotes').value = '';
-  await refreshAfterReport();
-}
-
-async function saveStockStatus(itemId, storeId, appStatus) {
-  const item = findItem(itemId);
-  const store = findStore(storeId);
-  await api('/api/reports', {
-    method: 'POST',
-    body: JSON.stringify({
-      itemId,
-      storeId,
-      zip: $('huntZip').value || '08096',
-      appStatus,
-      scanResult: 'unknown',
-      foundStatus: 'unknown',
-      priceSeen: '',
-      notes: `Stock Helper: ${statusLabel(appStatus)} for ${item?.description || itemId} at ${store?.name || storeId}`
-    })
-  });
-  await refreshAfterReport();
-}
-
-async function refreshAfterReport() {
-  await loadItems();
-  await loadReports();
-  await loadStores();
-  renderStockHelper();
+  renderQuickSelectors();
   renderRouteBuilder();
+}
+
+function renderQuickSelectors() {
+  const quickItem = $('quickItem');
+  const quickStore = $('quickStore');
+  if (!quickItem || !quickStore) return;
+  const items = [...state.selected.values()];
+  quickItem.innerHTML = items.length
+    ? items.map(i => `<option value="${i.id}">${escapeHtml(i.description)}</option>`).join('')
+    : '<option value="">Add items to My Run first</option>';
+  quickStore.innerHTML = state.stores.map(s => `<option value="${s.id}">${escapeHtml(s.name)} ${s.storeNumber ? '#' + escapeHtml(s.storeNumber) : ''}</option>`).join('');
+  renderCheckHelper();
+}
+
+function renderCheckHelper() {
+  const item = findItem($('quickItem')?.value);
+  const store = findStore($('quickStore')?.value);
+  const el = $('checkHelper');
+  if (!el) return;
+  if (!item) {
+    el.innerHTML = '<p class="muted">Add items to My Run first, then come back here.</p>';
+    return;
+  }
+  el.innerHTML = `
+    <strong>${escapeHtml(item.description)}</strong>
+    <p class="small">Search term: <strong>${escapeHtml(preferredSearchTerm(item))}</strong></p>
+    <p class="small">ZIP: <strong>${escapeHtml(state.homeZip)}</strong>${store ? ` · Store: <strong>${escapeHtml(store.name)}</strong>` : ''}</p>
+    <div class="actions">
+      <button class="secondary" onclick="copyTerm('${item.id}')">Copy Search Term</button>
+      <a class="button-link" href="${dollarTreeSearchUrl(preferredSearchTerm(item))}" target="_blank" rel="noopener">Open Dollar Tree Search</a>
+    </div>`;
 }
 
 async function loadReports() {
   const data = await api('/api/reports');
   state.reports = data.reports;
-  $('reportsList').innerHTML = state.reports.length ? state.reports.map(r => {
-    const item = findItem(r.itemId);
-    const store = findStore(r.storeId);
-    return `
-      <article class="item-card">
-        <div class="item-title">${escapeHtml(item?.description || r.itemId)}</div>
-        <div class="sku">${escapeHtml(store?.name || 'Unknown store')} · ${new Date(r.createdAt).toLocaleString()}</div>
-        <div class="pill-row">
-          <span class="pill">App: ${escapeHtml(statusLabel(r.appStatus))}</span>
-          <span class="pill ${r.scanResult === 'penny' ? 'green' : r.scanResult === 'normal' ? 'amber' : 'gray'}">Scan: ${escapeHtml(statusLabel(r.scanResult))}</span>
-          <span class="pill">Found: ${escapeHtml(statusLabel(r.foundStatus))}</span>
-        </div>
-        ${r.priceSeen ? `<div class="small">Price seen: ${escapeHtml(r.priceSeen)}</div>` : ''}
-        ${r.notes ? `<p class="muted">${escapeHtml(r.notes)}</p>` : ''}
-      </article>`;
-  }).join('') : '<div class="card"><p class="muted">No reports yet. Report your first penny find.</p></div>';
+  renderReports();
+  renderRouteBuilder();
+  renderDashboard();
 }
 
-function renderStockHelper() {
-  const box = $('stockHelperList');
+async function quickReport(choice) {
+  const itemId = $('quickItem').value;
+  const storeId = $('quickStore').value;
+  if (!itemId || !storeId) return setMessage('quickStatus', 'Choose an item and store first.', true);
+  const payload = reportPayloadFromChoice(choice);
+  payload.itemId = itemId;
+  payload.storeId = storeId;
+  payload.zip = state.homeZip;
+  payload.notes = `Quick check from ZIP ${state.homeZip}`;
+  if (choice === 'penny') payload.priceSeen = '0.01';
+  await api('/api/reports', { method:'POST', body: JSON.stringify(payload) });
+  setMessage('quickStatus', `Saved: ${statusLabel(choice)} for ${findItem(itemId)?.description || 'item'}`);
+  await loadReports();
+}
+
+function renderReports() {
+  const box = $('reportsList');
   if (!box) return;
-  const selectedItems = [...state.selected.values()];
-  const items = selectedItems.length ? selectedItems : state.items.slice(0, 8);
-  if (!items.length) {
-    box.innerHTML = '<div class="card"><p class="muted">Load the penny list first, then add items to your Penny Run.</p></div>';
+  if (!state.reports.length) {
+    box.innerHTML = '<p class="muted">No reports yet. Store checks and penny scans will show here.</p>';
     return;
   }
-  box.innerHTML = items.map(item => {
-    const term = preferredSearchTerm(item);
-    return `
-      <article class="item-card stock-card">
-        <div class="item-head">
-          <div>
-            <div class="item-title">${escapeHtml(item.description)}</div>
-            <div class="sku">App search term: <strong>${escapeHtml(term)}</strong></div>
-          </div>
-          <div class="score">${item.pennyScore}<span>PennyScore</span></div>
-        </div>
-        <div class="actions">
-          <button class="teal" onclick="copyTerm('${item.id}')">Copy Search Term</button>
-          <a class="button-link" href="${dollarTreeSearchUrl(term)}" target="_blank" rel="noopener">Open Dollar Tree Search</a>
-          <button class="secondary" onclick="openReport('${item.id}')">Report Scan</button>
-        </div>
-        <div class="store-stock-grid">
-          ${state.stores.map(store => {
-            const latest = latestReportFor(item.id, store.id);
-            const status = latest?.appStatus && latest.appStatus !== 'unknown' ? statusLabel(latest.appStatus) : 'not checked';
-            return `
-              <div class="store-stock-row">
-                <div>
-                  <strong>${escapeHtml(store.name)}</strong>
-                  <div class="small">${store.storeNumber ? 'Store #' + escapeHtml(store.storeNumber) + ' · ' : ''}${escapeHtml(status)}</div>
-                </div>
-                <div class="mini-actions">
-                  <button onclick="saveStockStatus('${item.id}','${store.id}','in_stock')">In</button>
-                  <button onclick="saveStockStatus('${item.id}','${store.id}','limited_stock')">Limited</button>
-                  <button class="secondary" onclick="saveStockStatus('${item.id}','${store.id}','out_of_stock')">Out</button>
-                  <button class="secondary" onclick="saveStockStatus('${item.id}','${store.id}','product_not_found')">Not Found</button>
-                </div>
-              </div>`;
-          }).join('')}
-        </div>
-      </article>`;
+  box.innerHTML = state.reports.slice(0, 75).map(r => {
+    const item = findItem(r.itemId) || state.items.find(i => i.id === r.itemId);
+    const store = findStore(r.storeId);
+    const main = r.scanResult !== 'unknown' ? r.scanResult : (r.appStatus !== 'unknown' ? r.appStatus : r.foundStatus);
+    return `<div class="report-row">
+      <div>
+        <strong>${escapeHtml(item?.description || 'Unknown item')}</strong>
+        <small>${escapeHtml(store?.name || 'Unknown store')} · ZIP ${escapeHtml(r.zip || 'n/a')} · ${new Date(r.createdAt).toLocaleString()}</small>
+      </div>
+      <span class="pill ${main === 'penny' ? 'green' : main === 'normal' ? 'gold' : ''}">${escapeHtml(statusLabel(main))}</span>
+    </div>`;
   }).join('');
 }
 
-function stockValue(status) {
-  if (status === 'in_stock') return 12;
-  if (status === 'limited_stock') return 7;
-  if (status === 'out_of_stock') return -6;
-  if (status === 'product_not_found') return -2;
-  return 0;
+function scoreStoreLocal(store) {
+  const selectedIds = new Set([...state.selected.keys()]);
+  const storeReports = state.reports.filter(r => r.storeId === store.id && (!selectedIds.size || selectedIds.has(r.itemId)));
+  let score = selectedIds.size ? 35 : 25;
+  const uniquePositiveItems = new Set();
+  for (const r of storeReports) {
+    const ageHours = (Date.now() - new Date(r.createdAt).getTime()) / 3600000;
+    const freshness = ageHours < 24 ? 1 : ageHours < 72 ? .7 : .35;
+    if (r.scanResult === 'penny') { score += 18 * freshness; uniquePositiveItems.add(r.itemId); }
+    if (r.appStatus === 'in_stock') { score += 9 * freshness; uniquePositiveItems.add(r.itemId); }
+    if (r.appStatus === 'limited_stock') { score += 5 * freshness; uniquePositiveItems.add(r.itemId); }
+    if (r.scanResult === 'normal') score -= 10 * freshness;
+    if (r.appStatus === 'out_of_stock') score -= 8 * freshness;
+    if (r.foundStatus === 'not_found') score -= 8 * freshness;
+    if (r.foundStatus === 'store_pulled') score -= 14 * freshness;
+  }
+  score += Math.min(25, uniquePositiveItems.size * 6);
+  return Math.max(0, Math.min(100, Math.round(score)));
 }
 
 function renderRouteBuilder() {
-  const box = $('routeBuilder');
-  if (!box) return;
-  const items = [...state.selected.values()];
-  if (!items.length) {
-    box.innerHTML = '<p class="muted">Add items to your Penny Run first. Then use Stock Helper to mark what the Dollar Tree app shows for each store.</p>';
-    return;
-  }
-  const rows = state.stores.map(store => {
-    const itemRows = items.map(item => {
-      const latest = latestReportFor(item.id, store.id);
-      const appStatus = latest?.appStatus || 'unknown';
-      const scan = latest?.scanResult || 'unknown';
-      const found = latest?.foundStatus || 'unknown';
-      const points = stockValue(appStatus) + (scan === 'penny' ? 10 : scan === 'normal' ? -8 : 0) + (found === 'not_found' ? -5 : found === 'store_pulled' ? -9 : 0);
-      return { item, latest, appStatus, points };
-    });
-    const possible = itemRows.filter(r => ['in_stock','limited_stock'].includes(r.appStatus)).length;
-    const checked = itemRows.filter(r => r.latest).length;
-    const score = Math.max(0, Math.min(100, 35 + itemRows.reduce((sum, r) => sum + r.points, 0) + Math.round((store.worthTheDriveScore || 40) / 5)));
-    return { store, itemRows, possible, checked, score };
-  }).sort((a, b) => b.score - a.score);
-
-  box.innerHTML = rows.map((row, idx) => `
-    <article class="route-card">
-      <div class="item-head">
-        <div>
-          <div class="item-title">${idx === 0 ? 'Start Here: ' : ''}${escapeHtml(row.store.name)}</div>
-          <div class="sku">${row.possible} possible finds · ${row.checked}/${items.length} items checked · ${escapeHtml(row.store.address)}</div>
-        </div>
-        <div class="score">${row.score}<span>Worth Drive</span></div>
+  const selected = [...state.selected.values()];
+  const html = state.stores.map(store => {
+    const score = scoreStoreLocal(store);
+    const matches = selected.map(item => {
+      const report = latestReportFor(item.id, store.id);
+      if (!report) return null;
+      const label = report.scanResult !== 'unknown' ? report.scanResult : (report.appStatus !== 'unknown' ? report.appStatus : report.foundStatus);
+      return `${item.description}: ${statusLabel(label)}`;
+    }).filter(Boolean);
+    return { store, score, matches };
+  }).sort((a,b)=>b.score-a.score).map((row, idx) => `
+    <div class="route-row ${idx===0?'best':''}">
+      <div>
+        <strong>${idx===0?'Start here: ':''}${escapeHtml(row.store.name)} ${row.store.storeNumber ? '#' + escapeHtml(row.store.storeNumber) : ''}</strong>
+        <div class="small">${escapeHtml(row.store.address)}, ${escapeHtml(row.store.city)}, ${escapeHtml(row.store.state)} ${escapeHtml(row.store.zip)}</div>
+        <div class="small">${row.matches.length ? escapeHtml(row.matches.join(' · ')) : 'No reports yet for your selected items at this store.'}</div>
       </div>
-      <div class="route-items">
-        ${row.itemRows.map(r => `<div class="route-line"><span>${escapeHtml(r.item.description)}</span><strong>${escapeHtml(statusLabel(r.appStatus))}</strong></div>`).join('')}
-      </div>
-    </article>
-  `).join('');
+      <div class="route-score">${row.score}<div class="small">Worth the Drive</div></div>
+    </div>`).join('');
+  $('routeBuilder') && ($('routeBuilder').innerHTML = html || '<p class="muted">No stores loaded yet.</p>');
+  $('dashboardRoute') && ($('dashboardRoute').innerHTML = html || '<p class="muted">No stores loaded yet.</p>');
 }
 
-async function saveHunt() {
-  const itemIds = [...state.selected.keys()];
-  if (!itemIds.length) return alert('Add items to your Penny Run first.');
-  const data = await api('/api/hunts', {
-    method: 'POST',
-    body: JSON.stringify({ name: $('huntName').value, zip: $('huntZip').value, itemIds })
-  });
-  alert(`Saved: ${data.hunt.name}`);
-  loadHunts();
-}
-
-async function loadHunts() {
-  const data = await api('/api/hunts');
-  $('savedHunts').innerHTML = data.hunts.length ? data.hunts.map(h => `
-    <div class="selected-chip">
-      <div><strong>${escapeHtml(h.name)}</strong><div class="small">ZIP ${escapeHtml(h.zip)} · ${h.itemIds.length} items · ${new Date(h.createdAt).toLocaleString()}</div></div>
-    </div>
-  `).join('') : '<p class="muted">No saved hunts yet.</p>';
-}
-
-async function signup() {
-  try {
-    await api('/api/auth/signup', { method:'POST', body: JSON.stringify({ name:$('signupName').value, email:$('signupEmail').value, password:$('signupPassword').value }) });
-    await loadMe();
-  } catch (e) { alert(e.message); }
-}
-
-async function login() {
-  try {
-    await api('/api/auth/login', { method:'POST', body: JSON.stringify({ email:$('loginEmail').value, password:$('loginPassword').value }) });
-    await loadMe();
-  } catch (e) { alert(e.message); }
-}
-
-async function logout() {
-  await api('/api/auth/logout', { method:'POST' });
-  await loadMe();
+function renderDashboard() {
+  $('metricItems') && ($('metricItems').textContent = state.items.length);
+  $('metricRun') && ($('metricRun').textContent = state.selected.size);
+  $('metricReports') && ($('metricReports').textContent = state.reports.length);
+  renderRouteBuilder();
 }
 
 async function copyTerm(itemId) {
   const item = findItem(itemId);
-  const term = preferredSearchTerm(item);
-  if (!term) return;
-  try {
-    await navigator.clipboard.writeText(term);
-    alert(`Copied: ${term}`);
-  } catch {
-    window.prompt('Copy this search term:', term);
-  }
+  if (!item) return;
+  await navigator.clipboard.writeText(preferredSearchTerm(item));
+  alert(`Copied: ${preferredSearchTerm(item)}`);
 }
 
-async function init() {
+async function loadHunts() {
+  const data = await api('/api/hunts');
+  $('savedHunts').innerHTML = data.hunts.length ? data.hunts.slice().reverse().map(h => `
+    <div class="hunt-row">
+      <div><strong>${escapeHtml(h.name)}</strong><div class="small">ZIP ${escapeHtml(h.zip || 'n/a')} · ${h.itemIds.length} items · ${new Date(h.createdAt).toLocaleString()}</div></div>
+    </div>
+  `).join('') : '<p class="muted">No saved runs yet.</p>';
+}
+
+async function saveHunt() {
+  const itemIds = [...state.selected.keys()];
+  if (!itemIds.length) return alert('Add items to My Run first.');
+  await api('/api/hunts', { method:'POST', body: JSON.stringify({ name: $('huntName').value || 'My Penny Run', zip: state.homeZip, itemIds }) });
+  await loadHunts();
+  alert('Run saved.');
+}
+
+async function signup() {
+  try {
+    const data = await api('/api/auth/signup', { method:'POST', body: JSON.stringify({ name:$('signupName').value, email:$('signupEmail').value, password:$('signupPassword').value }) });
+    state.user = data.user; updateAccountUi(); alert('Account created.');
+  } catch(e) { alert(e.message); }
+}
+async function login() {
+  try {
+    const data = await api('/api/auth/login', { method:'POST', body: JSON.stringify({ email:$('loginEmail').value, password:$('loginPassword').value }) });
+    state.user = data.user; updateAccountUi(); alert('Logged in.');
+  } catch(e) { alert(e.message); }
+}
+async function logout() {
+  await api('/api/auth/logout', { method:'POST', body:'{}' });
+  state.user = null; updateAccountUi(); alert('Logged out.');
+}
+
+async function adminAddItem() {
+  try {
+    const payload = {
+      sku:$('adminSku').value,
+      description:$('adminDescription').value,
+      category:$('adminCategory').value,
+      eventNumber:$('adminEvent').value,
+      dropDate:$('adminDrop').value,
+      source:$('adminSource').value,
+      confidence:$('adminConfidence').value,
+      searchTerms:$('adminSearchTerms').value
+    };
+    await api('/api/admin/items', { method:'POST', body: JSON.stringify(payload) });
+    $('adminStatus').textContent = 'Item added.';
+    ['adminSku','adminDescription','adminCategory','adminSearchTerms','adminEvent','adminDrop','adminSource'].forEach(id => $(id).value='');
+    await loadCategories();
+    await loadItems();
+  } catch(e) { $('adminStatus').textContent = e.message; }
+}
+
+function saveZip() {
+  const zip = $('homeZip').value.trim();
+  if (!/^\d{5}$/.test(zip)) { $('zipStatus').textContent = 'Enter a 5 digit ZIP.'; return; }
+  state.homeZip = zip;
+  localStorage.setItem('dtpr_zip', zip);
+  $('zipStatus').textContent = `Saved ${zip}`;
+  renderCheckHelper();
+}
+
+function bindEvents() {
   document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => setTab(btn.dataset.tab)));
-  $('loginToggle').addEventListener('click', () => $('authPanel').classList.toggle('hidden'));
+  $('saveZipBtn').addEventListener('click', saveZip);
   $('itemSearch').addEventListener('input', () => loadItems());
   $('categoryFilter').addEventListener('change', () => loadItems());
-  $('submitReportBtn').addEventListener('click', submitReport);
   $('saveHuntBtn').addEventListener('click', saveHunt);
+  $('quickItem').addEventListener('change', renderCheckHelper);
+  $('quickStore').addEventListener('change', renderCheckHelper);
   $('signupBtn').addEventListener('click', signup);
   $('loginBtn').addEventListener('click', login);
   $('logoutBtn').addEventListener('click', logout);
-  await loadMe();
-  await loadCategories();
-  await loadStores();
-  await loadItems();
-  await loadReports();
-  renderSelected();
-  renderStockHelper();
-  renderRouteBuilder();
+  $('adminAddItemBtn').addEventListener('click', adminAddItem);
 }
 
-window.addToRun = addToRun;
-window.removeFromRun = removeFromRun;
-window.openReport = openReport;
-window.copyTerm = copyTerm;
-window.saveStockStatus = saveStockStatus;
-init().catch(err => alert(err.message));
+async function init() {
+  $('homeZip').value = state.homeZip;
+  bindEvents();
+  await loadMe();
+  await loadCategories();
+  await loadItems();
+  restoreSelectedLocal();
+  await loadStores();
+  await loadReports();
+  renderSelected();
+  renderQuickSelectors();
+  renderDashboard();
+}
+
+init().catch(err => {
+  console.error(err);
+  alert('App failed to load: ' + err.message);
+});
