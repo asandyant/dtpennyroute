@@ -200,10 +200,12 @@ function renderSelected() {
 }
 
 async function loadStores() {
-  const data = await api('/api/stores');
+  const data = await api(`/api/stores?zip=${encodeURIComponent(state.homeZip)}`);
   state.stores = data.stores;
+  state.storeSource = data.source;
   renderQuickSelectors();
   renderRouteBuilder();
+  renderDashboard();
 }
 
 function renderQuickSelectors() {
@@ -214,7 +216,7 @@ function renderQuickSelectors() {
   quickItem.innerHTML = items.length
     ? items.map(i => `<option value="${i.id}">${escapeHtml(i.description)}</option>`).join('')
     : '<option value="">Add items to My Run first</option>';
-  quickStore.innerHTML = state.stores.map(s => `<option value="${s.id}">${escapeHtml(s.name)} ${s.storeNumber ? '#' + escapeHtml(s.storeNumber) : ''}</option>`).join('');
+  quickStore.innerHTML = state.stores.map(s => `<option value="${s.id}">${escapeHtml(s.name)} ${s.storeNumber ? '#' + escapeHtml(s.storeNumber) : ''}${Number.isFinite(s.distanceMiles) ? ' · ' + s.distanceMiles + ' mi' : ''}</option>`).join('');
   renderCheckHelper();
 }
 
@@ -316,7 +318,7 @@ function renderRouteBuilder() {
     <div class="route-row ${idx===0?'best':''}">
       <div>
         <strong>${idx===0?'Start here: ':''}${escapeHtml(row.store.name)} ${row.store.storeNumber ? '#' + escapeHtml(row.store.storeNumber) : ''}</strong>
-        <div class="small">${escapeHtml(row.store.address)}, ${escapeHtml(row.store.city)}, ${escapeHtml(row.store.state)} ${escapeHtml(row.store.zip)}</div>
+        <div class="small">${escapeHtml(row.store.address)}, ${escapeHtml(row.store.city)}, ${escapeHtml(row.store.state)} ${escapeHtml(row.store.zip)}${Number.isFinite(row.store.distanceMiles) ? ' · ' + row.store.distanceMiles + ' mi from ' + escapeHtml(state.homeZip) : ''}</div>
         <div class="small">${row.matches.length ? escapeHtml(row.matches.join(' · ')) : 'No reports yet for your selected items at this store.'}</div>
       </div>
       <div class="route-score">${row.score}<div class="small">Worth the Drive</div></div>
@@ -393,12 +395,15 @@ async function adminAddItem() {
   } catch(e) { $('adminStatus').textContent = e.message; }
 }
 
-function saveZip() {
+async function saveZip() {
   const zip = $('homeZip').value.trim();
   if (!/^\d{5}$/.test(zip)) { $('zipStatus').textContent = 'Enter a 5 digit ZIP.'; return; }
   state.homeZip = zip;
   localStorage.setItem('dtpr_zip', zip);
-  $('zipStatus').textContent = `Saved ${zip}`;
+  $('zipStatus').textContent = `Loading stores near ${zip}...`;
+  await loadStores();
+  const fallbackNote = state.storeSource === 'fallback-08096' ? ' Starter list used because this ZIP is not mapped yet.' : '';
+  $('zipStatus').textContent = `Saved ${zip}. Stores updated.${fallbackNote}`;
   renderCheckHelper();
 }
 

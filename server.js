@@ -72,6 +72,55 @@ function seedItems() {
   ].map((item, index) => ({ id: `item_${String(index + 1).padStart(4, '0')}`, ...item }));
 }
 
+
+const STORE_DIRECTORY = [
+  { id:'store_4807', storeNumber:'4807', name:'Dollar Tree - Deptford Crossings', address:'1800 Clements Bridge Rd', city:'Woodbury', state:'NJ', zip:'08096', latitude:39.8397, longitude:-75.1177 },
+  { id:'store_deptford_hurffville', storeNumber:'', name:'Dollar Tree - Deptford / Hurffville Rd', address:'1360 Hurffville Rd Unit 2', city:'Deptford', state:'NJ', zip:'08096', latitude:39.8204, longitude:-75.0950 },
+  { id:'store_9091', storeNumber:'9091', name:'Dollar Tree - Woodbury', address:'529 N Evergreen Ave', city:'Woodbury', state:'NJ', zip:'08096', latitude:39.8478, longitude:-75.1470 },
+  { id:'store_1652', storeNumber:'1652', name:'Dollar Tree - Mantua Pike', address:'736 Mantua Pike', city:'Woodbury', state:'NJ', zip:'08096', latitude:39.8126, longitude:-75.1702 },
+  { id:'store_blackwood', storeNumber:'', name:'Dollar Tree - Blackwood', address:'1001 S Black Horse Pike Unit 2B', city:'Blackwood', state:'NJ', zip:'08012', latitude:39.7849, longitude:-75.0550 },
+  { id:'store_runnemede', storeNumber:'', name:'Dollar Tree - Runnemede / Acme Plaza', address:'611 E Evesham Rd', city:'Runnemede', state:'NJ', zip:'08078', latitude:39.8567, longitude:-75.0668 },
+  { id:'store_bellmawr', storeNumber:'', name:'Dollar Tree - Bellmawr', address:'42 N Black Horse Pike', city:'Bellmawr', state:'NJ', zip:'08031', latitude:39.8672, longitude:-75.0947 },
+  { id:'store_turnersville', storeNumber:'', name:'Dollar Tree - Turnersville Area', address:'Black Horse Pike Area', city:'Turnersville', state:'NJ', zip:'08012', latitude:39.7730, longitude:-75.0470 },
+  { id:'store_sicklerville', storeNumber:'', name:'Dollar Tree - Sicklerville Area', address:'Sicklerville Area', city:'Sicklerville', state:'NJ', zip:'08081', latitude:39.7170, longitude:-74.9690 },
+  { id:'store_cherry_hill', storeNumber:'', name:'Dollar Tree - Cherry Hill Area', address:'Cherry Hill Area', city:'Cherry Hill', state:'NJ', zip:'08002', latitude:39.9348, longitude:-75.0310 },
+  { id:'store_mount_lauren', storeNumber:'', name:'Dollar Tree - Mount Laurel Area', address:'Mount Laurel Area', city:'Mount Laurel', state:'NJ', zip:'08054', latitude:39.9340, longitude:-74.8910 }
+];
+
+const ZIP_COORDS = {
+  '08096': { latitude:39.8268, longitude:-75.1238 },
+  '08080': { latitude:39.7476, longitude:-75.0890 },
+  '08012': { latitude:39.7849, longitude:-75.0550 },
+  '08078': { latitude:39.8523, longitude:-75.0671 },
+  '08031': { latitude:39.8676, longitude:-75.0946 },
+  '08081': { latitude:39.7170, longitude:-74.9690 },
+  '08002': { latitude:39.9348, longitude:-75.0310 },
+  '08054': { latitude:39.9340, longitude:-74.8910 },
+  '19148': { latitude:39.9170, longitude:-75.1570 },
+  '19145': { latitude:39.9135, longitude:-75.1820 }
+};
+
+function milesBetween(aLat, aLon, bLat, bLon) {
+  const R = 3958.8;
+  const toRad = deg => deg * Math.PI / 180;
+  const dLat = toRad(bLat - aLat);
+  const dLon = toRad(bLon - aLon);
+  const x = Math.sin(dLat/2) ** 2 + Math.cos(toRad(aLat)) * Math.cos(toRad(bLat)) * Math.sin(dLon/2) ** 2;
+  return 2 * R * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
+}
+
+function storesForZip(zip) {
+  const cleanZip = String(zip || '08096').slice(0,5);
+  const center = ZIP_COORDS[cleanZip] || ZIP_COORDS['08096'];
+  return STORE_DIRECTORY
+    .map(store => ({
+      ...store,
+      distanceMiles: Number(milesBetween(center.latitude, center.longitude, store.latitude, store.longitude).toFixed(1))
+    }))
+    .sort((a, b) => a.distanceMiles - b.distanceMiles)
+    .slice(0, 7);
+}
+
 function initialDb() {
   return {
     createdAt: new Date().toISOString(),
@@ -79,12 +128,7 @@ function initialDb() {
     items: seedItems(),
     reports: [],
     huntLists: [],
-    stores: [
-      { id:'store_4807', storeNumber:'4807', name:'Dollar Tree - Deptford Crossings', address:'1800 Clements Bridge Rd', city:'Woodbury', state:'NJ', zip:'08096' },
-      { id:'store_deptford_hurffville', storeNumber:'', name:'Dollar Tree - Deptford / Hurffville Rd', address:'1360 Hurffville Rd Unit 2', city:'Deptford', state:'NJ', zip:'08096' },
-      { id:'store_9091', storeNumber:'9091', name:'Dollar Tree - Woodbury', address:'529 N Evergreen Ave', city:'Woodbury', state:'NJ', zip:'08096' },
-      { id:'store_1652', storeNumber:'1652', name:'Dollar Tree - Mantua Pike', address:'736 Mantua Pike', city:'Woodbury', state:'NJ', zip:'08096' }
-    ]
+    stores: storesForZip('08096')
   };
 }
 
@@ -198,8 +242,12 @@ app.get('/api/categories', (req, res) => {
 
 app.get('/api/stores', (req, res) => {
   const db = readDb();
-  const stores = db.stores.map(store => ({ ...store, worthTheDriveScore: scoreStore(store.id, db.reports) }));
-  res.json({ stores });
+  const zip = String(req.query.zip || '08096').slice(0, 5);
+  const stores = storesForZip(zip).map(store => ({
+    ...store,
+    worthTheDriveScore: scoreStore(store.id, db.reports)
+  }));
+  res.json({ stores, zip, source: ZIP_COORDS[zip] ? 'zip-match' : 'fallback-08096' });
 });
 
 app.get('/api/reports', (req, res) => {
