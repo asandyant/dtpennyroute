@@ -36,3 +36,16 @@ textarea{min-height:92px;resize:vertical}button,.button-link{border:none;backgro
 
 .zip-status{font-size:13px;font-weight:800;color:#10243d;background:#eaf2f6;border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:8px 10px;display:inline-block;line-height:1.25}
 .source-note{font-size:12px;font-weight:800;color:#1f3f67;margin-top:4px}
+
+/* Build 9 route-builder cleanup */
+button.added-btn{background:#d9f5ea;color:#14543c;border:1px solid #9bd8bf;cursor:default}
+.inside-note{display:inline-flex;align-items:center;border:1px dashed var(--line);border-radius:14px;padding:10px 12px;background:#fff;color:var(--muted);font-size:13px;font-weight:700}
+.route-controls{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:center;background:#f6fafb;border:1px solid var(--line);border-radius:18px;padding:12px;margin-top:12px}
+.route-store-card{border:1px solid var(--line);border-radius:20px;padding:14px;background:#f9fcfd;margin:12px 0}
+.route-store-card.best{border-color:#99d6c6;background:#effbf8}
+.route-store-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.route-store-head h4{margin:0 0 4px;font-size:18px}
+.route-item-grid{display:grid;gap:8px;margin-top:12px}
+.route-item-line{display:flex;justify-content:space-between;gap:10px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px}
+.route-item-line span{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+@media(max-width:760px){.route-controls{grid-template-columns:1fr}.route-store-head,.route-item-line{flex-direction:column;align-items:flex-start}.route-score{text-align:left}}

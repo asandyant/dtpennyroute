@@ -75,7 +75,7 @@ function setTab(tab) {
   $(`${tab}Tab`)?.classList.remove('hidden');
   if (tab === 'dashboard') renderDashboard();
   if (tab === 'run') { loadHunts(); renderSelected(); renderRouteBuilder(); }
-  if (tab === 'check') { renderQuickSelectors(); renderCheckHelper(); }
+  if (tab === 'check') { renderQuickSelectors(); renderCheckHelper(); buildRouteView(); }
   if (tab === 'community') renderReports();
 }
 
@@ -114,6 +114,7 @@ async function loadItems() {
   state.items = data.items;
   renderItems();
   renderDashboard();
+  buildRouteView();
 }
 
 function renderItems() {
@@ -137,10 +138,9 @@ function renderItems() {
         </div>
         <div class="small"><strong>Search in Dollar Tree app/site:</strong> ${escapeHtml(preferredSearchTerm(item))}</div>
         <div class="actions simple-actions">
-          <button class="teal" onclick="addToRun('${item.id}')">${inRun ? 'Added to Run' : 'Add to My Run'}</button>
+          <button class="${inRun ? 'added-btn' : 'teal'}" onclick="addToRun('${item.id}')">${inRun ? 'Added ✓' : 'Add to My Run'}</button>
           <button class="secondary" onclick="copyTerm('${item.id}')">Copy Search</button>
-          <a class="button-link" href="${dollarTreeSearchUrl(preferredSearchTerm(item))}" target="_blank" rel="noopener">Open Search</a>
-          <button onclick="addAndCheck('${item.id}')">Check Item</button>
+          <button onclick="addAndCheck('${item.id}')">Build Route</button>
         </div>
       </article>`;
   }).join('');
@@ -190,9 +190,8 @@ function renderSelected() {
     <div class="selected-chip">
       <div><strong>${escapeHtml(item.description)}</strong><div class="small">Search: ${escapeHtml(preferredSearchTerm(item))}</div></div>
       <div class="chip-actions">
-        <button class="secondary" onclick="copyTerm('${item.id}')">Copy</button>
-        <a class="mini-link" href="${dollarTreeSearchUrl(preferredSearchTerm(item))}" target="_blank" rel="noopener">Open</a>
-        <button onclick="addAndCheck('${item.id}')">Check Item</button>
+        <button class="secondary" onclick="copyTerm('${item.id}')">Copy Search</button>
+        <button onclick="addAndCheck('${item.id}')">Build Route</button>
         <button class="secondary" onclick="removeFromRun('${item.id}')">Remove</button>
       </div>
     </div>
@@ -237,7 +236,7 @@ function renderCheckHelper() {
     <p class="small">ZIP: <strong>${escapeHtml(state.homeZip)}</strong>${store ? ` · Store: <strong>${escapeHtml(store.name)}</strong>` : ''}</p>
     <div class="actions">
       <button class="secondary" onclick="copyTerm('${item.id}')">Copy Search Term</button>
-      <a class="button-link" href="${dollarTreeSearchUrl(preferredSearchTerm(item))}" target="_blank" rel="noopener">Open Dollar Tree Search</a>
+      <span class="inside-note">Dollar Tree stock search will stay inside this app once the live DT endpoint is connected.</span>
     </div>`;
 }
 
@@ -262,7 +261,9 @@ async function quickReport(choice) {
   await api('/api/reports', { method:'POST', body: JSON.stringify(payload) });
   setMessage('quickStatus', `Saved: ${statusLabel(choice)} for ${findItem(itemId)?.description || 'item'}`);
   await loadReports();
+  buildRouteView();
 }
+
 
 function renderReports() {
   const box = $('reportsList');
@@ -359,6 +360,59 @@ function renderRouteBuilder() {
   }).join('');
   $('routeBuilder') && ($('routeBuilder').innerHTML = html || '<p class="muted">No stores loaded yet.</p>');
   $('dashboardRoute') && ($('dashboardRoute').innerHTML = html || '<p class="muted">No stores loaded yet.</p>');
+}
+
+
+function buildRouteView() {
+  const selected = [...state.selected.values()];
+  $('routeZipLabel') && ($('routeZipLabel').textContent = state.homeZip);
+  $('routeItemCount') && ($('routeItemCount').textContent = selected.length);
+
+  const box = $('routeBuilderFull');
+  if (!box) return;
+  if (!selected.length) {
+    box.innerHTML = '<p class="muted">Add items to My Run first. Then this screen will rank stores near your ZIP.</p>';
+    return;
+  }
+
+  const rows = state.stores.map(store => {
+    const scoreInfo = scoreStoreLocal(store);
+    return { store, scoreInfo };
+  }).sort((a,b) => {
+    if (a.scoreInfo.hasData && !b.scoreInfo.hasData) return -1;
+    if (!a.scoreInfo.hasData && b.scoreInfo.hasData) return 1;
+    if (a.scoreInfo.hasData && b.scoreInfo.hasData) return b.scoreInfo.score - a.scoreInfo.score;
+    return (a.store.distanceMiles ?? 9999) - (b.store.distanceMiles ?? 9999);
+  });
+
+  box.innerHTML = rows.map((row, idx) => {
+    const scoreHtml = row.scoreInfo.hasData
+      ? `<div class="route-score">${row.scoreInfo.score}<div class="small">Worth the Drive</div></div>`
+      : `<div class="route-score no-score">No Score<div class="small">Needs Data</div></div>`;
+
+    const itemGrid = selected.map(item => {
+      const report = latestReportFor(item.id, row.store.id);
+      const label = report ? (report.scanResult !== 'unknown' ? report.scanResult : (report.appStatus !== 'unknown' ? report.appStatus : report.foundStatus)) : 'not_checked';
+      const labelClass = label === 'penny' || label === 'in_stock' ? 'green' : (label === 'normal' || label === 'out_of_stock' || label === 'not_found' || label === 'store_pulled' ? 'gold' : '');
+      return `<div class="route-item-line">
+        <div><strong>${escapeHtml(item.description)}</strong><span>Search: ${escapeHtml(preferredSearchTerm(item))}</span></div>
+        <span class="pill ${labelClass}">${escapeHtml(statusLabel(label))}</span>
+      </div>`;
+    }).join('');
+
+    return `<div class="route-store-card ${idx === 0 && row.scoreInfo.hasData ? 'best' : ''}">
+      <div class="route-store-head">
+        <div>
+          <h4>${idx === 0 && row.scoreInfo.hasData ? 'Start here: ' : ''}${escapeHtml(row.store.name)} ${row.store.storeNumber ? '#' + escapeHtml(row.store.storeNumber) : ''}</h4>
+          <div class="small">${escapeHtml(row.store.address)}, ${escapeHtml(row.store.city)}, ${escapeHtml(row.store.state)} ${escapeHtml(row.store.zip)}${Number.isFinite(row.store.distanceMiles) ? ' · ' + row.store.distanceMiles + ' mi from ' + escapeHtml(state.homeZip) : ''}</div>
+          <div class="source-note">Store source: ${state.storeLiveConnected ? 'Live Dollar Tree lookup' : 'starter/cached directory'}</div>
+          <div class="small">${escapeHtml(row.scoreInfo.reason)}</div>
+        </div>
+        ${scoreHtml}
+      </div>
+      <div class="route-item-grid">${itemGrid}</div>
+    </div>`;
+  }).join('');
 }
 
 function renderDashboard() {
@@ -467,6 +521,7 @@ async function init() {
   renderSelected();
   renderQuickSelectors();
   renderDashboard();
+  buildRouteView();
 }
 
 init().catch(err => {

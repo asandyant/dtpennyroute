@@ -30,7 +30,7 @@
       <button data-tab="dashboard" class="tab-btn active">Dashboard</button>
       <button data-tab="items" class="tab-btn">Penny List</button>
       <button data-tab="run" class="tab-btn">My Run</button>
-      <button data-tab="check" class="tab-btn">Check Items</button>
+      <button data-tab="check" class="tab-btn">Route Builder</button>
       <button data-tab="community" class="tab-btn">Community</button>
       <button data-tab="account" class="tab-btn">Account</button>
       <button data-tab="admin" class="tab-btn hidden" id="adminTabButton">Admin</button>
@@ -41,7 +41,7 @@
     <section id="dashboardTab" class="tab-panel">
       <div class="card intro-card">
         <h2>Build My Penny Run</h2>
-        <p class="muted">Start here: set your ZIP, add items from the Penny List, then use Check Items to record what the Dollar Tree app or in-store scanner shows.</p>
+        <p class="muted">Start here: set your ZIP, add items from the Penny List, then build your route. DTPennyRoute will rank nearby stores using your stock checks and penny scan reports.</p>
         <div class="dashboard-grid">
           <div class="metric"><strong id="metricItems">0</strong><span>Penny items loaded</span></div>
           <div class="metric"><strong id="metricRun">0</strong><span>Items in My Run</span></div>
@@ -50,7 +50,7 @@
         <div class="actions">
           <button onclick="setTab('items')">Search Penny List</button>
           <button class="teal" onclick="setTab('run')">View My Run</button>
-          <button class="secondary" onclick="setTab('check')">Open Check Items</button>
+          <button class="secondary" onclick="setTab('check')">Build Route</button>
         </div>
       </div>
 
@@ -65,8 +65,8 @@
         <div class="quick-steps big">
           <div><strong>1</strong><span>Add penny items</span></div>
           <div><strong>2</strong><span>Enter ZIP</span></div>
-          <div><strong>3</strong><span>Check Dollar Tree app</span></div>
-          <div><strong>4</strong><span>Follow best route</span></div>
+          <div><strong>3</strong><span>Build route</span></div>
+          <div><strong>4</strong><span>Hunt the best store first</span></div>
         </div>
       </div>
     </section>
@@ -87,10 +87,11 @@
     <section id="runTab" class="tab-panel hidden">
       <div class="card run-card">
         <h2>My Penny Run</h2>
-        <p class="muted">Your shopping list for today. Save it to your account or guest session, then build a route by store.</p>
+        <p class="muted">Your shopping list for today. Add the items you want, then tap Build Route to rank nearby Dollar Tree stores for your ZIP.</p>
         <div class="search-row">
           <input id="huntName" placeholder="Run name" value="My Penny Run" />
           <button id="saveHuntBtn">Save Run</button>
+          <button class="teal" type="button" onclick="setTab('check')">Build Route</button>
         </div>
       </div>
 
@@ -100,7 +101,8 @@
       </div>
 
       <div class="card">
-        <h3>Today’s Best Route</h3>
+        <h3>Route Preview</h3>
+        <p class="muted">Stores sort by best reports first, then distance. True automatic Dollar Tree stock search is the next backend hookup.</p>
         <div id="routeBuilder"></div>
       </div>
 
@@ -111,9 +113,25 @@
     </section>
 
     <section id="checkTab" class="tab-panel hidden">
+      <div class="card intro-card">
+        <h2>Route Builder</h2>
+        <p class="muted">This is the gas saver. Add items to My Run, set your ZIP, then build a store-by-store hunt route. Right now this uses saved app checks and penny reports. The live Dollar Tree stock hookup will plug into this same screen later.</p>
+        <div class="route-controls">
+          <div><strong>ZIP:</strong> <span id="routeZipLabel">08096</span></div>
+          <div><strong>Items in run:</strong> <span id="routeItemCount">0</span></div>
+          <button class="teal" type="button" onclick="buildRouteView()">Build My Route</button>
+        </div>
+      </div>
+
       <div class="card">
-        <h2>Check Items</h2>
-        <p class="muted">Use this after you search an item in the Dollar Tree app or scan it in store. Pick the item, pick the store, then tap what happened.</p>
+        <h3>My Route</h3>
+        <p class="muted">Stores with positive stock or penny reports move up. Stores with normal price, out of stock, couldn’t find, or pulled reports move down.</p>
+        <div id="routeBuilderFull"></div>
+      </div>
+
+      <div class="card">
+        <h3>Log a Store Result</h3>
+        <p class="muted">Use this when you check the Dollar Tree app or scan an item in-store. This data updates the route score.</p>
         <div class="grid two compact-grid">
           <select id="quickItem"></select>
           <select id="quickStore"></select>
