@@ -84,7 +84,17 @@ const STORE_DIRECTORY = [
   { id:'store_turnersville', storeNumber:'', name:'Dollar Tree - Turnersville Area', address:'Black Horse Pike Area', city:'Turnersville', state:'NJ', zip:'08012', latitude:39.7730, longitude:-75.0470 },
   { id:'store_sicklerville', storeNumber:'', name:'Dollar Tree - Sicklerville Area', address:'Sicklerville Area', city:'Sicklerville', state:'NJ', zip:'08081', latitude:39.7170, longitude:-74.9690 },
   { id:'store_cherry_hill', storeNumber:'', name:'Dollar Tree - Cherry Hill Area', address:'Cherry Hill Area', city:'Cherry Hill', state:'NJ', zip:'08002', latitude:39.9348, longitude:-75.0310 },
-  { id:'store_mount_lauren', storeNumber:'', name:'Dollar Tree - Mount Laurel Area', address:'Mount Laurel Area', city:'Mount Laurel', state:'NJ', zip:'08054', latitude:39.9340, longitude:-74.8910 }
+  { id:'store_mount_lauren', storeNumber:'', name:'Dollar Tree - Mount Laurel Area', address:'Mount Laurel Area', city:'Mount Laurel', state:'NJ', zip:'08054', latitude:39.9340, longitude:-74.8910 },
+
+  // New York / Queens starter stores for ZIP 11385 testing
+  { id:'store_middle_village', storeNumber:'', name:'Dollar Tree - Middle Village', address:'7802 Metropolitan Avenue', city:'Middle Village', state:'NY', zip:'11379', latitude:40.7132, longitude:-73.8765 },
+  { id:'store_maspeth_4587', storeNumber:'4587', name:'Dollar Tree - Maspeth / Grand Ave', address:'69-10 Grand Ave', city:'Maspeth', state:'NY', zip:'11378', latitude:40.7280, longitude:-73.8940 },
+  { id:'store_woodside_tower', storeNumber:'', name:'Dollar Tree - Tower Square', address:'51-02 Northern Blvd', city:'Woodside', state:'NY', zip:'11377', latitude:40.7531, longitude:-73.9121 },
+  { id:'store_woodside_big6', storeNumber:'', name:'Dollar Tree - Big 6', address:'63-14 Queens Blvd', city:'Woodside', state:'NY', zip:'11377', latitude:40.7405, longitude:-73.9020 },
+  { id:'store_east_new_york_van_sinderen', storeNumber:'', name:'Dollar Tree - Van Sinderen Ave', address:'679 Van Sinderen Ave', city:'Brooklyn', state:'NY', zip:'11207', latitude:40.6634, longitude:-73.9008 },
+  { id:'store_brooklyn_utica_d', storeNumber:'', name:'Dollar Tree - Utica & D', address:'1253 Utica Ave', city:'Brooklyn', state:'NY', zip:'11203', latitude:40.6419, longitude:-73.9290 },
+  { id:'store_brooklyn_remsen', storeNumber:'', name:'Dollar Tree - Remsen Ave', address:'533 Remsen Ave', city:'Brooklyn', state:'NY', zip:'11236', latitude:40.6502, longitude:-73.9190 },
+  { id:'store_flushing_francis_lewis', storeNumber:'', name:'Dollar Tree - Francis Lewis Billiards', address:'34-45 Francis Lewis Blvd', city:'Flushing', state:'NY', zip:'11358', latitude:40.7650, longitude:-73.7892 }
 ];
 
 const ZIP_COORDS = {
@@ -97,7 +107,15 @@ const ZIP_COORDS = {
   '08002': { latitude:39.9348, longitude:-75.0310 },
   '08054': { latitude:39.9340, longitude:-74.8910 },
   '19148': { latitude:39.9170, longitude:-75.1570 },
-  '19145': { latitude:39.9135, longitude:-75.1820 }
+  '19145': { latitude:39.9135, longitude:-75.1820 },
+
+  // NYC / Queens starter ZIPs
+  '11385': { latitude:40.7044, longitude:-73.9018 },
+  '11379': { latitude:40.7174, longitude:-73.8790 },
+  '11378': { latitude:40.7245, longitude:-73.8990 },
+  '11377': { latitude:40.7446, longitude:-73.9066 },
+  '11207': { latitude:40.6700, longitude:-73.8950 },
+  '11236': { latitude:40.6406, longitude:-73.9020 }
 };
 
 function milesBetween(aLat, aLon, bLat, bLon) {
@@ -121,6 +139,53 @@ function storesForZip(zip) {
     .slice(0, 7);
 }
 
+function buildFallbackStoreLookup(zip) {
+  const cleanZip = String(zip || '08096').replace(/\D/g, '').slice(0, 5) || '08096';
+  const mapped = Boolean(ZIP_COORDS[cleanZip]);
+  const stores = storesForZip(cleanZip).map(store => ({
+    ...store,
+    source: mapped ? 'starter_zip_directory' : 'starter_fallback_directory'
+  }));
+  return {
+    zip: cleanZip,
+    stores,
+    mapped,
+    source: mapped ? 'starter_zip_directory' : 'starter_fallback_directory',
+    liveConnected: false,
+    message: mapped
+      ? `Showing starter stores near ${cleanZip}. Live Dollar Tree lookup is ready to connect next.`
+      : `Live Dollar Tree lookup is not connected yet. Showing closest starter stores while we add the live store locator connection.`
+  };
+}
+
+async function lookupDollarTreeStoresLive(zip) {
+  // Future connection point:
+  // This is where we will connect a clean Dollar Tree store-locator request if we confirm an allowed/public endpoint.
+  // For now, return null so the app uses the starter/cached database safely.
+  return null;
+}
+
+async function lookupStoresForZip(zip) {
+  const cleanZip = String(zip || '08096').replace(/\D/g, '').slice(0, 5) || '08096';
+  const db = readDb();
+  db.storeCache = db.storeCache || {};
+
+  const cached = db.storeCache[cleanZip];
+  const cachedAgeHours = cached ? (Date.now() - new Date(cached.updatedAt).getTime()) / 3600000 : Infinity;
+  if (cached && cachedAgeHours < 24) {
+    return { ...cached, cached: true };
+  }
+
+  const live = await lookupDollarTreeStoresLive(cleanZip);
+  const result = live || buildFallbackStoreLookup(cleanZip);
+  result.updatedAt = new Date().toISOString();
+  result.cached = false;
+
+  db.storeCache[cleanZip] = result;
+  writeDb(db);
+  return result;
+}
+
 function initialDb() {
   return {
     createdAt: new Date().toISOString(),
@@ -128,6 +193,7 @@ function initialDb() {
     items: seedItems(),
     reports: [],
     huntLists: [],
+    storeCache: {},
     stores: storesForZip('08096')
   };
 }
@@ -240,14 +306,34 @@ app.get('/api/categories', (req, res) => {
   res.json({ categories: [...new Set(db.items.map(i => i.category))].sort() });
 });
 
-app.get('/api/stores', (req, res) => {
-  const db = readDb();
-  const zip = String(req.query.zip || '08096').slice(0, 5);
-  const stores = storesForZip(zip).map(store => ({
-    ...store,
-    worthTheDriveScore: scoreStore(store.id, db.reports)
-  }));
-  res.json({ stores, zip, source: ZIP_COORDS[zip] ? 'zip-match' : 'fallback-08096' });
+app.get('/api/stores', async (req, res) => {
+  try {
+    const db = readDb();
+    const result = await lookupStoresForZip(req.query.zip || '08096');
+    const stores = result.stores.map(store => ({
+      ...store,
+      worthTheDriveScore: scoreStore(store.id, db.reports)
+    }));
+    res.json({ ...result, stores });
+  } catch (err) {
+    console.error('Store lookup failed:', err);
+    res.status(500).json({ error: 'Store lookup failed' });
+  }
+});
+
+app.get('/api/stores/lookup', async (req, res) => {
+  try {
+    const db = readDb();
+    const result = await lookupStoresForZip(req.query.zip || '08096');
+    const stores = result.stores.map(store => ({
+      ...store,
+      worthTheDriveScore: scoreStore(store.id, db.reports)
+    }));
+    res.json({ ...result, stores });
+  } catch (err) {
+    console.error('Store lookup failed:', err);
+    res.status(500).json({ error: 'Store lookup failed' });
+  }
 });
 
 app.get('/api/reports', (req, res) => {

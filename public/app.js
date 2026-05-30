@@ -200,9 +200,11 @@ function renderSelected() {
 }
 
 async function loadStores() {
-  const data = await api(`/api/stores?zip=${encodeURIComponent(state.homeZip)}`);
+  const data = await api(`/api/stores/lookup?zip=${encodeURIComponent(state.homeZip)}`);
   state.stores = data.stores;
   state.storeSource = data.source;
+  state.storeMessage = data.message || '';
+  state.storeLiveConnected = !!data.liveConnected;
   renderQuickSelectors();
   renderRouteBuilder();
   renderDashboard();
@@ -318,7 +320,7 @@ function renderRouteBuilder() {
     <div class="route-row ${idx===0?'best':''}">
       <div>
         <strong>${idx===0?'Start here: ':''}${escapeHtml(row.store.name)} ${row.store.storeNumber ? '#' + escapeHtml(row.store.storeNumber) : ''}</strong>
-        <div class="small">${escapeHtml(row.store.address)}, ${escapeHtml(row.store.city)}, ${escapeHtml(row.store.state)} ${escapeHtml(row.store.zip)}${Number.isFinite(row.store.distanceMiles) ? ' · ' + row.store.distanceMiles + ' mi from ' + escapeHtml(state.homeZip) : ''}</div>
+        <div class="small">${escapeHtml(row.store.address)}, ${escapeHtml(row.store.city)}, ${escapeHtml(row.store.state)} ${escapeHtml(row.store.zip)}${Number.isFinite(row.store.distanceMiles) ? ' · ' + row.store.distanceMiles + ' mi from ' + escapeHtml(state.homeZip) : ''}</div><div class="source-note">Store source: ${state.storeLiveConnected ? 'Live Dollar Tree lookup' : 'starter/cached directory'}</div>
         <div class="small">${row.matches.length ? escapeHtml(row.matches.join(' · ')) : 'No reports yet for your selected items at this store.'}</div>
       </div>
       <div class="route-score">${row.score}<div class="small">Worth the Drive</div></div>
@@ -402,8 +404,8 @@ async function saveZip() {
   localStorage.setItem('dtpr_zip', zip);
   $('zipStatus').textContent = `Loading stores near ${zip}...`;
   await loadStores();
-  const fallbackNote = state.storeSource === 'fallback-08096' ? ' Starter list used because this ZIP is not mapped yet.' : '';
-  $('zipStatus').textContent = `Saved ${zip}. Stores updated.${fallbackNote}`;
+  const sourceNote = state.storeMessage ? ` ${state.storeMessage}` : '';
+  $('zipStatus').textContent = `Saved ${zip}. Stores updated.${sourceNote}`;
   renderCheckHelper();
 }
 
