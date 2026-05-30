@@ -1,0 +1,927 @@
+{
+  "createdAt": "2026-05-30T17:35:01.973Z",
+  "users": [],
+  "items": [
+    {
+      "id": "item_0001",
+      "sku": "328203",
+      "description": "NAVY DBL GLD 8X10",
+      "category": "Home / Decor",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "navy gold 8x10",
+        "navy 8x10"
+      ]
+    },
+    {
+      "id": "item_0002",
+      "sku": "359319",
+      "description": "BOXED CANDLE SOOTHING",
+      "category": "Home / Candle",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "boxed candle soothing",
+        "soothing candle"
+      ]
+    },
+    {
+      "id": "item_0003",
+      "sku": "375667",
+      "description": "3OZ CLR DIAMND JAR W PVC LID",
+      "category": "Home / Storage",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "clear diamond jar",
+        "3 oz jar pvc lid"
+      ]
+    },
+    {
+      "id": "item_0004",
+      "sku": "377016",
+      "description": "RAIN UMBRELLA 9.5",
+      "category": "Apparel",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "rain umbrella",
+        "umbrella"
+      ]
+    },
+    {
+      "id": "item_0005",
+      "sku": "382583",
+      "description": "MDAY POWER BODY MASSAGER",
+      "category": "Beauty & Eyewear",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "power body massager",
+        "body massager"
+      ]
+    },
+    {
+      "id": "item_0006",
+      "sku": "380864",
+      "description": "ESSENTIA WATER 500ML",
+      "category": "Beverages",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "essentia water",
+        "essentia 500ml"
+      ]
+    },
+    {
+      "id": "item_0007",
+      "sku": "237438",
+      "description": "EDUCATIONAL SPINNER",
+      "category": "Books & Activity",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "educational spinner"
+      ]
+    },
+    {
+      "id": "item_0008",
+      "sku": "357097",
+      "description": "PLAYSCHOOL PRE-K FLASH CARDS",
+      "category": "Books & Activity",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "playschool flash cards",
+        "pre k flash cards"
+      ]
+    },
+    {
+      "id": "item_0009",
+      "sku": "357098",
+      "description": "MULTI LICENSED FLASH CARDS",
+      "category": "Books & Activity",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "licensed flash cards",
+        "flash cards"
+      ]
+    },
+    {
+      "id": "item_0010",
+      "sku": "375902",
+      "description": "POP ART FOIL ADVANCED COLORING",
+      "category": "Books & Activity",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "pop art foil coloring",
+        "advanced coloring"
+      ]
+    },
+    {
+      "id": "item_0011",
+      "sku": "387913",
+      "description": "ADVANCED COLORING BOOK 11X14",
+      "category": "Books & Activity",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "advanced coloring book",
+        "11x14 coloring book"
+      ]
+    },
+    {
+      "id": "item_0012",
+      "sku": "341109",
+      "description": "WH SOUR TAFFY BARS LD 3.59Z E",
+      "category": "Candy-NonChoc/Seasonal",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "sour taffy bars",
+        "taffy bars"
+      ]
+    },
+    {
+      "id": "item_0013",
+      "sku": "380107",
+      "description": "INVISIBLE LIGHT PEN CS 2IN1",
+      "category": "Checkouts",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "invisible light pen",
+        "2 in 1 pen"
+      ]
+    },
+    {
+      "id": "item_0014",
+      "sku": "252595",
+      "description": "CRFTSQ CHERSH LOV & BLIVE STKR",
+      "category": "Crafts",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "cherish love believe sticker",
+        "crafter square sticker"
+      ]
+    },
+    {
+      "id": "item_0015",
+      "sku": "267670",
+      "description": "STENCIL BRUSH STRAIGHT HANDLE",
+      "category": "Crafts",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "stencil brush",
+        "straight handle stencil brush"
+      ]
+    },
+    {
+      "id": "item_0016",
+      "sku": "300761",
+      "description": "DNU FELT LETTER AND NUMBERS",
+      "category": "Crafts",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "felt letters numbers",
+        "felt letter and numbers"
+      ]
+    },
+    {
+      "id": "item_0017",
+      "sku": "299788",
+      "description": "LED BULB 75W EQ A19 1PK",
+      "category": "Electronics",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "led bulb 75w",
+        "a19 led bulb"
+      ]
+    },
+    {
+      "id": "item_0018",
+      "sku": "378462",
+      "description": "SILVER AAA2 DOLLAR TREE TRAY",
+      "category": "Electronics",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "silver aaa batteries",
+        "aaa2 dollar tree tray"
+      ]
+    },
+    {
+      "id": "item_0019",
+      "sku": "344553",
+      "description": "PEACH FRUIT STEM ARTIFCL 21IN",
+      "category": "Floral",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "peach fruit stem",
+        "artificial peach stem"
+      ]
+    },
+    {
+      "id": "item_0020",
+      "sku": "252480",
+      "description": "MAGNETS KITCHEN THEMED",
+      "category": "Home Decor",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "kitchen magnets",
+        "kitchen themed magnets"
+      ]
+    },
+    {
+      "id": "item_0021",
+      "sku": "367396",
+      "description": "BATHROOM CLEANER 3PK",
+      "category": "Household Consumables",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "bathroom cleaner 3pk",
+        "bathroom cleaner"
+      ]
+    },
+    {
+      "id": "item_0022",
+      "sku": "355110",
+      "description": "SCRUB BUD DRY FLOOR CLOTH 15PK",
+      "category": "Household Products",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "scrub bud dry floor cloth",
+        "dry floor cloth"
+      ]
+    },
+    {
+      "id": "item_0023",
+      "sku": "327645",
+      "description": "BLUE FLORAL MUG 12Z",
+      "category": "Kitchenware",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "blue floral mug",
+        "floral mug",
+        "12 oz mug"
+      ]
+    },
+    {
+      "id": "item_0024",
+      "sku": "343933",
+      "description": "SOFT GREEN DINNER PLT 10.5IN",
+      "category": "Kitchenware",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "soft green dinner plate",
+        "green dinner plate"
+      ]
+    },
+    {
+      "id": "item_0025",
+      "sku": "344034",
+      "description": "SOFT GREEN FLORAL PLATE 10.5",
+      "category": "Kitchenware",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "soft green floral plate",
+        "green floral plate"
+      ]
+    },
+    {
+      "id": "item_0026",
+      "sku": "939567",
+      "description": "ROSE PETALS WHITE 300CT",
+      "category": "Party Celebrations",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "white rose petals",
+        "rose petals 300ct"
+      ]
+    },
+    {
+      "id": "item_0027",
+      "sku": "219215",
+      "description": "GIFTBOX AO BUTTERFLY",
+      "category": "Party Paper",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "butterfly gift box",
+        "giftbox butterfly"
+      ]
+    },
+    {
+      "id": "item_0028",
+      "sku": "219216",
+      "description": "GIFTBOX AO BASKET W/HANDLE",
+      "category": "Party Paper",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "basket gift box",
+        "gift box with handle"
+      ]
+    },
+    {
+      "id": "item_0029",
+      "sku": "379958",
+      "description": "GIFTBAG XL BABY GENERAL",
+      "category": "Party Paper",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "xl baby gift bag",
+        "baby gift bag"
+      ]
+    },
+    {
+      "id": "item_0030",
+      "sku": "380311",
+      "description": "GIFTBAG BOTTLE ALL OCC GEN",
+      "category": "Party Paper",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "bottle gift bag",
+        "all occasion bottle gift bag"
+      ]
+    },
+    {
+      "id": "item_0031",
+      "sku": "382956",
+      "description": "GIFTBAG LRG AO JUVI",
+      "category": "Party Paper",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "large juvenile gift bag",
+        "juvi gift bag"
+      ]
+    },
+    {
+      "id": "item_0032",
+      "sku": "383026",
+      "description": "GIFTBAG LG ALL OCCASION FLORA",
+      "category": "Party Paper",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "large floral gift bag",
+        "all occasion floral gift bag"
+      ]
+    },
+    {
+      "id": "item_0033",
+      "sku": "383145",
+      "description": "CORAL 13X8 TRAY",
+      "category": "Party Paper",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "coral tray",
+        "13x8 tray"
+      ]
+    },
+    {
+      "id": "item_0034",
+      "sku": "304352",
+      "description": "PURE SILK 3BL RZR 2CT",
+      "category": "Personal Care",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "pure silk razor",
+        "pure silk razors"
+      ]
+    },
+    {
+      "id": "item_0035",
+      "sku": "355583",
+      "description": "AD WIG CAP 3PK",
+      "category": "Personal Care",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "wig cap 3pk",
+        "wig cap"
+      ]
+    },
+    {
+      "id": "item_0036",
+      "sku": "356211",
+      "description": "SC WAVE CAP 3PK",
+      "category": "Personal Care",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "wave cap 3pk",
+        "wave cap"
+      ]
+    },
+    {
+      "id": "item_0037",
+      "sku": "381309",
+      "description": "BIC SENSITIVE 3BLD 1PK",
+      "category": "Personal Care",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "bic sensitive razor",
+        "bic sensitive"
+      ]
+    },
+    {
+      "id": "item_0038",
+      "sku": "307619",
+      "description": "PROTECTIVE WRAP 4X300IN",
+      "category": "Stationery",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "protective wrap",
+        "4x300 protective wrap"
+      ]
+    },
+    {
+      "id": "item_0039",
+      "sku": "366951",
+      "description": "METAL PEARL BALLPOINT PEN 1PC",
+      "category": "Stationery",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "metal pearl ballpoint pen",
+        "pearl pen"
+      ]
+    },
+    {
+      "id": "item_0040",
+      "sku": "317809",
+      "description": "BARBIE PURSES / SHOES / ACCS",
+      "category": "Toys Everyday",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "barbie purses shoes accessories",
+        "barbie accessories"
+      ]
+    },
+    {
+      "id": "item_0041",
+      "sku": "",
+      "description": "POWER STICK ROLL-ON ALUMINUM FREE DEODORANT 1.8 OZ",
+      "category": "Beauty",
+      "eventNumber": "",
+      "dropDate": "2026-05-05",
+      "source": "internet list + field confirmed by Anthony",
+      "confidence": "field-confirmed",
+      "status": "active",
+      "searchTerms": [
+        "power stick deodorant",
+        "aluminum free deodorant"
+      ]
+    },
+    {
+      "id": "item_0042",
+      "sku": "",
+      "description": "SASSY + CHIC NAIL POLISH 0.44 OZ COLORS 911 / 943",
+      "category": "Beauty",
+      "eventNumber": "",
+      "dropDate": "2026-05-05",
+      "source": "internet list + field confirmed by Anthony",
+      "confidence": "field-confirmed",
+      "status": "active",
+      "searchTerms": [
+        "sassy chic nail polish",
+        "nail polish 911",
+        "nail polish 943"
+      ]
+    },
+    {
+      "id": "item_0043",
+      "sku": "",
+      "description": "BRAIN FREEZE FREEZE-DRIED CANDY 0.88 OZ",
+      "category": "Food / Candy",
+      "eventNumber": "",
+      "dropDate": "2026-05-05",
+      "source": "internet list + field confirmed by Anthony",
+      "confidence": "field-confirmed",
+      "status": "active",
+      "searchTerms": [
+        "freeze dried candy",
+        "brain freeze candy"
+      ]
+    },
+    {
+      "id": "item_0044",
+      "sku": "",
+      "description": "COASTAL BAY CONFECTIONS BUBBLE GUM 5.5 OZ",
+      "category": "Food / Candy",
+      "eventNumber": "",
+      "dropDate": "2026-05-05",
+      "source": "internet list + field confirmed by Anthony",
+      "confidence": "field-confirmed",
+      "status": "active",
+      "searchTerms": [
+        "coastal bay bubble gum",
+        "bubble gum"
+      ]
+    },
+    {
+      "id": "item_0045",
+      "sku": "",
+      "description": "TIC TAC CHEWY SOUR ADVENTURE CANDIES 2.8 OZ",
+      "category": "Food / Candy",
+      "eventNumber": "",
+      "dropDate": "2026-05-05",
+      "source": "internet list",
+      "confidence": "medium",
+      "status": "active",
+      "searchTerms": [
+        "tic tac chewy sour",
+        "sour adventure candies"
+      ]
+    }
+  ],
+  "reports": [
+    {
+      "id": "1d9af8b0-781a-4567-bc50-25e6559ed10e",
+      "itemId": "item_0004",
+      "storeId": "store_9091",
+      "zip": "08096",
+      "appStatus": "in_stock",
+      "scanResult": "unknown",
+      "foundStatus": "unknown",
+      "priceSeen": "",
+      "notes": "",
+      "userId": null,
+      "createdAt": "2026-05-30T17:46:50.387Z"
+    }
+  ],
+  "huntLists": [],
+  "storeCache": {
+    "08096": {
+      "zip": "08096",
+      "stores": [
+        {
+          "id": "store_9091",
+          "storeNumber": "9091",
+          "name": "Dollar Tree - Woodbury",
+          "address": "529 N Evergreen Ave",
+          "city": "Woodbury",
+          "state": "NJ",
+          "zip": "08096",
+          "latitude": 39.842421668442974,
+          "longitude": -75.14531449816494,
+          "distanceMiles": 0.5,
+          "source": "yext_live"
+        },
+        {
+          "id": "store_1652",
+          "storeNumber": "1652",
+          "name": "Dollar Tree - Woodbury Heights",
+          "address": "736 Mantua Pike",
+          "city": "Woodbury Heights",
+          "state": "NJ",
+          "zip": "08097",
+          "latitude": 39.82275054334935,
+          "longitude": -75.16058568220903,
+          "distanceMiles": 1.2,
+          "source": "yext_live"
+        },
+        {
+          "id": "store_8681",
+          "storeNumber": "8681",
+          "name": "Dollar Tree - West Deptford",
+          "address": "1107 Mantua Pike Suite 730",
+          "city": "West Deptford",
+          "state": "NJ",
+          "zip": "08051",
+          "latitude": 39.802523040715954,
+          "longitude": -75.17088423804609,
+          "distanceMiles": 2.7,
+          "source": "yext_live"
+        },
+        {
+          "id": "store_4807",
+          "storeNumber": "4807",
+          "name": "Dollar Tree - Woodbury",
+          "address": "1800 Clements Bridge Rd",
+          "city": "Woodbury",
+          "state": "NJ",
+          "zip": "08096",
+          "latitude": 39.83899865630618,
+          "longitude": -75.0970217,
+          "distanceMiles": 3,
+          "source": "yext_live"
+        },
+        {
+          "id": "store_1360",
+          "storeNumber": "1360",
+          "name": "Dollar Tree - Brooklawn",
+          "address": "700 Crescent Blvd, Ste 6",
+          "city": "Brooklawn",
+          "state": "NJ",
+          "zip": "08030",
+          "latitude": 39.87853792796154,
+          "longitude": -75.11116746301933,
+          "distanceMiles": 3.5,
+          "source": "yext_live"
+        },
+        {
+          "id": "store_7820",
+          "storeNumber": "7820",
+          "name": "Dollar Tree - Deptford",
+          "address": "1360 Hurffville Rd Unit 2",
+          "city": "Deptford",
+          "state": "NJ",
+          "zip": "08096",
+          "latitude": 39.818801250105366,
+          "longitude": -75.09207673315258,
+          "distanceMiles": 3.5,
+          "source": "yext_live"
+        },
+        {
+          "id": "store_6652",
+          "storeNumber": "6652",
+          "name": "Dollar Tree - Gloucester City",
+          "address": "401 S Broadway",
+          "city": "Gloucester City",
+          "state": "NJ",
+          "zip": "08030",
+          "latitude": 39.88892110115021,
+          "longitude": -75.12083578819392,
+          "distanceMiles": 3.8,
+          "source": "yext_live"
+        },
+        {
+          "id": "store_7255",
+          "storeNumber": "7255",
+          "name": "Dollar Tree - Bellmawr",
+          "address": "42 N Blackhorse Pike",
+          "city": "Bellmawr",
+          "state": "NJ",
+          "zip": "08031",
+          "latitude": 39.868507493143795,
+          "longitude": -75.0808577171793,
+          "distanceMiles": 4.3,
+          "source": "yext_live"
+        },
+        {
+          "id": "store_1667",
+          "storeNumber": "1667",
+          "name": "Dollar Tree - Runnemede",
+          "address": "611 E Evesham Rd",
+          "city": "Runnemede",
+          "state": "NJ",
+          "zip": "08078",
+          "latitude": 39.84915078645396,
+          "longitude": -75.05796230469697,
+          "distanceMiles": 5.1,
+          "source": "yext_live"
+        },
+        {
+          "id": "store_3300",
+          "storeNumber": "3300",
+          "name": "Dollar Tree - Philadelphia",
+          "address": "2116 S. Columbus Blvd.",
+          "city": "Philadelphia",
+          "state": "PA",
+          "zip": "19148",
+          "latitude": 39.915670812743535,
+          "longitude": -75.1396125803769,
+          "distanceMiles": 5.3,
+          "source": "yext_live"
+        }
+      ],
+      "mapped": true,
+      "source": "yext_live",
+      "liveConnected": true,
+      "message": "10 Dollar Tree stores near 08096 — live from Dollar Tree store locator.",
+      "updatedAt": "2026-05-30T17:46:50.339Z",
+      "cached": false
+    }
+  },
+  "stores": [
+    {
+      "id": "store_4807",
+      "storeNumber": "4807",
+      "name": "Dollar Tree - Deptford Crossings",
+      "address": "1800 Clements Bridge Rd",
+      "city": "Woodbury",
+      "state": "NJ",
+      "zip": "08096",
+      "latitude": 39.8397,
+      "longitude": -75.1177,
+      "distanceMiles": 0.9
+    },
+    {
+      "id": "store_deptford_hurffville",
+      "storeNumber": "",
+      "name": "Dollar Tree - Deptford / Hurffville Rd",
+      "address": "1360 Hurffville Rd Unit 2",
+      "city": "Deptford",
+      "state": "NJ",
+      "zip": "08096",
+      "latitude": 39.8204,
+      "longitude": -75.095,
+      "distanceMiles": 1.6
+    },
+    {
+      "id": "store_9091",
+      "storeNumber": "9091",
+      "name": "Dollar Tree - Woodbury",
+      "address": "529 N Evergreen Ave",
+      "city": "Woodbury",
+      "state": "NJ",
+      "zip": "08096",
+      "latitude": 39.8478,
+      "longitude": -75.147,
+      "distanceMiles": 1.9
+    },
+    {
+      "id": "store_1652",
+      "storeNumber": "1652",
+      "name": "Dollar Tree - Mantua Pike",
+      "address": "736 Mantua Pike",
+      "city": "Woodbury",
+      "state": "NJ",
+      "zip": "08096",
+      "latitude": 39.8126,
+      "longitude": -75.1702,
+      "distanceMiles": 2.7
+    },
+    {
+      "id": "store_bellmawr",
+      "storeNumber": "",
+      "name": "Dollar Tree - Bellmawr",
+      "address": "42 N Black Horse Pike",
+      "city": "Bellmawr",
+      "state": "NJ",
+      "zip": "08031",
+      "latitude": 39.8672,
+      "longitude": -75.0947,
+      "distanceMiles": 3.2
+    },
+    {
+      "id": "store_runnemede",
+      "storeNumber": "",
+      "name": "Dollar Tree - Runnemede / Acme Plaza",
+      "address": "611 E Evesham Rd",
+      "city": "Runnemede",
+      "state": "NJ",
+      "zip": "08078",
+      "latitude": 39.8567,
+      "longitude": -75.0668,
+      "distanceMiles": 3.7
+    },
+    {
+      "id": "store_blackwood",
+      "storeNumber": "",
+      "name": "Dollar Tree - Blackwood",
+      "address": "1001 S Black Horse Pike Unit 2B",
+      "city": "Blackwood",
+      "state": "NJ",
+      "zip": "08012",
+      "latitude": 39.7849,
+      "longitude": -75.055,
+      "distanceMiles": 4.7
+    }
+  ]
+}

@@ -153,16 +153,81 @@ function buildFallbackStoreLookup(zip) {
     source: mapped ? 'starter_zip_directory' : 'starter_fallback_directory',
     liveConnected: false,
     message: mapped
-      ? `Showing starter stores near ${cleanZip}. Live Dollar Tree lookup is ready to connect next.`
-      : `Live Dollar Tree lookup is not connected yet. Showing closest starter stores while we add the live store locator connection.`
+      ? `Using starter store directory for ${cleanZip}. Live store lookup will retry on next request.`
+      : `ZIP ${cleanZip} is not in the starter directory. Showing nearest stores — add your ZIP area to get better coverage.`
   };
 }
 
 async function lookupDollarTreeStoresLive(zip) {
-  // Future connection point:
-  // This is where we will connect a clean Dollar Tree store-locator request if we confirm an allowed/public endpoint.
-  // For now, return null so the app uses the starter/cached database safely.
-  return null;
+  // STORE LOCATOR: Yext powers locations.dollartree.com. The API key below is their
+  // embedded Yext "live API key" (read-only, public in their JS bundle at
+  // locations.dollartree.com/assets/static/dollartree-CYzSknic.js). It returns the
+  // same store list that locations.dollartree.com shows. This is the default connector.
+  // Set STORE_PROVIDER=off to skip Yext and use only the static fallback directory.
+  //
+  // STOCK STATUS (not connected): No accessible public API was found.
+  // - dollartree.com/ccstoreui/v1/stockStatus returns HTTP 204 (no data) for all SKU+store combos.
+  // - In-store inventory lives in a private POS system, not the web storefront.
+  // - sameday.dollartree.com (Instacart) requires user authentication.
+  // - The "In Stock / Limited Stock / Out of Stock / Product Not Found" that the DT
+  //   mobile app shows comes from a private authenticated API not accessible to third parties.
+  // See lookupDollarTreeItemStockLive() below for the stock side of this story.
+
+  if (process.env.STORE_PROVIDER === 'off') return null;
+
+  try {
+    const params = new URLSearchParams({
+      input: zip,
+      experienceKey: 'pages-locator-usa-only',
+      api_key: '7a860787290ef5396ebe3ffe229d96c3',
+      v: '20220511',
+      version: 'PRODUCTION',
+      locale: 'en',
+      'verticals[dollar-tree-usa][limit]': '10'
+    });
+
+    const res = await fetch(`https://liveapi.yext.com/v2/accounts/me/answers/query?${params}`, {
+      headers: { 'Accept': 'application/json' },
+      signal: AbortSignal.timeout(8000)
+    });
+
+    if (!res.ok) return null;
+    const data = await res.json();
+    const results = (data?.response?.modules || []).find(m => m.verticalConfigId === 'dollar-tree-usa')?.results || [];
+    if (!results.length) return null;
+
+    const stores = results.map(r => {
+      const d = r.data;
+      const coord = d.yextDisplayCoordinate || d.cityCoordinate || {};
+      const distMeters = typeof r.distanceFromFilter === 'number' ? r.distanceFromFilter : null;
+      return {
+        id: `store_${d.id}`,
+        storeNumber: String(d.id),
+        name: `Dollar Tree - ${d.address?.city || 'Store'}`,
+        address: d.address?.line1 || '',
+        city: d.address?.city || '',
+        state: d.address?.region || '',
+        zip: (d.address?.postalCode || '').slice(0, 5),
+        latitude: coord.latitude || 0,
+        longitude: coord.longitude || 0,
+        distanceMiles: distMeters !== null ? Number((distMeters / 1609.34).toFixed(1)) : null,
+        source: 'yext_live'
+      };
+    }).filter(s => s.latitude && s.longitude);
+
+    if (!stores.length) return null;
+    return {
+      zip,
+      stores,
+      mapped: true,
+      source: 'yext_live',
+      liveConnected: true,
+      message: `${stores.length} Dollar Tree stores near ${zip} — live from Dollar Tree store locator.`
+    };
+  } catch (err) {
+    console.error('Yext store lookup failed:', err.message);
+    return null;
+  }
 }
 
 async function lookupStoresForZip(zip) {
@@ -172,7 +237,7 @@ async function lookupStoresForZip(zip) {
 
   const cached = db.storeCache[cleanZip];
   const cachedAgeHours = cached ? (Date.now() - new Date(cached.updatedAt).getTime()) / 3600000 : Infinity;
-  if (cached && cachedAgeHours < 24) {
+  if (cached && cachedAgeHours < 6) {
     return { ...cached, cached: true };
   }
 
@@ -259,12 +324,29 @@ function deterministicDemoStock(zip, store, item) {
   if (n < 18) return { status: 'in_stock', confidence: 'demo', reason: 'Demo mode estimate only - not live Dollar Tree inventory.' };
   if (n < 32) return { status: 'limited_stock', confidence: 'demo', reason: 'Demo mode estimate only - not live Dollar Tree inventory.' };
   if (n < 45) return { status: 'out_of_stock', confidence: 'demo', reason: 'Demo mode estimate only - not live Dollar Tree inventory.' };
-  return { status: 'unknown', confidence: 'demo', reason: 'No demo stock signal for this item/store.' };
+  return { status: 'no_data', confidence: 'demo', reason: 'No demo signal for this item/store.' };
 }
 
 async function lookupDollarTreeItemStockLive({ zip, store, item }) {
-  // Future connection point for live Dollar Tree / same-day inventory.
-  // We do not fake this. If a clean allowed endpoint is confirmed, plug it in here.
+  // INVESTIGATION RESULT (2026-05-30): No accessible public stock API exists.
+  //
+  // What was tested:
+  //   dollartree.com/ccstoreui/v1/stockStatus?skuId=377016&locationIds=9091
+  //     → HTTP 204 No Content for every SKU+store combination tested.
+  //       OCC tracks online-order inventory only; in-store stock is a separate system.
+  //   dollartree.com/ccstoreui/v1/products?q=displayName+co+"RAIN UMBRELLA"
+  //     → Works, returns product IDs. Confirms SKU 377016 = "RAIN UMBRELLA 9.5".
+  //       Product catalog only — no stock levels.
+  //   sameday.dollartree.com (Instacart-powered same-day delivery)
+  //     → Requires user authentication. Not callable from a backend.
+  //   Dollar Tree mobile app stock status (In Stock / Limited / Out / Not Found)
+  //     → Uses a private authenticated API. No accessible endpoint found.
+  //       No public subdomain (api., mobile., app., gateway., services.) responds.
+  //
+  // Bottom line: live per-store stock lookup is not possible without authenticated
+  // access to Dollar Tree's internal inventory system or Instacart's private API.
+  // Community/manual reports (the quickReport buttons) are the correct data source
+  // until Dollar Tree publishes a partner API or a clean authorized path is found.
   return null;
 }
 
@@ -321,10 +403,10 @@ async function buildStockRun({ zip, itemIds }) {
       let signal = reportToStockSignal(report);
       if (!signal) signal = await lookupDollarTreeItemStockLive({ zip, store, item });
       if (!signal && provider === 'demo') signal = deterministicDemoStock(zip, store, item);
-      if (!signal) signal = { status: 'unknown', confidence: 'not_connected', reason: 'Live Dollar Tree stock lookup is not connected yet.' };
+      if (!signal) signal = { status: 'no_data', confidence: 'community', reason: 'No reports yet for this item at this store. Be the first to report.' };
 
       const boost = stockScoreBoost(signal.status);
-      if (signal.status !== 'unknown') checked += 1;
+      if (signal.status !== 'no_data') checked += 1;
       if (boost > 0) positives += 1;
       if (boost < 0) negatives += 1;
       score += boost;
@@ -341,7 +423,7 @@ async function buildStockRun({ zip, itemIds }) {
     }
 
     let worthTheDrive = null;
-    let scoreReason = 'Not enough stock data yet.';
+    let scoreReason = 'No reports yet. Use the report buttons after visiting to help rank this store.';
     if (checked > 0) {
       const distancePenalty = Math.min(18, Math.round((store.distanceMiles || 0) * 1.2));
       worthTheDrive = Math.max(0, Math.min(100, Math.round(35 + score + positives * 6 - negatives * 6 - distancePenalty)));
@@ -366,15 +448,18 @@ async function buildStockRun({ zip, itemIds }) {
     return (a.store.distanceMiles || 9999) - (b.store.distanceMiles || 9999);
   });
 
+  const storesLive = storeLookup.source === 'yext_live';
   return {
     zip,
     provider,
-    liveConnected: provider === 'live',
-    message: provider === 'demo'
-      ? 'Demo stock mode is on. Results show workflow only and are not real Dollar Tree inventory.'
-      : 'Live Dollar Tree stock lookup is not connected yet. Route uses community/manual reports until the DT stock connector is added.',
+    storesLive,
     storesSource: storeLookup.source,
     itemsCount: items.length,
+    message: provider === 'demo'
+      ? 'Demo mode — results show the routing workflow only, not real inventory.'
+      : storesLive
+        ? 'Nearby stores are live from the Dollar Tree store locator. Route confidence scores are built from community scan reports and hunt results — not live inventory.'
+        : 'Using starter store directory. Route confidence scores are built from community scan reports and hunt results — not live inventory.',
     route
   };
 }

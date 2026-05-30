@@ -55,5 +55,6 @@ button.added-btn{background:#d9f5ea;color:#14543c;border:1px solid #9bd8bf;curso
 .warning-note { background:#fff6da; border:1px solid #e8c35b; color:#2b2310; padding:12px 14px; border-radius:14px; margin-bottom:12px; font-weight:700; }
 .empty-stock-box { background:#f7fbff; border:1px dashed #9eb6cf; padding:16px; border-radius:16px; color:#07172d; }
 .pill.red { background:#ffe1dc; color:#7a1c12; border-color:#ffc3ba; }
+.route-note { background:#f0f6fb; border:1px solid #bcd0e8; color:#0d2a45; padding:12px 14px; border-radius:14px; margin-bottom:12px; font-size:13px; font-weight:700; }
 .inside-note { display:inline-block; margin-top:8px; color:#163050; font-weight:700; }
 .item-card .added-btn { background:#2f7d54; color:white; border-color:#2f7d54; }

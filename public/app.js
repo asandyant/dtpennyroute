@@ -25,7 +25,8 @@ function escapeHtml(value) {
 }
 
 function statusLabel(value) {
-  return String(value || 'unknown').replaceAll('_',' ');
+  if (value === 'no_data' || value === 'unknown' || !value) return 'No reports yet';
+  return String(value).replaceAll('_', ' ');
 }
 
 function setMessage(id, message, isError=false) {
@@ -142,7 +143,7 @@ function renderItems() {
         <div class="actions simple-actions">
           <button class="${inRun ? 'added-btn' : 'teal'}" onclick="addToRun('${item.id}')">${inRun ? 'Added ✓' : 'Add to My Run'}</button>
           <button class="secondary" onclick="copyTerm('${item.id}')">Copy Search</button>
-          <button onclick="addAndCheck('${item.id}')">Check Stock</button>
+          <button onclick="addAndCheck('${item.id}')">Add + Route</button>
         </div>
       </article>`;
   }).join('');
@@ -193,7 +194,7 @@ function renderSelected() {
       <div><strong>${escapeHtml(item.description)}</strong><div class="small">Search: ${escapeHtml(preferredSearchTerm(item))}</div></div>
       <div class="chip-actions">
         <button class="secondary" onclick="copyTerm('${item.id}')">Copy Search</button>
-        <button onclick="addAndCheck('${item.id}')">Check Stock</button>
+        <button onclick="addAndCheck('${item.id}')">Add + Route</button>
         <button class="secondary" onclick="removeFromRun('${item.id}')">Remove</button>
       </div>
     </div>
@@ -205,7 +206,7 @@ async function loadStores() {
   state.stores = data.stores;
   state.storeSource = data.source;
   state.storeMessage = data.message || '';
-  state.storeLiveConnected = !!data.liveConnected;
+  state.storeLiveConnected = data.source === 'yext_live';
   renderQuickSelectors();
   renderRouteBuilder();
   renderDashboard();
@@ -236,9 +237,9 @@ function renderCheckHelper() {
     <strong>${escapeHtml(item.description)}</strong>
     <p class="small">Search term: <strong>${escapeHtml(preferredSearchTerm(item))}</strong></p>
     <p class="small">ZIP: <strong>${escapeHtml(state.homeZip)}</strong>${store ? ` · Store: <strong>${escapeHtml(store.name)}</strong>` : ''}</p>
+    <p class="small muted">Search this item in the Dollar Tree app, then log what you see with the buttons below. Your report improves the Route Confidence score for this store.</p>
     <div class="actions">
       <button class="secondary" onclick="copyTerm('${item.id}')">Copy Search Term</button>
-      <span class="inside-note">Dollar Tree stock search will stay inside this app once the live DT endpoint is connected.</span>
     </div>`;
 }
 
@@ -299,7 +300,7 @@ function scoreStoreLocal(store) {
   }
 
   if (!storeReports.length) {
-    return { hasData: false, score: null, reason: 'Not enough data yet. Add an app stock result or penny scan for this store.' };
+    return { hasData: false, score: null, reason: 'No reports yet for your selected items at this store.' };
   }
 
   let score = 45;
@@ -350,13 +351,13 @@ function renderRouteBuilder() {
   const html = rows.map((row, idx) => {
     const showBest = idx === 0 && row.scoreInfo.hasData;
     const scoreHtml = row.scoreInfo.hasData
-      ? `<div class="route-score">${row.scoreInfo.score}<div class="small">Worth the Drive</div></div>`
-      : `<div class="route-score no-score">No Score<div class="small">Needs Data</div></div>`;
+      ? `<div class="route-score">${row.scoreInfo.score}<div class="small">Route Confidence</div></div>`
+      : `<div class="route-score no-score">—<div class="small">No reports</div></div>`;
     return `
     <div class="route-row ${showBest?'best':''}">
       <div>
         <strong>${showBest?'Start here: ':''}${escapeHtml(row.store.name)} ${row.store.storeNumber ? '#' + escapeHtml(row.store.storeNumber) : ''}</strong>
-        <div class="small">${escapeHtml(row.store.address)}, ${escapeHtml(row.store.city)}, ${escapeHtml(row.store.state)} ${escapeHtml(row.store.zip)}${Number.isFinite(row.store.distanceMiles) ? ' · ' + row.store.distanceMiles + ' mi from ' + escapeHtml(state.homeZip) : ''}</div><div class="source-note">Store source: ${state.storeLiveConnected ? 'Live Dollar Tree lookup' : 'starter/cached directory'}</div>
+        <div class="small">${escapeHtml(row.store.address)}, ${escapeHtml(row.store.city)}, ${escapeHtml(row.store.state)} ${escapeHtml(row.store.zip)}${Number.isFinite(row.store.distanceMiles) ? ' · ' + row.store.distanceMiles + ' mi from ' + escapeHtml(state.homeZip) : ''}</div><div class="source-note">Stores: ${state.storeLiveConnected ? 'live Dollar Tree store locator' : 'starter directory'}</div>
         <div class="small">${row.matches.length ? escapeHtml(row.matches.join(' · ')) : escapeHtml(row.scoreInfo.reason)}</div>
       </div>
       ${scoreHtml}
@@ -371,17 +372,17 @@ function renderRouteBuilder() {
 async function checkStockForRun() {
   const itemIds = [...state.selected.keys()];
   if (!itemIds.length) {
-    setMessage('stockStatus', 'Add items to My Run first, then check stock.', true);
+    setMessage('stockStatus', 'Add items to My Run first, then build your route.', true);
     return;
   }
-  setMessage('stockStatus', `Checking ${itemIds.length} item(s) near ZIP ${state.homeZip}...`);
+  setMessage('stockStatus', `Finding stores near ZIP ${state.homeZip} and building route for ${itemIds.length} item(s)...`);
   try {
     const data = await api('/api/stock/check-run', {
       method: 'POST',
       body: JSON.stringify({ zip: state.homeZip, itemIds })
     });
     state.stockRun = data;
-    setMessage('stockStatus', data.message || 'Stock route built.');
+    setMessage('stockStatus', data.message || 'Route built.');
     renderStockRouteResults();
     renderDashboard();
   } catch (e) {
@@ -392,7 +393,7 @@ async function checkStockForRun() {
 function statusClassForStock(status) {
   if (status === 'penny_found' || status === 'in_stock') return 'green';
   if (status === 'limited_stock' || status === 'product_not_found') return 'gold';
-  if (['out_of_stock','normal_price','not_found','store_pulled'].includes(status)) return 'red';
+  if (['out_of_stock', 'normal_price', 'not_found', 'store_pulled'].includes(status)) return 'red';
   return '';
 }
 
@@ -403,23 +404,26 @@ function renderStockRouteResults() {
   $('routeZipLabel') && ($('routeZipLabel').textContent = state.homeZip);
   $('routeItemCount') && ($('routeItemCount').textContent = selected.length);
   if (!selected.length) {
-    box.innerHTML = '<p class="muted">Add items to My Run first. Then tap Check Stock + Build Route.</p>';
+    box.innerHTML = '<p class="muted">Add items to My Run first. Then tap Build My Penny Route.</p>';
     return;
   }
   if (!state.stockRun) {
     box.innerHTML = `<div class="empty-stock-box">
-      <h4>Ready to check ${selected.length} item(s)</h4>
-      <p>Tap <strong>Check Stock + Build Route</strong>. The full stock workflow is built here. Live Dollar Tree inventory will plug into this engine once the allowed DT stock connector is confirmed.</p>
+      <h4>${selected.length} item(s) ready to route</h4>
+      <p>Tap <strong>Build My Penny Route</strong>. Nearby Dollar Tree stores are pulled live. Scores come from community scan reports and hunt results — "No reports yet" means nobody has checked this item at that store yet.</p>
     </div>`;
     return;
   }
+  const storeNote = state.stockRun.storesLive
+    ? '<div class="warning-note">Stores: live from Dollar Tree store locator. Route confidence: community reports only — no live Dollar Tree inventory.</div>'
+    : '<div class="warning-note">Stores: starter directory (live store lookup unavailable). Route confidence: community reports only.</div>';
   const providerNote = state.stockRun.provider === 'demo'
-    ? '<div class="warning-note">Demo mode is on — results are not live Dollar Tree inventory.</div>'
-    : (!state.stockRun.liveConnected ? '<div class="warning-note">Live Dollar Tree stock is not connected yet. Unknown items are not fake results. Community/manual reports still rank the route.</div>' : '');
+    ? '<div class="warning-note">Demo mode — results are not real inventory.</div>'
+    : storeNote;
   const rows = (state.stockRun.route || []).map((row, idx) => {
     const scoreHtml = row.worthTheDrive === null
-      ? '<div class="route-score no-score">No Score<div class="small">Needs Stock</div></div>'
-      : `<div class="route-score">${row.worthTheDrive}<div class="small">Worth the Drive</div></div>`;
+      ? '<div class="route-score no-score">—<div class="small">No reports</div></div>'
+      : `<div class="route-score">${row.worthTheDrive}<div class="small">Route Confidence</div></div>`;
     const itemHtml = row.items.map(it => `
       <div class="route-item-line">
         <div><strong>${escapeHtml(it.description)}</strong><span>${escapeHtml(it.reason || '')}</span></div>
@@ -464,12 +468,12 @@ function buildRouteView() {
 
   box.innerHTML = rows.map((row, idx) => {
     const scoreHtml = row.scoreInfo.hasData
-      ? `<div class="route-score">${row.scoreInfo.score}<div class="small">Worth the Drive</div></div>`
-      : `<div class="route-score no-score">No Score<div class="small">Needs Data</div></div>`;
+      ? `<div class="route-score">${row.scoreInfo.score}<div class="small">Route Confidence</div></div>`
+      : `<div class="route-score no-score">—<div class="small">No reports</div></div>`;
 
     const itemGrid = selected.map(item => {
       const report = latestReportFor(item.id, row.store.id);
-      const label = report ? (report.scanResult !== 'unknown' ? report.scanResult : (report.appStatus !== 'unknown' ? report.appStatus : report.foundStatus)) : 'not_checked';
+      const label = report ? (report.scanResult !== 'unknown' ? report.scanResult : (report.appStatus !== 'unknown' ? report.appStatus : report.foundStatus)) : 'no_data';
       const labelClass = label === 'penny' || label === 'in_stock' ? 'green' : (label === 'normal' || label === 'out_of_stock' || label === 'not_found' || label === 'store_pulled' ? 'gold' : '');
       return `<div class="route-item-line">
         <div><strong>${escapeHtml(item.description)}</strong><span>Search: ${escapeHtml(preferredSearchTerm(item))}</span></div>
@@ -482,7 +486,7 @@ function buildRouteView() {
         <div>
           <h4>${idx === 0 && row.scoreInfo.hasData ? 'Start here: ' : ''}${escapeHtml(row.store.name)} ${row.store.storeNumber ? '#' + escapeHtml(row.store.storeNumber) : ''}</h4>
           <div class="small">${escapeHtml(row.store.address)}, ${escapeHtml(row.store.city)}, ${escapeHtml(row.store.state)} ${escapeHtml(row.store.zip)}${Number.isFinite(row.store.distanceMiles) ? ' · ' + row.store.distanceMiles + ' mi from ' + escapeHtml(state.homeZip) : ''}</div>
-          <div class="source-note">Store source: ${state.storeLiveConnected ? 'Live Dollar Tree lookup' : 'starter/cached directory'}</div>
+          <div class="source-note">Stores: ${state.storeLiveConnected ? 'live Dollar Tree store locator' : 'starter directory'}</div>
           <div class="small">${escapeHtml(row.scoreInfo.reason)}</div>
         </div>
         ${scoreHtml}
