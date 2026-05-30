@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DTPennyRoute</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-top">
+      <div>
+        <p class="eyebrow">Dollar Tree Penny Hunting</p>
+        <h1>DTPennyRoute</h1>
+        <p class="tagline">Find penny items. Build the best route. Stop wasting gas.</p>
+      </div>
+      <button id="loginToggle" class="ghost-btn">Login</button>
+    </div>
+    <div class="hero-actions">
+      <button data-tab="items" class="tab-btn active">Penny List</button>
+      <button data-tab="run" class="tab-btn">My Penny Run</button>
+      <button data-tab="reports" class="tab-btn">Reports</button>
+      <button data-tab="stores" class="tab-btn">Stores</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="authPanel" class="card hidden">
+      <h2>Account</h2>
+      <p class="muted">First account created becomes admin for testing.</p>
+      <div id="meBox" class="notice hidden"></div>
+      <div class="grid two">
+        <div>
+          <h3>Create account</h3>
+          <input id="signupName" placeholder="Name" />
+          <input id="signupEmail" placeholder="Email" />
+          <input id="signupPassword" type="password" placeholder="Password" />
+          <button id="signupBtn">Sign up</button>
+        </div>
+        <div>
+          <h3>Login</h3>
+          <input id="loginEmail" placeholder="Email" />
+          <input id="loginPassword" type="password" placeholder="Password" />
+          <button id="loginBtn">Login</button>
+          <button id="logoutBtn" class="secondary">Logout</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="itemsTab" class="tab-panel">
+      <div class="card">
+        <h2>Penny List</h2>
+        <p class="muted">Preloaded with the 6/1/26 drop plus earlier field-confirmed finds.</p>
+        <div class="search-row">
+          <input id="itemSearch" placeholder="Search description, SKU, category, event #" />
+          <select id="categoryFilter"><option value="">All Categories</option></select>
+        </div>
+        <div id="itemCount" class="small"></div>
+      </div>
+      <div id="itemsList" class="list"></div>
+    </section>
+
+    <section id="runTab" class="tab-panel hidden">
+      <div class="card">
+        <h2>Build My Penny Run</h2>
+        <p class="muted">Add items from the penny list, enter your ZIP, and save the hunt.</p>
+        <input id="huntName" placeholder="Hunt name" value="6/1/26 Deptford Penny Run" />
+        <input id="huntZip" placeholder="ZIP code" value="08096" />
+        <button id="saveHuntBtn">Save Hunt List</button>
+      </div>
+      <div class="card">
+        <h3>Selected Items</h3>
+        <div id="selectedItems" class="selected-list"></div>
+      </div>
+      <div class="card">
+        <h3>Saved Hunts</h3>
+        <div id="savedHunts"></div>
+      </div>
+    </section>
+
+    <section id="reportsTab" class="tab-panel hidden">
+      <div class="card">
+        <h2>Community / Field Reports</h2>
+        <p class="muted">This is where users report penny, normal price, not found, or store pulled.</p>
+      </div>
+      <div id="reportsList" class="list"></div>
+    </section>
+
+    <section id="storesTab" class="tab-panel hidden">
+      <div class="card">
+        <h2>Worth the Drive Scores</h2>
+        <p class="muted">Scores rise when users report penny finds and drop when shelves are empty or items scan normal.</p>
+      </div>
+      <div id="storesList" class="list"></div>
+    </section>
+  </main>
+
+  <dialog id="reportDialog">
+    <form method="dialog" class="dialog-card">
+      <h2>Report Find</h2>
+      <p id="reportItemName" class="muted"></p>
+      <label>Store</label>
+      <select id="reportStore"></select>
+      <label>Dollar Tree app status</label>
+      <select id="reportAppStatus">
+        <option value="unknown">Unknown</option>
+        <option value="in_stock">In Stock</option>
+        <option value="limited_stock">Limited Stock</option>
+        <option value="out_of_stock">Out of Stock</option>
+        <option value="product_not_found">Product Not Found</option>
+      </select>
+      <label>Scan result</label>
+      <select id="reportScanResult">
+        <option value="unknown">Unknown</option>
+        <option value="penny">Scanned $0.01</option>
+        <option value="normal">Scanned normal price</option>
+        <option value="other">Other price</option>
+      </select>
+      <label>Found status</label>
+      <select id="reportFoundStatus">
+        <option value="unknown">Unknown</option>
+        <option value="found">Found in store</option>
+        <option value="not_found">Could not find</option>
+        <option value="store_pulled">Store pulled it</option>
+        <option value="wrong_item">Wrong item / bad description</option>
+      </select>
+      <input id="reportPrice" placeholder="Price seen, example 0.01" />
+      <textarea id="reportNotes" placeholder="Notes: aisle, quantity, scanner result, etc."></textarea>
+      <div class="dialog-actions">
+        <button value="cancel" class="secondary">Cancel</button>
+        <button id="submitReportBtn" value="default">Submit Report</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>

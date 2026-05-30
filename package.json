@@ -1,0 +1,17 @@
+{
+  "name": "dtpennyroute",
+  "version": "0.1.0",
+  "description": "DTPennyRoute - Dollar Tree penny list, hunt list, and worth-the-drive scoring web app.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "cookie-session": "^2.1.0",
+    "express": "^4.19.2"
+  }
+}
