@@ -34,3 +34,106 @@ textarea{min-height:82px;resize:vertical}.grid.two{display:grid;grid-template-co
 .selected-list{display:grid;gap:8px}.selected-chip{display:flex;justify-content:space-between;gap:10px;border:1px solid var(--line);border-radius:14px;padding:10px;background:#f8fafc}.notice{background:#ecfdf5;color:#065f46;border:1px solid #bbf7d0;border-radius:14px;padding:10px;margin:10px 0}
 dialog{border:0;border-radius:24px;padding:0;max-width:520px;width:92%;box-shadow:var(--shadow)}.dialog-card{padding:18px}.dialog-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:8px}
 @media(max-width:720px){h1{font-size:30px}.hero-top{display:block}.ghost-btn{margin-top:14px}.search-row,.grid.two{grid-template-columns:1fr}.item-head{align-items:stretch}.score{min-width:76px}.actions button{flex:1}}
+
+/* Build 2: Stock Helper + route builder */
+.notice.soft {
+  background: #eefaf6;
+  border-color: #b9efe1;
+  color: #17463f;
+}
+
+.button-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.75rem 1rem;
+  background: #0f172a;
+  color: white;
+  text-decoration: none;
+  font-weight: 800;
+  border: 0;
+}
+
+.chip-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.stock-card {
+  border-left: 5px solid #2d8b80;
+}
+
+.store-stock-grid {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.store-stock-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.8rem;
+  border: 1px solid #e4e7ec;
+  border-radius: 1rem;
+  background: #fbfcfd;
+}
+
+.mini-actions {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.mini-actions button {
+  padding: 0.45rem 0.6rem;
+  font-size: 0.82rem;
+  border-radius: 999px;
+}
+
+.route-card {
+  padding: 1rem;
+  background: #ffffff;
+  border-radius: 1.25rem;
+  border: 1px solid #d9e7e4;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+  margin-bottom: 0.85rem;
+}
+
+.route-items {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.8rem;
+}
+
+.route-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-top: 1px dashed #e2e8f0;
+  padding-top: 0.45rem;
+  font-size: 0.9rem;
+}
+
+.route-line strong {
+  white-space: nowrap;
+  text-transform: capitalize;
+}
+
+@media (max-width: 720px) {
+  .store-stock-row {
+    grid-template-columns: 1fr;
+  }
+  .mini-actions,
+  .chip-actions {
+    justify-content: flex-start;
+  }
+  .route-line {
+    flex-direction: column;
+  }
+}

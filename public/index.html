@@ -19,6 +19,7 @@
     <div class="hero-actions">
       <button data-tab="items" class="tab-btn active">Penny List</button>
       <button data-tab="run" class="tab-btn">My Penny Run</button>
+      <button data-tab="stock" class="tab-btn">Stock Helper</button>
       <button data-tab="reports" class="tab-btn">Reports</button>
       <button data-tab="stores" class="tab-btn">Stores</button>
     </div>
@@ -73,9 +74,23 @@
         <div id="selectedItems" class="selected-list"></div>
       </div>
       <div class="card">
+        <h3>Today's Best Route</h3>
+        <p class="muted">This uses your selected items plus saved stock/report data to show which stores look most worth the drive.</p>
+        <div id="routeBuilder"></div>
+      </div>
+      <div class="card">
         <h3>Saved Hunts</h3>
         <div id="savedHunts"></div>
       </div>
+    </section>
+
+    <section id="stockTab" class="tab-panel hidden">
+      <div class="card">
+        <h2>Stock Check Helper</h2>
+        <p class="muted">Use this while checking the Dollar Tree app. Copy the search term, check stores near your ZIP, then save the app stock result here.</p>
+        <div class="notice soft">This does not scrape Dollar Tree. It helps you track what the app showed so DTPennyRoute can build a better route and Worth the Drive Score.</div>
+      </div>
+      <div id="stockHelperList" class="list"></div>
     </section>
 
     <section id="reportsTab" class="tab-panel hidden">
