@@ -53,6 +53,7 @@ function publicItem(item) {
     status: item.status || 'active',
     searchTerms: item.searchTerms || [],
     imageUrl: item.imageUrl || null,
+    imageSource: item.imageSource || null,
     imageStatus: item.imageStatus || 'placeholder',
   };
 }
@@ -682,6 +683,7 @@ app.post('/api/admin/items', requireAdmin, (req, res) => {
       ? searchTerms.map(t => String(t).trim()).filter(Boolean)
       : String(searchTerms || '').split(',').map(t => t.trim()).filter(Boolean),
     imageUrl: null,
+    imageSource: null,
     imageStatus: 'placeholder',
     createdAt: new Date().toISOString()
   };
@@ -770,6 +772,7 @@ app.post('/api/admin/import', requireAdmin, (req, res) => {
       status: 'active',
       searchTerms: newTerms.length ? newTerms : [cleanDesc.toLowerCase()],
       imageUrl: null,
+      imageSource: null,
       imageStatus: 'placeholder',
       createdAt: new Date().toISOString()
     };

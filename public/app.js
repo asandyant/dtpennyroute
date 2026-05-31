@@ -119,9 +119,18 @@ async function loadItems() {
 function itemImageHtml(item) {
   if (item.imageUrl) {
     return `<img class="item-img" src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.description)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
-            <div class="item-img-placeholder" style="display:none"><span>${escapeHtml(item.category || '?')}</span></div>`;
+            <div class="item-img-placeholder" style="display:none"><span>Image coming soon</span></div>`;
   }
-  return `<div class="item-img-placeholder"><span>${escapeHtml(item.category || '?')}</span></div>`;
+  return `<div class="item-img-placeholder"><span>Image coming soon</span></div>`;
+}
+
+function routeItemImageHtml(item) {
+  if (!item) return `<div class="route-img-placeholder"><span>—</span></div>`;
+  if (item.imageUrl) {
+    return `<img class="route-img" src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.description)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+            <div class="route-img-placeholder" style="display:none"><span>Soon</span></div>`;
+  }
+  return `<div class="route-img-placeholder"><span>Soon</span></div>`;
 }
 
 function renderItems() {
@@ -507,11 +516,15 @@ function renderStockRouteResults() {
     const scoreHtml = row.worthTheDrive === null
       ? '<div class="route-score no-score">—<div class="small">No reports yet</div></div>'
       : `<div class="route-score">${row.worthTheDrive}<div class="small">Route Confidence</div></div>`;
-    const itemHtml = row.items.map(it => `
+    const itemHtml = row.items.map(it => {
+      const itemRef = [...state.selected.values()].find(i => i.id === it.itemId) || state.items.find(i => i.id === it.itemId);
+      return `
       <div class="route-item-line">
-        <div><strong>${escapeHtml(it.description)}</strong><span>${escapeHtml(it.reason || '')}</span></div>
+        <div class="route-img-wrap">${routeItemImageHtml(itemRef)}</div>
+        <div class="route-item-info"><strong>${escapeHtml(it.description)}</strong><span>${escapeHtml(it.reason || '')}</span></div>
         <span class="pill ${statusClassForStock(it.status)}">${escapeHtml(statusLabel(it.status))}</span>
-      </div>`).join('');
+      </div>`;
+    }).join('');
     return `<div class="route-store-card ${idx === 0 && row.worthTheDrive !== null ? 'best' : ''}">
       <div class="route-store-head">
         <div>
@@ -555,7 +568,8 @@ function buildRouteView() {
       const label = report ? (report.scanResult !== 'unknown' ? report.scanResult : (report.appStatus !== 'unknown' ? report.appStatus : report.foundStatus)) : 'no_data';
       const labelClass = label === 'penny' || label === 'in_stock' ? 'green' : (label === 'normal' || label === 'out_of_stock' || label === 'not_found' || label === 'store_pulled' ? 'gold' : '');
       return `<div class="route-item-line">
-        <div><strong>${escapeHtml(item.description)}</strong><span>Search: ${escapeHtml(preferredSearchTerm(item))}</span></div>
+        <div class="route-img-wrap">${routeItemImageHtml(item)}</div>
+        <div class="route-item-info"><strong>${escapeHtml(item.description)}</strong><span>Search: ${escapeHtml(preferredSearchTerm(item))}</span></div>
         <span class="pill ${labelClass}">${escapeHtml(statusLabel(label))}</span>
       </div>`;
     }).join('');
