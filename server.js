@@ -239,6 +239,59 @@ function buildFallbackStoreLookup(zip) {
   };
 }
 
+// Dollar Tree product image enrichment via their Oracle Commerce Cloud catalog API.
+// Products endpoint works for items still in their active catalog; penny/clearance items
+// dropped from the catalog get imageStatus='not_found' and show the placeholder.
+const DT_BASE = 'https://www.dollartree.com';
+const DT_HEADERS = {
+  'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+  'X-CCProfileType': 'storefrontUI',
+  'Accept': 'application/json'
+};
+
+async function fetchDollarTreeProductImage(sku) {
+  try {
+    const url = `${DT_BASE}/ccstoreui/v1/products/${encodeURIComponent(sku)}?fields=displayName,primarySmallImageURL`;
+    const res = await fetch(url, { headers: DT_HEADERS, signal: AbortSignal.timeout(8000) });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const imgPath = data.primarySmallImageURL;
+    if (!imgPath || imgPath.includes('no-image')) return null;
+    const base = imgPath.replace(/&height=\d+&width=\d+/, '');
+    return { url: `${DT_BASE}${base}&height=300&width=300`, source: 'dollartree_catalog', name: data.displayName || '' };
+  } catch (e) {
+    return null;
+  }
+}
+
+async function searchDollarTreeProductImage(searchTerm) {
+  try {
+    const innerUrl = `/search?Nrpp=5&searchType=simple&Nrq=${encodeURIComponent(searchTerm)}`;
+    const url = `${DT_BASE}/ccstoreui/v1/search?Nrpp=5&searchType=simple&lang=default&queryURL=${encodeURIComponent(innerUrl)}`;
+    const res = await fetch(url, { headers: DT_HEADERS, signal: AbortSignal.timeout(8000) });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const records = data.resultsList?.records || [];
+    const keywords = searchTerm.toLowerCase().split(/\s+/).filter(w => w.length > 3);
+    for (const record of records) {
+      const sub = record.records?.[0];
+      const attrs = sub?.attributes || {};
+      const types = attrs['record.type'] || [];
+      if (!types.includes('DollarProductType')) continue;
+      const imgPath = attrs['product.primarySmallImageURL']?.[0];
+      if (!imgPath || imgPath.includes('no-image')) continue;
+      const name = (attrs['product.displayName']?.[0] || '').toLowerCase();
+      if (keywords.some(kw => name.includes(kw))) {
+        const base = imgPath.replace(/&height=\d+&width=\d+/, '');
+        return { url: `${DT_BASE}${base}&height=300&width=300`, source: 'dollartree_search', name: attrs['product.displayName']?.[0] || '' };
+      }
+    }
+    return null;
+  } catch (e) {
+    return null;
+  }
+}
+
 async function lookupDollarTreeStoresLive(zip) {
   // STORE LOCATOR: Yext powers locations.dollartree.com. The API key below is their
   // embedded Yext "live API key" (read-only, public in their JS bundle at
@@ -793,6 +846,55 @@ app.post('/api/admin/import', requireAdmin, (req, res) => {
       totalAfter: db.items.length
     }
   });
+});
+
+app.post('/api/admin/enrich-images', requireAdmin, async (req, res) => {
+  const force = Boolean(req.body.force);
+  const db = readDb();
+  const summary = { found: 0, skipped: 0, notFound: 0, errors: 0, foundItems: [] };
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+  for (const item of db.items) {
+    if (!force && item.imageStatus === 'found') {
+      summary.skipped++;
+      continue;
+    }
+
+    let result = null;
+    try {
+      if (item.sku) {
+        result = await fetchDollarTreeProductImage(item.sku);
+        await sleep(200);
+      }
+      if (!result && item.searchTerms?.length) {
+        for (const term of item.searchTerms.slice(0, 2)) {
+          result = await searchDollarTreeProductImage(term);
+          await sleep(200);
+          if (result) break;
+        }
+      }
+    } catch (e) {
+      console.error(`Enrich error ${item.id}:`, e.message);
+      summary.errors++;
+    }
+
+    if (result) {
+      item.imageUrl = result.url;
+      item.imageSource = result.source;
+      item.imageStatus = 'found';
+      summary.found++;
+      summary.foundItems.push({ id: item.id, sku: item.sku || '', description: item.description.slice(0, 50), catalogName: result.name, source: result.source });
+    } else {
+      if (force) { item.imageUrl = null; item.imageSource = null; }
+      item.imageStatus = 'not_found';
+      summary.notFound++;
+    }
+    await sleep(100);
+  }
+
+  writeDb(db);
+  console.log(`Image enrichment: ${summary.found} found, ${summary.notFound} not found, ${summary.skipped} skipped`);
+  res.json({ ok: true, ...summary });
 });
 
 app.listen(PORT, () => {

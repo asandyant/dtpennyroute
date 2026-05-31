@@ -1,88 +1,1264 @@
 {
   "createdAt": "2026-05-30T17:35:01.973Z",
-  "users": [],
+  "users": [
+    {
+      "id": "ef66e294-963c-465e-84cc-bae39560e80e",
+      "name": "Admin",
+      "email": "admin@dtpennyroute.local",
+      "passwordHash": "eef68f54abca6660492162f09cccd686:12f11cffeba574e1fccbbc5eada51a47d999657d59b67b70345bf8813455ca8124c105847421be24cf50ff2457849a4485d51488c0f155e91a8dbb578f7b629a",
+      "role": "admin",
+      "paid": true,
+      "createdAt": "2026-05-31T14:46:55.095Z"
+    }
+  ],
   "items": [
-    { "id": "item_0001", "sku": "328203", "description": "NAVY DBL GLD 8X10", "category": "Household", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["navy gold 8x10", "navy 8x10"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0002", "sku": "359319", "description": "BOXED CANDLE SOOTHING", "category": "Home Decor", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["boxed candle soothing", "soothing candle"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0003", "sku": "375667", "description": "3OZ CLR DIAMND JAR W PVC LID", "category": "Household", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["clear diamond jar", "3 oz jar pvc lid"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0004", "sku": "377016", "description": "RAIN UMBRELLA 9.5", "category": "Apparel", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["rain umbrella", "umbrella"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0005", "sku": "382583", "description": "MDAY POWER BODY MASSAGER", "category": "Beauty", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["power body massager", "body massager"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0006", "sku": "380864", "description": "ESSENTIA WATER 500ML", "category": "Candy / Food", "eventNumber": "40059", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["essentia water", "essentia 500ml"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0007", "sku": "237438", "description": "EDUCATIONAL SPINNER", "category": "Books / Activity", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["educational spinner"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0008", "sku": "357097", "description": "PLAYSCHOOL PRE-K FLASH CARDS", "category": "Books / Activity", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["playschool flash cards", "pre k flash cards"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0009", "sku": "357098", "description": "MULTI LICENSED FLASH CARDS", "category": "Books / Activity", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["licensed flash cards", "flash cards"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0010", "sku": "375902", "description": "POP ART FOIL ADVANCED COLORING", "category": "Books / Activity", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["pop art foil coloring", "advanced coloring"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0011", "sku": "387913", "description": "ADVANCED COLORING BOOK 11X14", "category": "Books / Activity", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["advanced coloring book", "11x14 coloring book"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0012", "sku": "341109", "description": "WH SOUR TAFFY BARS LD 3.59Z E", "category": "Candy / Food", "eventNumber": "40059", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["sour taffy bars", "taffy bars"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0013", "sku": "380107", "description": "INVISIBLE LIGHT PEN CS 2IN1", "category": "Toys", "eventNumber": "40059", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["invisible light pen", "2 in 1 pen"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0014", "sku": "252595", "description": "CRFTSQ CHERSH LOV & BLIVE STKR", "category": "Crafts", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["cherish love believe sticker", "crafter square sticker"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0015", "sku": "267670", "description": "STENCIL BRUSH STRAIGHT HANDLE", "category": "Crafts", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["stencil brush", "straight handle stencil brush"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0016", "sku": "300761", "description": "DNU FELT LETTER AND NUMBERS", "category": "Crafts", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["felt letters numbers", "felt letter and numbers"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0017", "sku": "299788", "description": "LED BULB 75W EQ A19 1PK", "category": "Electronics", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["led bulb 75w", "a19 led bulb"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0018", "sku": "378462", "description": "SILVER AAA2 DOLLAR TREE TRAY", "category": "Electronics", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["silver aaa batteries", "aaa2 dollar tree tray"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0019", "sku": "344553", "description": "PEACH FRUIT STEM ARTIFCL 21IN", "category": "Floral", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["peach fruit stem", "artificial peach stem"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0020", "sku": "252480", "description": "MAGNETS KITCHEN THEMED", "category": "Home Decor", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["kitchen magnets", "kitchen themed magnets"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0021", "sku": "367396", "description": "BATHROOM CLEANER 3PK", "category": "Household", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["bathroom cleaner 3pk", "bathroom cleaner"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0022", "sku": "355110", "description": "SCRUB BUD DRY FLOOR CLOTH 15PK", "category": "Household", "eventNumber": "40059", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["scrub bud dry floor cloth", "dry floor cloth"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0023", "sku": "327645", "description": "BLUE FLORAL MUG 12Z", "category": "Kitchenware", "eventNumber": "40059", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["blue floral mug", "floral mug", "12 oz mug"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0024", "sku": "343933", "description": "SOFT GREEN DINNER PLT 10.5IN", "category": "Kitchenware", "eventNumber": "40059", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["soft green dinner plate", "green dinner plate"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0025", "sku": "344034", "description": "SOFT GREEN FLORAL PLATE 10.5", "category": "Kitchenware", "eventNumber": "40059", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["soft green floral plate", "green floral plate"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0026", "sku": "939567", "description": "ROSE PETALS WHITE 300CT", "category": "Party / Gift Bags", "eventNumber": "40059", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["white rose petals", "rose petals 300ct"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0027", "sku": "219215", "description": "GIFTBOX AO BUTTERFLY", "category": "Party / Gift Bags", "eventNumber": "40059", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["butterfly gift box", "giftbox butterfly"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0028", "sku": "219216", "description": "GIFTBOX AO BASKET W/HANDLE", "category": "Party / Gift Bags", "eventNumber": "40059", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["basket gift box", "gift box with handle"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0029", "sku": "379958", "description": "GIFTBAG XL BABY GENERAL", "category": "Party / Gift Bags", "eventNumber": "40059", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["xl baby gift bag", "baby gift bag"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0030", "sku": "380311", "description": "GIFTBAG BOTTLE ALL OCC GEN", "category": "Party / Gift Bags", "eventNumber": "40059", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["bottle gift bag", "all occasion bottle gift bag"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0031", "sku": "382956", "description": "GIFTBAG LRG AO JUVI", "category": "Party / Gift Bags", "eventNumber": "40059", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["large juvenile gift bag", "juvi gift bag"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0032", "sku": "383026", "description": "GIFTBAG LG ALL OCCASION FLORA", "category": "Party / Gift Bags", "eventNumber": "40059", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["large floral gift bag", "all occasion floral gift bag"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0033", "sku": "383145", "description": "CORAL 13X8 TRAY", "category": "Party / Gift Bags", "eventNumber": "40059", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["coral tray", "13x8 tray"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0034", "sku": "304352", "description": "PURE SILK 3BL RZR 2CT", "category": "Personal Care", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["pure silk razor", "pure silk razors"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0035", "sku": "355583", "description": "AD WIG CAP 3PK", "category": "Personal Care", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["wig cap 3pk", "wig cap"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0036", "sku": "356211", "description": "SC WAVE CAP 3PK", "category": "Personal Care", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["wave cap 3pk", "wave cap"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0037", "sku": "381309", "description": "BIC SENSITIVE 3BLD 1PK", "category": "Personal Care", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["bic sensitive razor", "bic sensitive"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0038", "sku": "307619", "description": "PROTECTIVE WRAP 4X300IN", "category": "Stationery", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["protective wrap", "4x300 protective wrap"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0039", "sku": "366951", "description": "METAL PEARL BALLPOINT PEN 1PC", "category": "Stationery", "eventNumber": "40058", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["metal pearl ballpoint pen", "pearl pen"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0040", "sku": "317809", "description": "BARBIE PURSES / SHOES / ACCS", "category": "Toys", "eventNumber": "40059", "dropDate": "2026-06-01", "source": "6/1/26 screenshot", "confidence": "high", "status": "active", "searchTerms": ["barbie purses shoes accessories", "barbie accessories"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0041", "sku": "", "description": "POWER STICK ROLL-ON ALUMINUM FREE DEODORANT 1.8 OZ", "category": "Beauty", "dropDate": "2026-05-05", "source": "field confirmed", "confidence": "field-confirmed", "status": "active", "searchTerms": ["power stick deodorant", "aluminum free deodorant"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0042", "sku": "", "description": "SASSY + CHIC NAIL POLISH 0.44 OZ COLORS 911 / 943", "category": "Beauty", "dropDate": "2026-05-05", "source": "field confirmed", "confidence": "field-confirmed", "status": "active", "searchTerms": ["sassy chic nail polish", "nail polish 911", "nail polish 943"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0043", "sku": "", "description": "BRAIN FREEZE FREEZE-DRIED CANDY 0.88 OZ", "category": "Candy / Food", "dropDate": "2026-05-05", "source": "field confirmed", "confidence": "field-confirmed", "status": "active", "searchTerms": ["freeze dried candy", "brain freeze candy"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0044", "sku": "", "description": "COASTAL BAY CONFECTIONS BUBBLE GUM 5.5 OZ", "category": "Candy / Food", "dropDate": "2026-05-05", "source": "field confirmed", "confidence": "field-confirmed", "status": "active", "searchTerms": ["coastal bay bubble gum", "bubble gum"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0045", "sku": "", "description": "TIC TAC CHEWY SOUR ADVENTURE CANDIES 2.8 OZ", "category": "Candy / Food", "dropDate": "2026-05-05", "source": "internet list", "confidence": "medium", "status": "active", "searchTerms": ["tic tac chewy sour", "sour adventure candies"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0046", "sku": "401350", "description": "BLU REACTIVE PRNT PLATE 10.5IN", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["blue reactive print plate"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0047", "sku": "401307", "description": "BLUE REACTIVE PRINT BOWL 6IN", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["blue reactive print bowl"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0048", "sku": "401420", "description": "BLUE REACTIVE PRNT PLATE 7.5IN", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["blue reactive print side plate"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0049", "sku": "401344", "description": "REACTIVE GLAZE MUG BLUE 12Z", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["reactive glaze blue mug"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0050", "sku": "288908", "description": "BLACK LINES BOWL 6IN", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["black lines bowl"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0051", "sku": "288944", "description": "BLACK LINES MUG 16OZ", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["black lines mug"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0052", "sku": "288924", "description": "BLACK LINES PLATE 10.5IN", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["black lines plate"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0053", "sku": "288933", "description": "BLACK LINES SIDE PLATE 7.5IN", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["black lines side plate"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0054", "sku": "388382", "description": "GRAY LINES PLATE 8IN", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["gray lines plate"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0055", "sku": "388390", "description": "GREY LINES PLATE 10.5", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["grey lines plate"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0056", "sku": "405799", "description": "GREY SWIRL MUG 12Z", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["grey swirl mug"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0057", "sku": "405801", "description": "GREY SWIRL PLATE 10.5IN", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["grey swirl plate"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0058", "sku": "405806", "description": "GREY SWIRL SIDE PLATE 7.5IN", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["grey swirl side plate"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0059", "sku": "318526", "description": "BLUE 2-TONE 8N PLATE", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["blue two tone plate"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0060", "sku": "401413", "description": "MATTE GLAZE 10.5IN PLATE", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["matte glaze plate"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0061", "sku": "401404", "description": "MATTE GLAZE DECAL BOWL 5.5IN", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["matte glaze decal bowl"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0062", "sku": "401396", "description": "MATTE GLAZE DECAL MUG 12Z", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["matte glaze decal mug"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0063", "sku": "401424", "description": "MATTE GLAZE DECAL PLATE 7.5IN", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["matte glaze decal side plate"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0064", "sku": "343970", "description": "SOFT GREEN FLORAL BOWL 6IN", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["soft green floral bowl"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0065", "sku": "344033", "description": "SOFT GREEN FLORAL MUG 12Z", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["soft green floral mug"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0066", "sku": "397971", "description": "BOWL BLUE HYDRANGEA 5.5IN", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["blue hydrangea bowl"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0067", "sku": "397970", "description": "MUG BLUE HYDRANGEA 14Z", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["blue hydrangea mug"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0068", "sku": "397973", "description": "PLATE BLUE HYDRANGEA 10.5IN", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["blue hydrangea plate"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0069", "sku": "397969", "description": "PLATE BLUE HYDRANGEA 7.5IN", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["blue hydrangea side plate"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0070", "sku": "398459", "description": "BLUE HYDRANGEA COOLER", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["blue hydrangea cooler"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0071", "sku": "398456", "description": "BLUE HYDRANGEA STEMLESS WINE", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["blue hydrangea stemless wine"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0072", "sku": "346419", "description": "BLUE FLORAL STMLESS WINE 16.8Z", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["blue floral stemless wine"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0073", "sku": "308713", "description": "SPRING FLING STM5S WINE 16.8Z", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["spring fling stemless wine"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0074", "sku": "392169", "description": "RCTV LOOK BLUE BOWL 6IN", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["reactive look blue bowl"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0075", "sku": "392161", "description": "RCTV LOOK BLUE MUG 14Z", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["reactive look blue mug"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0076", "sku": "392157", "description": "RCTV LOOK BLUE PLATE 10.5", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["reactive look blue plate"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0077", "sku": "392154", "description": "RCTV LOOK BLUE PLATE 7.5", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["reactive look blue side plate"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0078", "sku": "392162", "description": "RCTV LOOK GRY BOWL 6N", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["reactive look gray bowl"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0079", "sku": "392168", "description": "RCTV LOOK GRY MUG 14Z", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["reactive look gray mug"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0080", "sku": "392159", "description": "RCTV LOOK GRY PLATE 10.5", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["reactive look gray plate"], "imageUrl": null, "imageStatus": "placeholder" },
-    { "id": "item_0081", "sku": "392178", "description": "RCTV LOOK GRY PLATE 7.5", "category": "Kitchenware", "dropDate": "2026-06-01", "status": "active", "searchTerms": ["reactive look gray side plate"], "imageUrl": null, "imageStatus": "placeholder" }
+    {
+      "id": "item_0001",
+      "sku": "328203",
+      "description": "NAVY DBL GLD 8X10",
+      "category": "Household",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "navy gold 8x10",
+        "navy 8x10"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0002",
+      "sku": "359319",
+      "description": "BOXED CANDLE SOOTHING",
+      "category": "Home Decor",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "boxed candle soothing",
+        "soothing candle"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0003",
+      "sku": "375667",
+      "description": "3OZ CLR DIAMND JAR W PVC LID",
+      "category": "Household",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "clear diamond jar",
+        "3 oz jar pvc lid"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0004",
+      "sku": "377016",
+      "description": "RAIN UMBRELLA 9.5",
+      "category": "Apparel",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "rain umbrella",
+        "umbrella"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0005",
+      "sku": "382583",
+      "description": "MDAY POWER BODY MASSAGER",
+      "category": "Beauty",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "power body massager",
+        "body massager"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0006",
+      "sku": "380864",
+      "description": "ESSENTIA WATER 500ML",
+      "category": "Candy / Food",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "essentia water",
+        "essentia 500ml"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0007",
+      "sku": "237438",
+      "description": "EDUCATIONAL SPINNER",
+      "category": "Books / Activity",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "educational spinner"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0008",
+      "sku": "357097",
+      "description": "PLAYSCHOOL PRE-K FLASH CARDS",
+      "category": "Books / Activity",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "playschool flash cards",
+        "pre k flash cards"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0009",
+      "sku": "357098",
+      "description": "MULTI LICENSED FLASH CARDS",
+      "category": "Books / Activity",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "licensed flash cards",
+        "flash cards"
+      ],
+      "imageUrl": "https://www.dollartree.com/ccstore/v1/images/?source=/file/v7273887660137256606/products/357098.jpg&height=300&width=300",
+      "imageStatus": "found",
+      "imageSource": "dollartree_catalog"
+    },
+    {
+      "id": "item_0010",
+      "sku": "375902",
+      "description": "POP ART FOIL ADVANCED COLORING",
+      "category": "Books / Activity",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "pop art foil coloring",
+        "advanced coloring"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0011",
+      "sku": "387913",
+      "description": "ADVANCED COLORING BOOK 11X14",
+      "category": "Books / Activity",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "advanced coloring book",
+        "11x14 coloring book"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0012",
+      "sku": "341109",
+      "description": "WH SOUR TAFFY BARS LD 3.59Z E",
+      "category": "Candy / Food",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "sour taffy bars",
+        "taffy bars"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0013",
+      "sku": "380107",
+      "description": "INVISIBLE LIGHT PEN CS 2IN1",
+      "category": "Toys",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "invisible light pen",
+        "2 in 1 pen"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0014",
+      "sku": "252595",
+      "description": "CRFTSQ CHERSH LOV & BLIVE STKR",
+      "category": "Crafts",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "cherish love believe sticker",
+        "crafter square sticker"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0015",
+      "sku": "267670",
+      "description": "STENCIL BRUSH STRAIGHT HANDLE",
+      "category": "Crafts",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "stencil brush",
+        "straight handle stencil brush"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0016",
+      "sku": "300761",
+      "description": "DNU FELT LETTER AND NUMBERS",
+      "category": "Crafts",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "felt letters numbers",
+        "felt letter and numbers"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0017",
+      "sku": "299788",
+      "description": "LED BULB 75W EQ A19 1PK",
+      "category": "Electronics",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "led bulb 75w",
+        "a19 led bulb"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0018",
+      "sku": "378462",
+      "description": "SILVER AAA2 DOLLAR TREE TRAY",
+      "category": "Electronics",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "silver aaa batteries",
+        "aaa2 dollar tree tray"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0019",
+      "sku": "344553",
+      "description": "PEACH FRUIT STEM ARTIFCL 21IN",
+      "category": "Floral",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "peach fruit stem",
+        "artificial peach stem"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0020",
+      "sku": "252480",
+      "description": "MAGNETS KITCHEN THEMED",
+      "category": "Home Decor",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "kitchen magnets",
+        "kitchen themed magnets"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0021",
+      "sku": "367396",
+      "description": "BATHROOM CLEANER 3PK",
+      "category": "Household",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "bathroom cleaner 3pk",
+        "bathroom cleaner"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0022",
+      "sku": "355110",
+      "description": "SCRUB BUD DRY FLOOR CLOTH 15PK",
+      "category": "Household",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "scrub bud dry floor cloth",
+        "dry floor cloth"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0023",
+      "sku": "327645",
+      "description": "BLUE FLORAL MUG 12Z",
+      "category": "Kitchenware",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "blue floral mug",
+        "floral mug",
+        "12 oz mug"
+      ],
+      "imageUrl": "https://www.dollartree.com/ccstore/v1/images/?source=/file/v1511361159241041779/products/327645.jpg&height=300&width=300",
+      "imageStatus": "found",
+      "imageSource": "dollartree_catalog"
+    },
+    {
+      "id": "item_0024",
+      "sku": "343933",
+      "description": "SOFT GREEN DINNER PLT 10.5IN",
+      "category": "Kitchenware",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "soft green dinner plate",
+        "green dinner plate"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0025",
+      "sku": "344034",
+      "description": "SOFT GREEN FLORAL PLATE 10.5",
+      "category": "Kitchenware",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "soft green floral plate",
+        "green floral plate"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0026",
+      "sku": "939567",
+      "description": "ROSE PETALS WHITE 300CT",
+      "category": "Party / Gift Bags",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "white rose petals",
+        "rose petals 300ct"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0027",
+      "sku": "219215",
+      "description": "GIFTBOX AO BUTTERFLY",
+      "category": "Party / Gift Bags",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "butterfly gift box",
+        "giftbox butterfly"
+      ],
+      "imageUrl": "https://www.dollartree.com/ccstore/v1/images/?source=/file/v6586244193986378383/products/219215.jpg&height=300&width=300",
+      "imageStatus": "found",
+      "imageSource": "dollartree_catalog"
+    },
+    {
+      "id": "item_0028",
+      "sku": "219216",
+      "description": "GIFTBOX AO BASKET W/HANDLE",
+      "category": "Party / Gift Bags",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "basket gift box",
+        "gift box with handle"
+      ],
+      "imageUrl": "https://www.dollartree.com/ccstore/v1/images/?source=/file/v3145439365837579490/products/219216.jpg&height=300&width=300",
+      "imageStatus": "found",
+      "imageSource": "dollartree_catalog"
+    },
+    {
+      "id": "item_0029",
+      "sku": "379958",
+      "description": "GIFTBAG XL BABY GENERAL",
+      "category": "Party / Gift Bags",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "xl baby gift bag",
+        "baby gift bag"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0030",
+      "sku": "380311",
+      "description": "GIFTBAG BOTTLE ALL OCC GEN",
+      "category": "Party / Gift Bags",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "bottle gift bag",
+        "all occasion bottle gift bag"
+      ],
+      "imageUrl": "https://www.dollartree.com/ccstore/v1/images/?source=/file/v421417442193795234/products/380311.jpg&height=300&width=300",
+      "imageStatus": "found",
+      "imageSource": "dollartree_catalog"
+    },
+    {
+      "id": "item_0031",
+      "sku": "382956",
+      "description": "GIFTBAG LRG AO JUVI",
+      "category": "Party / Gift Bags",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "large juvenile gift bag",
+        "juvi gift bag"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0032",
+      "sku": "383026",
+      "description": "GIFTBAG LG ALL OCCASION FLORA",
+      "category": "Party / Gift Bags",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "large floral gift bag",
+        "all occasion floral gift bag"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0033",
+      "sku": "383145",
+      "description": "CORAL 13X8 TRAY",
+      "category": "Party / Gift Bags",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "coral tray",
+        "13x8 tray"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0034",
+      "sku": "304352",
+      "description": "PURE SILK 3BL RZR 2CT",
+      "category": "Personal Care",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "pure silk razor",
+        "pure silk razors"
+      ],
+      "imageUrl": "https://www.dollartree.com/ccstore/v1/images/?source=/file/v6361856915017689260/products/304352.jpg&height=300&width=300",
+      "imageStatus": "found",
+      "imageSource": "dollartree_catalog"
+    },
+    {
+      "id": "item_0035",
+      "sku": "355583",
+      "description": "AD WIG CAP 3PK",
+      "category": "Personal Care",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "wig cap 3pk",
+        "wig cap"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0036",
+      "sku": "356211",
+      "description": "SC WAVE CAP 3PK",
+      "category": "Personal Care",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "wave cap 3pk",
+        "wave cap"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0037",
+      "sku": "381309",
+      "description": "BIC SENSITIVE 3BLD 1PK",
+      "category": "Personal Care",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "bic sensitive razor",
+        "bic sensitive"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0038",
+      "sku": "307619",
+      "description": "PROTECTIVE WRAP 4X300IN",
+      "category": "Stationery",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "protective wrap",
+        "4x300 protective wrap"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0039",
+      "sku": "366951",
+      "description": "METAL PEARL BALLPOINT PEN 1PC",
+      "category": "Stationery",
+      "eventNumber": "40058",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "metal pearl ballpoint pen",
+        "pearl pen"
+      ],
+      "imageUrl": "https://www.dollartree.com/ccstore/v1/images/?source=/file/v275090998449662859/products/366951.jpg&height=300&width=300",
+      "imageStatus": "found",
+      "imageSource": "dollartree_catalog"
+    },
+    {
+      "id": "item_0040",
+      "sku": "317809",
+      "description": "BARBIE PURSES / SHOES / ACCS",
+      "category": "Toys",
+      "eventNumber": "40059",
+      "dropDate": "2026-06-01",
+      "source": "6/1/26 screenshot",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "barbie purses shoes accessories",
+        "barbie accessories"
+      ],
+      "imageUrl": "https://www.dollartree.com/ccstore/v1/images/?source=/file/v5880353454024805519/products/317809.jpg&height=300&width=300",
+      "imageStatus": "found",
+      "imageSource": "dollartree_catalog"
+    },
+    {
+      "id": "item_0041",
+      "sku": "",
+      "description": "POWER STICK ROLL-ON ALUMINUM FREE DEODORANT 1.8 OZ",
+      "category": "Beauty",
+      "dropDate": "2026-05-05",
+      "source": "field confirmed",
+      "confidence": "field-confirmed",
+      "status": "active",
+      "searchTerms": [
+        "power stick deodorant",
+        "aluminum free deodorant"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0042",
+      "sku": "",
+      "description": "SASSY + CHIC NAIL POLISH 0.44 OZ COLORS 911 / 943",
+      "category": "Beauty",
+      "dropDate": "2026-05-05",
+      "source": "field confirmed",
+      "confidence": "field-confirmed",
+      "status": "active",
+      "searchTerms": [
+        "sassy chic nail polish",
+        "nail polish 911",
+        "nail polish 943"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0043",
+      "sku": "",
+      "description": "BRAIN FREEZE FREEZE-DRIED CANDY 0.88 OZ",
+      "category": "Candy / Food",
+      "dropDate": "2026-05-05",
+      "source": "field confirmed",
+      "confidence": "field-confirmed",
+      "status": "active",
+      "searchTerms": [
+        "freeze dried candy",
+        "brain freeze candy"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0044",
+      "sku": "",
+      "description": "COASTAL BAY CONFECTIONS BUBBLE GUM 5.5 OZ",
+      "category": "Candy / Food",
+      "dropDate": "2026-05-05",
+      "source": "field confirmed",
+      "confidence": "field-confirmed",
+      "status": "active",
+      "searchTerms": [
+        "coastal bay bubble gum",
+        "bubble gum"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0045",
+      "sku": "",
+      "description": "TIC TAC CHEWY SOUR ADVENTURE CANDIES 2.8 OZ",
+      "category": "Candy / Food",
+      "dropDate": "2026-05-05",
+      "source": "internet list",
+      "confidence": "medium",
+      "status": "active",
+      "searchTerms": [
+        "tic tac chewy sour",
+        "sour adventure candies"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0046",
+      "sku": "401350",
+      "description": "BLU REACTIVE PRNT PLATE 10.5IN",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "blue reactive print plate"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0047",
+      "sku": "401307",
+      "description": "BLUE REACTIVE PRINT BOWL 6IN",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "blue reactive print bowl"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0048",
+      "sku": "401420",
+      "description": "BLUE REACTIVE PRNT PLATE 7.5IN",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "blue reactive print side plate"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0049",
+      "sku": "401344",
+      "description": "REACTIVE GLAZE MUG BLUE 12Z",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "reactive glaze blue mug"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0050",
+      "sku": "288908",
+      "description": "BLACK LINES BOWL 6IN",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "black lines bowl"
+      ],
+      "imageUrl": "https://www.dollartree.com/ccstore/v1/images/?source=/file/v1013814252047511476/products/288908.jpg&height=300&width=300",
+      "imageStatus": "found",
+      "imageSource": "dollartree_catalog"
+    },
+    {
+      "id": "item_0051",
+      "sku": "288944",
+      "description": "BLACK LINES MUG 16OZ",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "black lines mug"
+      ],
+      "imageUrl": "https://www.dollartree.com/ccstore/v1/images/?source=/file/v4810555286131529090/products/288944.jpg&height=300&width=300",
+      "imageStatus": "found",
+      "imageSource": "dollartree_catalog"
+    },
+    {
+      "id": "item_0052",
+      "sku": "288924",
+      "description": "BLACK LINES PLATE 10.5IN",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "black lines plate"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0053",
+      "sku": "288933",
+      "description": "BLACK LINES SIDE PLATE 7.5IN",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "black lines side plate"
+      ],
+      "imageUrl": "https://www.dollartree.com/ccstore/v1/images/?source=/file/v5621493087014936320/products/288933.jpg&height=300&width=300",
+      "imageStatus": "found",
+      "imageSource": "dollartree_catalog"
+    },
+    {
+      "id": "item_0054",
+      "sku": "388382",
+      "description": "GRAY LINES PLATE 8IN",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "gray lines plate"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0055",
+      "sku": "388390",
+      "description": "GREY LINES PLATE 10.5",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "grey lines plate"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0056",
+      "sku": "405799",
+      "description": "GREY SWIRL MUG 12Z",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "grey swirl mug"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0057",
+      "sku": "405801",
+      "description": "GREY SWIRL PLATE 10.5IN",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "grey swirl plate"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0058",
+      "sku": "405806",
+      "description": "GREY SWIRL SIDE PLATE 7.5IN",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "grey swirl side plate"
+      ],
+      "imageUrl": "https://www.dollartree.com/ccstore/v1/images/?source=/file/v4599289909609522815/products/405806.jpg&height=300&width=300",
+      "imageStatus": "found",
+      "imageSource": "dollartree_catalog"
+    },
+    {
+      "id": "item_0059",
+      "sku": "318526",
+      "description": "BLUE 2-TONE 8N PLATE",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "blue two tone plate"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0060",
+      "sku": "401413",
+      "description": "MATTE GLAZE 10.5IN PLATE",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "matte glaze plate"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0061",
+      "sku": "401404",
+      "description": "MATTE GLAZE DECAL BOWL 5.5IN",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "matte glaze decal bowl"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0062",
+      "sku": "401396",
+      "description": "MATTE GLAZE DECAL MUG 12Z",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "matte glaze decal mug"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0063",
+      "sku": "401424",
+      "description": "MATTE GLAZE DECAL PLATE 7.5IN",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "matte glaze decal side plate"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0064",
+      "sku": "343970",
+      "description": "SOFT GREEN FLORAL BOWL 6IN",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "soft green floral bowl"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0065",
+      "sku": "344033",
+      "description": "SOFT GREEN FLORAL MUG 12Z",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "soft green floral mug"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0066",
+      "sku": "397971",
+      "description": "BOWL BLUE HYDRANGEA 5.5IN",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "blue hydrangea bowl"
+      ],
+      "imageUrl": "https://www.dollartree.com/ccstore/v1/images/?source=/file/v6343022812328445628/products/397971.jpg&height=300&width=300",
+      "imageStatus": "found",
+      "imageSource": "dollartree_catalog"
+    },
+    {
+      "id": "item_0067",
+      "sku": "397970",
+      "description": "MUG BLUE HYDRANGEA 14Z",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "blue hydrangea mug"
+      ],
+      "imageUrl": "https://www.dollartree.com/ccstore/v1/images/?source=/file/v6598619675851625507/products/397970.jpg&height=300&width=300",
+      "imageStatus": "found",
+      "imageSource": "dollartree_catalog"
+    },
+    {
+      "id": "item_0068",
+      "sku": "397973",
+      "description": "PLATE BLUE HYDRANGEA 10.5IN",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "blue hydrangea plate"
+      ],
+      "imageUrl": "https://www.dollartree.com/ccstore/v1/images/?source=/file/v983181986095310221/products/397973.jpg&height=300&width=300",
+      "imageStatus": "found",
+      "imageSource": "dollartree_catalog"
+    },
+    {
+      "id": "item_0069",
+      "sku": "397969",
+      "description": "PLATE BLUE HYDRANGEA 7.5IN",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "blue hydrangea side plate"
+      ],
+      "imageUrl": "https://www.dollartree.com/ccstore/v1/images/?source=/file/v4738245737994941523/products/397969.jpg&height=300&width=300",
+      "imageStatus": "found",
+      "imageSource": "dollartree_catalog"
+    },
+    {
+      "id": "item_0070",
+      "sku": "398459",
+      "description": "BLUE HYDRANGEA COOLER",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "blue hydrangea cooler"
+      ],
+      "imageUrl": "https://www.dollartree.com/ccstore/v1/images/?source=/file/v8632750885701646387/products/398459.jpg&height=300&width=300",
+      "imageStatus": "found",
+      "imageSource": "dollartree_catalog"
+    },
+    {
+      "id": "item_0071",
+      "sku": "398456",
+      "description": "BLUE HYDRANGEA STEMLESS WINE",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "blue hydrangea stemless wine"
+      ],
+      "imageUrl": "https://www.dollartree.com/ccstore/v1/images/?source=/file/v6095937345529743556/products/398456.jpg&height=300&width=300",
+      "imageStatus": "found",
+      "imageSource": "dollartree_catalog"
+    },
+    {
+      "id": "item_0072",
+      "sku": "346419",
+      "description": "BLUE FLORAL STMLESS WINE 16.8Z",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "blue floral stemless wine"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0073",
+      "sku": "308713",
+      "description": "SPRING FLING STM5S WINE 16.8Z",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "spring fling stemless wine"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0074",
+      "sku": "392169",
+      "description": "RCTV LOOK BLUE BOWL 6IN",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "reactive look blue bowl"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0075",
+      "sku": "392161",
+      "description": "RCTV LOOK BLUE MUG 14Z",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "reactive look blue mug"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0076",
+      "sku": "392157",
+      "description": "RCTV LOOK BLUE PLATE 10.5",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "reactive look blue plate"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0077",
+      "sku": "392154",
+      "description": "RCTV LOOK BLUE PLATE 7.5",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "reactive look blue side plate"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0078",
+      "sku": "392162",
+      "description": "RCTV LOOK GRY BOWL 6N",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "reactive look gray bowl"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0079",
+      "sku": "392168",
+      "description": "RCTV LOOK GRY MUG 14Z",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "reactive look gray mug"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0080",
+      "sku": "392159",
+      "description": "RCTV LOOK GRY PLATE 10.5",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "reactive look gray plate"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0081",
+      "sku": "392178",
+      "description": "RCTV LOOK GRY PLATE 7.5",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "status": "active",
+      "searchTerms": [
+        "reactive look gray side plate"
+      ],
+      "imageUrl": null,
+      "imageStatus": "not_found"
+    }
   ],
   "reports": [
     {
@@ -104,16 +1280,136 @@
     "08096": {
       "zip": "08096",
       "stores": [
-        { "id": "store_9091", "storeNumber": "9091", "name": "Dollar Tree - Woodbury", "address": "529 N Evergreen Ave", "city": "Woodbury", "state": "NJ", "zip": "08096", "latitude": 39.842421668442974, "longitude": -75.14531449816494, "distanceMiles": 0.5, "source": "yext_live" },
-        { "id": "store_1652", "storeNumber": "1652", "name": "Dollar Tree - Woodbury Heights", "address": "736 Mantua Pike", "city": "Woodbury Heights", "state": "NJ", "zip": "08097", "latitude": 39.82275054334935, "longitude": -75.16058568220903, "distanceMiles": 1.2, "source": "yext_live" },
-        { "id": "store_8681", "storeNumber": "8681", "name": "Dollar Tree - West Deptford", "address": "1107 Mantua Pike Suite 730", "city": "West Deptford", "state": "NJ", "zip": "08051", "latitude": 39.802523040715954, "longitude": -75.17088423804609, "distanceMiles": 2.7, "source": "yext_live" },
-        { "id": "store_4807", "storeNumber": "4807", "name": "Dollar Tree - Woodbury", "address": "1800 Clements Bridge Rd", "city": "Woodbury", "state": "NJ", "zip": "08096", "latitude": 39.83899865630618, "longitude": -75.0970217, "distanceMiles": 3, "source": "yext_live" },
-        { "id": "store_1360", "storeNumber": "1360", "name": "Dollar Tree - Brooklawn", "address": "700 Crescent Blvd, Ste 6", "city": "Brooklawn", "state": "NJ", "zip": "08030", "latitude": 39.87853792796154, "longitude": -75.11116746301933, "distanceMiles": 3.5, "source": "yext_live" },
-        { "id": "store_7820", "storeNumber": "7820", "name": "Dollar Tree - Deptford", "address": "1360 Hurffville Rd Unit 2", "city": "Deptford", "state": "NJ", "zip": "08096", "latitude": 39.818801250105366, "longitude": -75.09207673315258, "distanceMiles": 3.5, "source": "yext_live" },
-        { "id": "store_6652", "storeNumber": "6652", "name": "Dollar Tree - Gloucester City", "address": "401 S Broadway", "city": "Gloucester City", "state": "NJ", "zip": "08030", "latitude": 39.88892110115021, "longitude": -75.12083578819392, "distanceMiles": 3.8, "source": "yext_live" },
-        { "id": "store_7255", "storeNumber": "7255", "name": "Dollar Tree - Bellmawr", "address": "42 N Blackhorse Pike", "city": "Bellmawr", "state": "NJ", "zip": "08031", "latitude": 39.868507493143795, "longitude": -75.0808577171793, "distanceMiles": 4.3, "source": "yext_live" },
-        { "id": "store_1667", "storeNumber": "1667", "name": "Dollar Tree - Runnemede", "address": "611 E Evesham Rd", "city": "Runnemede", "state": "NJ", "zip": "08078", "latitude": 39.84915078645396, "longitude": -75.05796230469697, "distanceMiles": 5.1, "source": "yext_live" },
-        { "id": "store_3300", "storeNumber": "3300", "name": "Dollar Tree - Philadelphia", "address": "2116 S. Columbus Blvd.", "city": "Philadelphia", "state": "PA", "zip": "19148", "latitude": 39.915670812743535, "longitude": -75.1396125803769, "distanceMiles": 5.3, "source": "yext_live" }
+        {
+          "id": "store_9091",
+          "storeNumber": "9091",
+          "name": "Dollar Tree - Woodbury",
+          "address": "529 N Evergreen Ave",
+          "city": "Woodbury",
+          "state": "NJ",
+          "zip": "08096",
+          "latitude": 39.842421668442974,
+          "longitude": -75.14531449816494,
+          "distanceMiles": 0.5,
+          "source": "yext_live"
+        },
+        {
+          "id": "store_1652",
+          "storeNumber": "1652",
+          "name": "Dollar Tree - Woodbury Heights",
+          "address": "736 Mantua Pike",
+          "city": "Woodbury Heights",
+          "state": "NJ",
+          "zip": "08097",
+          "latitude": 39.82275054334935,
+          "longitude": -75.16058568220903,
+          "distanceMiles": 1.2,
+          "source": "yext_live"
+        },
+        {
+          "id": "store_8681",
+          "storeNumber": "8681",
+          "name": "Dollar Tree - West Deptford",
+          "address": "1107 Mantua Pike Suite 730",
+          "city": "West Deptford",
+          "state": "NJ",
+          "zip": "08051",
+          "latitude": 39.802523040715954,
+          "longitude": -75.17088423804609,
+          "distanceMiles": 2.7,
+          "source": "yext_live"
+        },
+        {
+          "id": "store_4807",
+          "storeNumber": "4807",
+          "name": "Dollar Tree - Woodbury",
+          "address": "1800 Clements Bridge Rd",
+          "city": "Woodbury",
+          "state": "NJ",
+          "zip": "08096",
+          "latitude": 39.83899865630618,
+          "longitude": -75.0970217,
+          "distanceMiles": 3,
+          "source": "yext_live"
+        },
+        {
+          "id": "store_1360",
+          "storeNumber": "1360",
+          "name": "Dollar Tree - Brooklawn",
+          "address": "700 Crescent Blvd, Ste 6",
+          "city": "Brooklawn",
+          "state": "NJ",
+          "zip": "08030",
+          "latitude": 39.87853792796154,
+          "longitude": -75.11116746301933,
+          "distanceMiles": 3.5,
+          "source": "yext_live"
+        },
+        {
+          "id": "store_7820",
+          "storeNumber": "7820",
+          "name": "Dollar Tree - Deptford",
+          "address": "1360 Hurffville Rd Unit 2",
+          "city": "Deptford",
+          "state": "NJ",
+          "zip": "08096",
+          "latitude": 39.818801250105366,
+          "longitude": -75.09207673315258,
+          "distanceMiles": 3.5,
+          "source": "yext_live"
+        },
+        {
+          "id": "store_6652",
+          "storeNumber": "6652",
+          "name": "Dollar Tree - Gloucester City",
+          "address": "401 S Broadway",
+          "city": "Gloucester City",
+          "state": "NJ",
+          "zip": "08030",
+          "latitude": 39.88892110115021,
+          "longitude": -75.12083578819392,
+          "distanceMiles": 3.8,
+          "source": "yext_live"
+        },
+        {
+          "id": "store_7255",
+          "storeNumber": "7255",
+          "name": "Dollar Tree - Bellmawr",
+          "address": "42 N Blackhorse Pike",
+          "city": "Bellmawr",
+          "state": "NJ",
+          "zip": "08031",
+          "latitude": 39.868507493143795,
+          "longitude": -75.0808577171793,
+          "distanceMiles": 4.3,
+          "source": "yext_live"
+        },
+        {
+          "id": "store_1667",
+          "storeNumber": "1667",
+          "name": "Dollar Tree - Runnemede",
+          "address": "611 E Evesham Rd",
+          "city": "Runnemede",
+          "state": "NJ",
+          "zip": "08078",
+          "latitude": 39.84915078645396,
+          "longitude": -75.05796230469697,
+          "distanceMiles": 5.1,
+          "source": "yext_live"
+        },
+        {
+          "id": "store_3300",
+          "storeNumber": "3300",
+          "name": "Dollar Tree - Philadelphia",
+          "address": "2116 S. Columbus Blvd.",
+          "city": "Philadelphia",
+          "state": "PA",
+          "zip": "19148",
+          "latitude": 39.915670812743535,
+          "longitude": -75.1396125803769,
+          "distanceMiles": 5.3,
+          "source": "yext_live"
+        }
       ],
       "mapped": true,
       "source": "yext_live",
@@ -124,12 +1420,89 @@
     }
   },
   "stores": [
-    { "id": "store_4807", "storeNumber": "4807", "name": "Dollar Tree - Deptford Crossings", "address": "1800 Clements Bridge Rd", "city": "Woodbury", "state": "NJ", "zip": "08096", "latitude": 39.8397, "longitude": -75.1177, "distanceMiles": 0.9 },
-    { "id": "store_deptford_hurffville", "storeNumber": "", "name": "Dollar Tree - Deptford / Hurffville Rd", "address": "1360 Hurffville Rd Unit 2", "city": "Deptford", "state": "NJ", "zip": "08096", "latitude": 39.8204, "longitude": -75.095, "distanceMiles": 1.6 },
-    { "id": "store_9091", "storeNumber": "9091", "name": "Dollar Tree - Woodbury", "address": "529 N Evergreen Ave", "city": "Woodbury", "state": "NJ", "zip": "08096", "latitude": 39.8478, "longitude": -75.147, "distanceMiles": 1.9 },
-    { "id": "store_1652", "storeNumber": "1652", "name": "Dollar Tree - Mantua Pike", "address": "736 Mantua Pike", "city": "Woodbury", "state": "NJ", "zip": "08096", "latitude": 39.8126, "longitude": -75.1702, "distanceMiles": 2.7 },
-    { "id": "store_bellmawr", "storeNumber": "", "name": "Dollar Tree - Bellmawr", "address": "42 N Black Horse Pike", "city": "Bellmawr", "state": "NJ", "zip": "08031", "latitude": 39.8672, "longitude": -75.0947, "distanceMiles": 3.2 },
-    { "id": "store_runnemede", "storeNumber": "", "name": "Dollar Tree - Runnemede / Acme Plaza", "address": "611 E Evesham Rd", "city": "Runnemede", "state": "NJ", "zip": "08078", "latitude": 39.8567, "longitude": -75.0668, "distanceMiles": 3.7 },
-    { "id": "store_blackwood", "storeNumber": "", "name": "Dollar Tree - Blackwood", "address": "1001 S Black Horse Pike Unit 2B", "city": "Blackwood", "state": "NJ", "zip": "08012", "latitude": 39.7849, "longitude": -75.055, "distanceMiles": 4.7 }
+    {
+      "id": "store_4807",
+      "storeNumber": "4807",
+      "name": "Dollar Tree - Deptford Crossings",
+      "address": "1800 Clements Bridge Rd",
+      "city": "Woodbury",
+      "state": "NJ",
+      "zip": "08096",
+      "latitude": 39.8397,
+      "longitude": -75.1177,
+      "distanceMiles": 0.9
+    },
+    {
+      "id": "store_deptford_hurffville",
+      "storeNumber": "",
+      "name": "Dollar Tree - Deptford / Hurffville Rd",
+      "address": "1360 Hurffville Rd Unit 2",
+      "city": "Deptford",
+      "state": "NJ",
+      "zip": "08096",
+      "latitude": 39.8204,
+      "longitude": -75.095,
+      "distanceMiles": 1.6
+    },
+    {
+      "id": "store_9091",
+      "storeNumber": "9091",
+      "name": "Dollar Tree - Woodbury",
+      "address": "529 N Evergreen Ave",
+      "city": "Woodbury",
+      "state": "NJ",
+      "zip": "08096",
+      "latitude": 39.8478,
+      "longitude": -75.147,
+      "distanceMiles": 1.9
+    },
+    {
+      "id": "store_1652",
+      "storeNumber": "1652",
+      "name": "Dollar Tree - Mantua Pike",
+      "address": "736 Mantua Pike",
+      "city": "Woodbury",
+      "state": "NJ",
+      "zip": "08096",
+      "latitude": 39.8126,
+      "longitude": -75.1702,
+      "distanceMiles": 2.7
+    },
+    {
+      "id": "store_bellmawr",
+      "storeNumber": "",
+      "name": "Dollar Tree - Bellmawr",
+      "address": "42 N Black Horse Pike",
+      "city": "Bellmawr",
+      "state": "NJ",
+      "zip": "08031",
+      "latitude": 39.8672,
+      "longitude": -75.0947,
+      "distanceMiles": 3.2
+    },
+    {
+      "id": "store_runnemede",
+      "storeNumber": "",
+      "name": "Dollar Tree - Runnemede / Acme Plaza",
+      "address": "611 E Evesham Rd",
+      "city": "Runnemede",
+      "state": "NJ",
+      "zip": "08078",
+      "latitude": 39.8567,
+      "longitude": -75.0668,
+      "distanceMiles": 3.7
+    },
+    {
+      "id": "store_blackwood",
+      "storeNumber": "",
+      "name": "Dollar Tree - Blackwood",
+      "address": "1001 S Black Horse Pike Unit 2B",
+      "city": "Blackwood",
+      "state": "NJ",
+      "zip": "08012",
+      "latitude": 39.7849,
+      "longitude": -75.055,
+      "distanceMiles": 4.7
+    }
   ]
 }

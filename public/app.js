@@ -656,6 +656,31 @@ async function adminAddItem() {
   } catch(e) { $('adminStatus').textContent = e.message; }
 }
 
+async function adminEnrichImages(force = false) {
+  const btn = $(force ? 'adminEnrichForceBtn' : 'adminEnrichImagesBtn');
+  const status = $('adminEnrichStatus');
+  if (btn) { btn.disabled = true; btn.textContent = 'Searching…'; }
+  if (status) status.textContent = 'Checking Dollar Tree product catalog for all penny items. This can take up to 60 seconds…';
+  try {
+    const data = await api('/api/admin/enrich-images', { method: 'POST', body: JSON.stringify({ force }) });
+    const parts = [
+      `Images found: ${data.found}`,
+      `Not in DT catalog: ${data.notFound}`,
+      `Already had image (skipped): ${data.skipped}`,
+    ];
+    if (data.errors) parts.push(`Errors: ${data.errors}`);
+    if (data.foundItems?.length) {
+      parts.push('');
+      parts.push('Products matched: ' + data.foundItems.map(i => `${i.description} (${i.source === 'dollartree_search' ? 'search' : 'SKU'})`).join(' · '));
+    }
+    if (status) status.innerHTML = parts.map(p => p ? escapeHtml(p) : '<br>').join('<br>');
+    await loadItems();
+  } catch(e) {
+    if (status) status.textContent = 'Error: ' + e.message;
+  }
+  if (btn) { btn.disabled = false; btn.textContent = force ? 'Force Refresh All' : 'Find Product Images'; }
+}
+
 async function adminBulkImport() {
   const rows = $('adminImportRows').value.trim();
   if (!rows) { $('adminImportStatus').textContent = 'Paste rows first.'; return; }
@@ -693,6 +718,8 @@ function bindEvents() {
   $('logoutBtn').addEventListener('click', logout);
   $('adminAddItemBtn').addEventListener('click', adminAddItem);
   $('adminImportBtn')?.addEventListener('click', adminBulkImport);
+  $('adminEnrichImagesBtn')?.addEventListener('click', () => adminEnrichImages(false));
+  $('adminEnrichForceBtn')?.addEventListener('click', () => adminEnrichImages(true));
 }
 
 async function init() {

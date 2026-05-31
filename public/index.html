@@ -211,6 +211,16 @@
       </div>
 
       <div class="card">
+        <h2>Admin: Find Product Images</h2>
+        <p class="muted">Looks up each penny item in Dollar Tree's product catalog and saves the official product photo. Items still in the DT catalog get a real image; discontinued/clearance items that have been removed show "Image coming soon." Run once to populate, then again after adding new items.</p>
+        <div class="actions">
+          <button id="adminEnrichImagesBtn">Find Product Images</button>
+          <button id="adminEnrichForceBtn" class="secondary">Force Refresh All</button>
+        </div>
+        <div id="adminEnrichStatus" class="small" style="margin-top:10px"></div>
+      </div>
+
+      <div class="card">
         <h2>Admin: Bulk Import (TSV or pipe-separated)</h2>
         <p class="muted">Paste rows in format: <code>dropDate | category | sku | description | searchTerms</code> (tab or pipe separated). First line can be a header row — it will be skipped automatically. Duplicate SKUs are merged, not duplicated.</p>
         <textarea id="adminImportRows" placeholder="2026-06-01&#9;Kitchenware&#9;401350&#9;BLU REACTIVE PRNT PLATE 10.5IN&#9;blue reactive print plate
