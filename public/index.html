@@ -77,7 +77,10 @@
         <p class="muted">Confirmed penny items for the 6/1/26 drop plus earlier field-confirmed finds. Tap a search term chip to copy it for the Dollar Tree app.</p>
         <input id="itemSearch" placeholder="Search item, SKU, or search term" style="margin-bottom:10px" />
         <div id="categoryChips" class="category-chips"></div>
-        <div id="itemCount" class="small" style="margin-top:8px"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px;flex-wrap:wrap;gap:8px">
+          <div id="itemCount" class="small"></div>
+          <button class="secondary" onclick="addAllVisible()">Add All Visible to My Run</button>
+        </div>
       </div>
       <div id="itemsList" class="list"></div>
     </section>
@@ -85,38 +88,42 @@
     <section id="runTab" class="tab-panel hidden">
       <div class="card run-card">
         <h2>My Penny Run</h2>
-        <p class="muted">Your hunt checklist, grouped by category. Use the report buttons after visiting each store. Reports improve Route Confidence scores.</p>
+        <p class="muted">Add penny items from the list, then drive the map route. Mark each store as you go.</p>
         <div class="search-row">
           <input id="huntName" placeholder="Run name" value="My Penny Run" />
           <button id="saveHuntBtn">Save Run</button>
-          <button class="teal" type="button" onclick="setTab('check')">Build My Penny Route</button>
         </div>
       </div>
 
       <div class="card">
-        <h3>Items I'm Hunting</h3>
-        <div id="selectedItems" class="selected-list"></div>
+        <div class="run-summary-row">
+          <span class="run-count-badge" id="runCountLabel">Selected Items: 0</span>
+          <div class="run-summary-actions">
+            <button class="secondary" id="toggleItemsBtn" onclick="toggleSelectedItems()">View Items</button>
+            <button class="secondary" onclick="clearRun()">Clear My Run</button>
+          </div>
+        </div>
+        <div id="selectedItems" class="selected-list hidden"></div>
       </div>
 
       <div class="card">
-        <div class="hunt-section-head">
-          <h3>Today's Hunt Route</h3>
+        <div id="huntSummary"></div>
+        <div class="hunt-section-head" style="margin-top:10px">
+          <h3 style="margin:0">Today's Hunt Map</h3>
           <button class="secondary" id="huntMapToggle">Hide Map</button>
         </div>
-        <p class="muted">Mark stores checked as you drive. Resets tomorrow, notes stay saved.</p>
-        <div id="huntSummary"></div>
         <div id="huntMapCard" class="hunt-map-embed">
           <div id="huntMapContainer"></div>
         </div>
-        <div style="margin-top:14px">
-          <h4 style="margin:0 0 10px">Stores Near <span id="huntZipLabel">—</span></h4>
+        <div style="margin-top:16px">
+          <p class="small muted" style="margin:0 0 10px">Stores Near <strong id="huntZipLabel">—</strong></p>
           <div id="huntStoreList"></div>
         </div>
       </div>
 
       <div class="card">
         <h3>Route Preview</h3>
-        <p class="muted">Stores ranked by community report confidence, then distance. Nearby stores are live. Log results with the report buttons to improve scores.</p>
+        <p class="muted">Stores ranked by community report confidence, then distance. Log results with the report buttons to improve scores.</p>
         <div id="routeBuilder"></div>
       </div>
 

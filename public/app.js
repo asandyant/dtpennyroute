@@ -203,6 +203,7 @@ function addToRun(itemId) {
   renderSelected();
   renderQuickSelectors();
   renderDashboard();
+  updateRunCountLabel();
 }
 
 function addAndCheck(itemId) {
@@ -218,6 +219,7 @@ function removeFromRun(itemId) {
   renderSelected();
   renderQuickSelectors();
   renderDashboard();
+  updateRunCountLabel();
 }
 
 function saveSelectedLocal() {
@@ -849,7 +851,7 @@ const NOTE_PRESETS = [
   'Cleaned out', 'Employee pulled items', 'Worth returning'
 ];
 
-const huntMap = { instance: null, markers: {}, initialized: false };
+const huntMap = { instance: null, markers: {}, initialized: false, routeLine: null };
 let huntEditingStore = null;
 
 function todayStr() { return new Date().toISOString().slice(0, 10); }
@@ -867,53 +869,74 @@ function saveStoreNotes(n) {
   localStorage.setItem('dtpr_store_notes', JSON.stringify(n));
 }
 
-function huntMarkerStyle(storeId) {
-  const checked = getHuntState()[storeId]?.checked;
-  return checked
-    ? { radius: 11, color: '#0f5132', fillColor: '#198754', fillOpacity: 0.9, weight: 2 }
-    : { radius: 10, color: '#0a253d', fillColor: '#154e8c', fillOpacity: 0.78, weight: 2 };
+function getStoreStatus(storeId) {
+  const entry = getHuntState()[storeId];
+  if (!entry) return 'unchecked';
+  if (entry.status) return entry.status;
+  return entry.checked ? 'checked' : 'unchecked';
 }
 
-function makePopupHtml(store) {
-  const checked = getHuntState()[store.id]?.checked;
+function huntPinIcon(storeId, number) {
+  const s = getStoreStatus(storeId);
+  const bg = s === 'checked' ? '#198754' : s === 'skipped' ? '#6c757d' : s === 'cleaned_out' ? '#dc3545' : '#154e8c';
+  return L.divIcon({
+    className: '',
+    html: `<div class="hunt-pin" style="background:${bg}">${number}</div>`,
+    iconSize: [32, 32],
+    iconAnchor: [16, 16],
+    popupAnchor: [0, -18]
+  });
+}
+
+function makePopupHtml(store, routeNum) {
+  const status = getStoreStatus(store.id);
   const notes = getStoreNotes()[store.id] || [];
   const mapsUrl = `https://www.google.com/maps?q=${store.latitude},${store.longitude}`;
+  const statusText = status === 'checked' ? '✓ Checked Today' : status === 'skipped' ? '⏭ Skipped' : status === 'cleaned_out' ? '✗ Cleaned Out / No Scanner' : '◦ Not checked yet';
+  const statusColor = status === 'checked' ? '#198754' : status === 'skipped' ? '#6c757d' : status === 'cleaned_out' ? '#dc3545' : '#60707a';
   const notesHtml = notes.length
-    ? `<div style="margin:5px 0 8px">${notes.map(n => `<span style="display:inline-block;background:#eef4f6;border-radius:4px;padding:2px 7px;margin:2px;font-size:11px">${escapeHtml(n)}</span>`).join('')}</div>`
+    ? `<div style="margin:4px 0 7px;display:flex;flex-wrap:wrap;gap:4px">${notes.map(n => `<span style="background:#eef4f6;border-radius:4px;padding:2px 7px;font-size:11px">${escapeHtml(n)}</span>`).join('')}</div>`
     : '';
-  return `<div style="min-width:210px;font-family:Arial,sans-serif;line-height:1.4">
-    <strong>${escapeHtml(store.name)}${store.storeNumber ? ' #' + escapeHtml(store.storeNumber) : ''}</strong><br>
-    <span style="font-size:12px;color:#60707a">${escapeHtml(store.address)}, ${escapeHtml(store.city)}, ${escapeHtml(store.state)}${Number.isFinite(store.distanceMiles) ? ' · ' + store.distanceMiles + ' mi' : ''}</span>
+  const bs = (bg) => `background:${bg};color:white;border:none;border-radius:8px;padding:7px 10px;cursor:pointer;font-size:12px;font-weight:700;width:100%;text-align:left;margin:0`;
+  return `<div style="min-width:230px;font-family:Arial,sans-serif;line-height:1.4">
+    <div style="font-weight:900;font-size:13px">Stop #${routeNum}: ${escapeHtml(store.name)}${store.storeNumber ? ' #' + escapeHtml(store.storeNumber) : ''}</div>
+    <div style="font-size:12px;color:#60707a;margin:2px 0">${escapeHtml(store.address)}, ${escapeHtml(store.city)}, ${escapeHtml(store.state)}${Number.isFinite(store.distanceMiles) ? ' · ' + store.distanceMiles + ' mi' : ''}</div>
+    <div style="font-size:12px;color:${statusColor};margin:5px 0;font-weight:700">${statusText}</div>
     ${notesHtml}
     <div style="display:flex;flex-direction:column;gap:5px;margin-top:8px">
-      <button onclick="checkStoreToday('${store.id}')"
-        style="background:${checked ? '#157347' : '#0d2f4f'};color:white;border:none;border-radius:8px;padding:7px 10px;cursor:pointer;font-size:12px;font-weight:700">
-        ${checked ? '✓ Checked Today — Undo' : 'Mark Checked Today'}
-      </button>
-      <a href="${escapeHtml(mapsUrl)}" target="_blank" rel="noopener"
-        style="display:block;text-align:center;background:#f0f4f6;color:#0d2f4f;border-radius:8px;padding:7px 10px;font-size:12px;font-weight:700;text-decoration:none">
-        Open in Google Maps
-      </a>
+      <button onclick="setHuntStatus('${store.id}','checked')" style="${bs(status === 'checked' ? '#0f5132' : '#0d2f4f')}">${status === 'checked' ? '✓ Checked — Undo' : 'Mark Checked Today'}</button>
+      <button onclick="setHuntStatus('${store.id}','skipped')" style="${bs(status === 'skipped' ? '#495057' : '#6c757d')}">${status === 'skipped' ? 'Skipped — Undo' : 'Mark Skipped'}</button>
+      <button onclick="setHuntStatus('${store.id}','cleaned_out')" style="${bs(status === 'cleaned_out' ? '#842029' : '#b42318')}">${status === 'cleaned_out' ? 'Cleaned Out — Undo' : 'Cleaned Out / No Scanner'}</button>
+      <button onclick="openStoreNotes('${store.id}')" style="${bs('#4a5568')}">${notes.length ? 'Edit Notes' : 'Add Notes'}</button>
+      <a href="${escapeHtml(mapsUrl)}" target="_blank" rel="noopener" style="display:block;text-align:center;background:#f0f4f6;color:#0d2f4f;border-radius:8px;padding:7px 10px;font-size:12px;font-weight:700;text-decoration:none">Open in Google Maps</a>
     </div>
   </div>`;
 }
 
-function addHuntMarker(store) {
+function addHuntMarker(store, number) {
   if (!store.latitude || !store.longitude || !huntMap.instance) return;
-  const marker = L.circleMarker([store.latitude, store.longitude], huntMarkerStyle(store.id))
+  const marker = L.marker([store.latitude, store.longitude], { icon: huntPinIcon(store.id, number) })
     .addTo(huntMap.instance)
-    .bindPopup(() => makePopupHtml(store), { maxWidth: 290 });
+    .bindPopup(() => makePopupHtml(store, number), { maxWidth: 300 });
   huntMap.markers[store.id] = marker;
 }
 
 function updateHuntMarker(storeId) {
   const marker = huntMap.markers[storeId];
   if (!marker) return;
-  marker.setStyle(huntMarkerStyle(storeId));
+  const idx = state.stores.findIndex(s => s.id === storeId);
+  if (idx !== -1) marker.setIcon(huntPinIcon(storeId, idx + 1));
   if (marker.isPopupOpen()) {
     const store = state.stores.find(s => s.id === storeId);
-    if (store) marker.getPopup().setContent(makePopupHtml(store));
+    if (store) marker.getPopup().setContent(makePopupHtml(store, idx + 1));
   }
+}
+
+function drawRouteLine() {
+  if (huntMap.routeLine) { huntMap.routeLine.remove(); huntMap.routeLine = null; }
+  if (!huntMap.instance || state.stores.length < 2) return;
+  const coords = state.stores.map(s => [s.latitude, s.longitude]);
+  huntMap.routeLine = L.polyline(coords, { color: '#154e8c', weight: 3, opacity: 0.55, dashArray: '8,5' }).addTo(huntMap.instance);
 }
 
 function initHuntMap() {
@@ -933,15 +956,19 @@ function initHuntMap() {
   }
 
   if (huntMap.initialized) {
-    // Re-sync markers if store list changed (e.g. new ZIP)
     const currentIds = state.stores.map(s => s.id).sort().join(',');
     const cachedIds = Object.keys(huntMap.markers).sort().join(',');
     if (currentIds !== cachedIds) {
       Object.values(huntMap.markers).forEach(m => m.remove());
       huntMap.markers = {};
-      state.stores.forEach(store => addHuntMarker(store));
+      state.stores.forEach((store, idx) => addHuntMarker(store, idx + 1));
+      drawRouteLine();
+      if (state.stores.length) {
+        const bounds = L.latLngBounds(state.stores.map(s => [s.latitude, s.longitude]));
+        huntMap.instance.fitBounds(bounds, { padding: [40, 40] });
+      }
     } else {
-      Object.keys(huntMap.markers).forEach(id => updateHuntMarker(id));
+      state.stores.forEach(store => updateHuntMarker(store.id));
     }
     setTimeout(() => huntMap.instance?.invalidateSize(), 60);
     renderHuntSummary();
@@ -955,28 +982,35 @@ function initHuntMap() {
 
   const lats = state.stores.map(s => s.latitude).filter(Boolean);
   const lons = state.stores.map(s => s.longitude).filter(Boolean);
-  const lat = lats.reduce((a, b) => a + b, 0) / lats.length;
-  const lon = lons.reduce((a, b) => a + b, 0) / lons.length;
+  const centerLat = lats.reduce((a, b) => a + b, 0) / lats.length;
+  const centerLon = lons.reduce((a, b) => a + b, 0) / lons.length;
 
-  huntMap.instance = L.map('huntMapContainer').setView([lat, lon], 12);
+  huntMap.instance = L.map('huntMapContainer').setView([centerLat, centerLon], 12);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     maxZoom: 19
   }).addTo(huntMap.instance);
 
   huntMap.initialized = true;
-  state.stores.forEach(store => addHuntMarker(store));
+  state.stores.forEach((store, idx) => addHuntMarker(store, idx + 1));
+  drawRouteLine();
+  const bounds = L.latLngBounds(state.stores.map(s => [s.latitude, s.longitude]));
+  huntMap.instance.fitBounds(bounds, { padding: [40, 40] });
   setTimeout(() => huntMap.instance?.invalidateSize(), 100);
   renderHuntSummary();
   renderHuntStoreList();
 }
 
-function checkStoreToday(storeId) {
+function setHuntStatus(storeId, newStatus) {
   const hunt = getHuntState();
-  if (hunt[storeId]?.checked) {
-    hunt[storeId] = { checked: false };
+  const current = getStoreStatus(storeId);
+  if (current === newStatus) {
+    hunt[storeId] = { status: 'unchecked' };
   } else {
-    hunt[storeId] = { checked: true, checkedAt: new Date().toISOString() };
+    hunt[storeId] = {
+      status: newStatus,
+      checkedAt: newStatus === 'checked' ? new Date().toISOString() : (hunt[storeId]?.checkedAt || null)
+    };
   }
   saveHuntState(hunt);
   updateHuntMarker(storeId);
@@ -984,21 +1018,35 @@ function checkStoreToday(storeId) {
   renderHuntStoreList();
 }
 
+function checkStoreToday(storeId) { setHuntStatus(storeId, 'checked'); }
+
+function openStoreNotes(storeId) {
+  huntEditingStore = storeId;
+  renderHuntStoreList();
+  setTimeout(() => {
+    const el = $(`hsc_${storeId}`);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 50);
+}
+
 function renderHuntSummary() {
   const box = $('huntSummary');
   if (!box) return;
   if (!state.stores.length) {
-    box.innerHTML = '<p class="muted" style="margin:8px 0">Enter your ZIP above and tap <strong>Save ZIP</strong> to load nearby Dollar Tree stores.</p>';
+    box.innerHTML = '<p class="muted" style="margin:0 0 8px">Enter your ZIP above and tap <strong>Save ZIP</strong> to load nearby Dollar Tree stores.</p>';
     return;
   }
-  const hunt = getHuntState();
   const total = state.stores.length;
-  const checked = state.stores.filter(s => hunt[s.id]?.checked).length;
-  const remaining = total - checked;
+  const checked = state.stores.filter(s => getStoreStatus(s.id) === 'checked').length;
+  const remaining = state.stores.filter(s => getStoreStatus(s.id) === 'unchecked').length;
+  const itemCount = state.selected.size;
+  const firstStore = state.stores[0];
   const today = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
   box.innerHTML = `
+    ${firstStore ? `<div class="hunt-start-banner">Start Here: <strong>${escapeHtml(firstStore.name)}${firstStore.storeNumber ? ' #' + escapeHtml(firstStore.storeNumber) : ''}</strong>${Number.isFinite(firstStore.distanceMiles) ? ' · ' + firstStore.distanceMiles + ' mi' : ''}</div>` : ''}
     <div class="hunt-summary-grid">
-      <div class="hunt-metric"><strong>${total}</strong><span>Nearby stores</span></div>
+      <div class="hunt-metric"><strong>${itemCount}</strong><span>Items hunting</span></div>
+      <div class="hunt-metric"><strong>${total}</strong><span>Stores nearby</span></div>
       <div class="hunt-metric checked"><strong>${checked}</strong><span>Checked today</span></div>
       <div class="hunt-metric"><strong>${remaining}</strong><span>Remaining</span></div>
     </div>
@@ -1037,23 +1085,27 @@ function renderHuntStoreList() {
   }
   const hunt = getHuntState();
   const allNotes = getStoreNotes();
-  // Unchecked first, then checked; within each group sort by distance
+  const statusOrder = { unchecked: 0, skipped: 1, cleaned_out: 2, checked: 3 };
   const sorted = [...state.stores].sort((a, b) => {
-    const ca = hunt[a.id]?.checked ? 1 : 0;
-    const cb = hunt[b.id]?.checked ? 1 : 0;
-    if (ca !== cb) return ca - cb;
+    const sa = statusOrder[getStoreStatus(a.id)] ?? 0;
+    const sb = statusOrder[getStoreStatus(b.id)] ?? 0;
+    if (sa !== sb) return sa - sb;
     return (a.distanceMiles ?? 9999) - (b.distanceMiles ?? 9999);
   });
 
   box.innerHTML = sorted.map(store => {
-    const checked = hunt[store.id]?.checked;
+    const status = getStoreStatus(store.id);
     const checkedAt = hunt[store.id]?.checkedAt;
     const notes = allNotes[store.id] || [];
     const editing = huntEditingStore === store.id;
     const mapsUrl = `https://www.google.com/maps?q=${store.latitude},${store.longitude}`;
-    const timeStr = checkedAt
+    const routeNum = state.stores.findIndex(s => s.id === store.id) + 1;
+    const timeStr = checkedAt && status === 'checked'
       ? new Date(checkedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
     const existingCustom = notes.find(n => !NOTE_PRESETS.includes(n)) || '';
+
+    const pillClass = status === 'checked' ? 'green' : status === 'cleaned_out' ? 'red' : '';
+    const pillText = status === 'checked' ? ('Checked' + (timeStr ? ' ' + timeStr : '')) : status === 'skipped' ? 'Skipped' : status === 'cleaned_out' ? 'Cleaned Out' : 'Not checked';
 
     const noteChips = notes.length
       ? `<div class="hunt-note-chips">${notes.map(n => `<span class="note-chip">${escapeHtml(n)}</span>`).join('')}</div>`
@@ -1067,35 +1119,74 @@ function renderHuntStoreList() {
             ${escapeHtml(p)}
           </label>`).join('')}
         </div>
-        <input class="hunt-custom-input" type="text"
-          placeholder="Custom note…"
-          value="${escapeHtml(existingCustom)}" />
+        <input class="hunt-custom-input" type="text" placeholder="Custom note…" value="${escapeHtml(existingCustom)}" />
         <button class="teal" onclick="saveStoreNoteEdit('${store.id}')" style="margin-top:8px">Save Notes</button>
       </div>`;
 
-    return `<div class="hunt-store-card ${checked ? 'checked' : ''}" id="hsc_${store.id}">
+    return `<div class="hunt-store-card ${status !== 'unchecked' ? status.replace('_','-') : ''}" id="hsc_${store.id}">
       <div class="hunt-store-head">
         <div>
-          <strong>${escapeHtml(store.name)}${store.storeNumber ? ' #' + escapeHtml(store.storeNumber) : ''}</strong>
+          <strong>Stop #${routeNum}: ${escapeHtml(store.name)}${store.storeNumber ? ' #' + escapeHtml(store.storeNumber) : ''}</strong>
           <div class="small">${escapeHtml(store.address)}, ${escapeHtml(store.city)}, ${escapeHtml(store.state)}${Number.isFinite(store.distanceMiles) ? ' · ' + store.distanceMiles + ' mi' : ''}</div>
         </div>
-        <span class="pill ${checked ? 'green' : ''}" style="white-space:nowrap;flex-shrink:0">
-          ${checked ? 'Checked' + (timeStr ? ' ' + timeStr : '') : 'Not checked'}
-        </span>
+        <span class="pill ${pillClass}" style="white-space:nowrap;flex-shrink:0">${pillText}</span>
       </div>
       ${noteChips}
       <div class="hunt-store-actions">
-        <button class="${checked ? 'secondary' : 'teal'}" onclick="checkStoreToday('${store.id}')">
-          ${checked ? 'Uncheck' : 'Mark Checked Today'}
-        </button>
-        <button class="secondary" onclick="toggleHuntNoteEdit('${store.id}')">
-          ${editing ? 'Cancel' : notes.length ? 'Edit Notes' : 'Add Notes'}
-        </button>
-        <a class="button-link secondary" href="${escapeHtml(mapsUrl)}" target="_blank" rel="noopener">Google Maps</a>
+        <button class="${status === 'checked' ? 'secondary' : 'teal'}" onclick="setHuntStatus('${store.id}','checked')">${status === 'checked' ? 'Uncheck' : 'Mark Checked Today'}</button>
+        <button class="${status === 'skipped' ? '' : 'secondary'}" onclick="setHuntStatus('${store.id}','skipped')">${status === 'skipped' ? 'Undo Skip' : 'Skip'}</button>
+        <button class="${status === 'cleaned_out' ? 'danger' : 'secondary'}" onclick="setHuntStatus('${store.id}','cleaned_out')">${status === 'cleaned_out' ? 'Undo' : 'Cleaned Out'}</button>
+        <button class="secondary" onclick="toggleHuntNoteEdit('${store.id}')">${editing ? 'Cancel' : notes.length ? 'Edit Notes' : 'Add Notes'}</button>
+        <a class="button-link secondary" href="${escapeHtml(mapsUrl)}" target="_blank" rel="noopener">Maps</a>
       </div>
       ${editPanel}
     </div>`;
   }).join('');
+}
+
+function addAllVisible() {
+  let added = 0;
+  for (const item of state.items) {
+    if (!state.selected.has(item.id)) { state.selected.set(item.id, item); added++; }
+  }
+  if (!added) { alert('All visible items are already in My Run.'); return; }
+  saveSelectedLocal();
+  renderItems();
+  renderSelected();
+  renderQuickSelectors();
+  renderDashboard();
+  updateRunCountLabel();
+  alert(`Added ${added} item${added !== 1 ? 's' : ''} to My Run.`);
+}
+
+function clearRun() {
+  const count = state.selected.size;
+  if (!count) return;
+  if (!confirm(`Remove all ${count} item${count !== 1 ? 's' : ''} from My Run?`)) return;
+  state.selected.clear();
+  saveSelectedLocal();
+  renderItems();
+  renderSelected();
+  renderQuickSelectors();
+  renderDashboard();
+  updateRunCountLabel();
+}
+
+function toggleSelectedItems() {
+  const list = $('selectedItems');
+  const btn = $('toggleItemsBtn');
+  if (!list || !btn) return;
+  const nowHidden = list.classList.toggle('hidden');
+  btn.textContent = nowHidden ? 'View Items' : 'Hide Items';
+}
+
+function updateRunCountLabel() {
+  const count = state.selected.size;
+  if ($('runCountLabel')) $('runCountLabel').textContent = `Selected Items: ${count}`;
+  if (count === 0) {
+    $('selectedItems')?.classList.add('hidden');
+    if ($('toggleItemsBtn')) $('toggleItemsBtn').textContent = 'View Items';
+  }
 }
 
 function bindEvents() {
@@ -1127,6 +1218,7 @@ async function init() {
   await loadMe();
   await loadItems();
   restoreSelectedLocal();
+  updateRunCountLabel();
   await loadStores();
   await loadReports();
   renderSelected();
