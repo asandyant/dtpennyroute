@@ -65,6 +65,7 @@ function setTab(tab) {
   if (tab === 'check') { renderQuickSelectors(); renderCheckHelper(); buildRouteView(); renderStockRouteResults(); }
   if (tab === 'community') renderReports();
   if (tab === 'admin') initUploadSection();
+  if (tab === 'hunt') setTimeout(initHuntMap, 0);
 }
 
 function updateAccountUi() {
@@ -830,6 +831,255 @@ async function saveZip() {
   const sourceNote = state.storeMessage ? ` ${state.storeMessage}` : '';
   $('zipStatus').textContent = `Saved ${zip}. Stores updated.${sourceNote}`;
   renderCheckHelper();
+}
+
+// ── Today's Hunt Map ─────────────────────────────────────────────────────────
+
+const NOTE_PRESETS = [
+  'No scanner', 'Has price checker', 'Found penny items',
+  'Cleaned out', 'Employee pulled items', 'Worth returning'
+];
+
+const huntMap = { instance: null, markers: {}, initialized: false };
+let huntEditingStore = null;
+
+function todayStr() { return new Date().toISOString().slice(0, 10); }
+
+function getHuntState() {
+  return JSON.parse(localStorage.getItem(`dtpr_hunt_${todayStr()}`) || '{}');
+}
+function saveHuntState(s) {
+  localStorage.setItem(`dtpr_hunt_${todayStr()}`, JSON.stringify(s));
+}
+function getStoreNotes() {
+  return JSON.parse(localStorage.getItem('dtpr_store_notes') || '{}');
+}
+function saveStoreNotes(n) {
+  localStorage.setItem('dtpr_store_notes', JSON.stringify(n));
+}
+
+function huntMarkerStyle(storeId) {
+  const checked = getHuntState()[storeId]?.checked;
+  return checked
+    ? { radius: 11, color: '#0f5132', fillColor: '#198754', fillOpacity: 0.9, weight: 2 }
+    : { radius: 10, color: '#0a253d', fillColor: '#154e8c', fillOpacity: 0.78, weight: 2 };
+}
+
+function makePopupHtml(store) {
+  const checked = getHuntState()[store.id]?.checked;
+  const notes = getStoreNotes()[store.id] || [];
+  const mapsUrl = `https://www.google.com/maps?q=${store.latitude},${store.longitude}`;
+  const notesHtml = notes.length
+    ? `<div style="margin:5px 0 8px">${notes.map(n => `<span style="display:inline-block;background:#eef4f6;border-radius:4px;padding:2px 7px;margin:2px;font-size:11px">${escapeHtml(n)}</span>`).join('')}</div>`
+    : '';
+  return `<div style="min-width:210px;font-family:Arial,sans-serif;line-height:1.4">
+    <strong>${escapeHtml(store.name)}${store.storeNumber ? ' #' + escapeHtml(store.storeNumber) : ''}</strong><br>
+    <span style="font-size:12px;color:#60707a">${escapeHtml(store.address)}, ${escapeHtml(store.city)}, ${escapeHtml(store.state)}${Number.isFinite(store.distanceMiles) ? ' · ' + store.distanceMiles + ' mi' : ''}</span>
+    ${notesHtml}
+    <div style="display:flex;flex-direction:column;gap:5px;margin-top:8px">
+      <button onclick="checkStoreToday('${store.id}')"
+        style="background:${checked ? '#157347' : '#0d2f4f'};color:white;border:none;border-radius:8px;padding:7px 10px;cursor:pointer;font-size:12px;font-weight:700">
+        ${checked ? '✓ Checked Today — Undo' : 'Mark Checked Today'}
+      </button>
+      <a href="${escapeHtml(mapsUrl)}" target="_blank" rel="noopener"
+        style="display:block;text-align:center;background:#f0f4f6;color:#0d2f4f;border-radius:8px;padding:7px 10px;font-size:12px;font-weight:700;text-decoration:none">
+        Open in Google Maps
+      </a>
+    </div>
+  </div>`;
+}
+
+function addHuntMarker(store) {
+  if (!store.latitude || !store.longitude || !huntMap.instance) return;
+  const marker = L.circleMarker([store.latitude, store.longitude], huntMarkerStyle(store.id))
+    .addTo(huntMap.instance)
+    .bindPopup(() => makePopupHtml(store), { maxWidth: 290 });
+  huntMap.markers[store.id] = marker;
+}
+
+function updateHuntMarker(storeId) {
+  const marker = huntMap.markers[storeId];
+  if (!marker) return;
+  marker.setStyle(huntMarkerStyle(storeId));
+  if (marker.isPopupOpen()) {
+    const store = state.stores.find(s => s.id === storeId);
+    if (store) marker.getPopup().setContent(makePopupHtml(store));
+  }
+}
+
+function initHuntMap() {
+  const container = $('huntMapContainer');
+  if (!container) return;
+  if ($('huntZipLabel')) $('huntZipLabel').textContent = state.homeZip;
+
+  if (typeof L === 'undefined') {
+    container.innerHTML = '<p class="muted" style="padding:20px">Map library failed to load. Check your internet connection.</p>';
+    return;
+  }
+  if (!state.stores.length) {
+    container.innerHTML = '<p class="muted" style="padding:20px">Enter your ZIP above and tap Save ZIP to load nearby stores.</p>';
+    renderHuntSummary();
+    renderHuntStoreList();
+    return;
+  }
+
+  if (huntMap.initialized) {
+    // Re-sync markers if store list changed (e.g. new ZIP)
+    const currentIds = state.stores.map(s => s.id).sort().join(',');
+    const cachedIds = Object.keys(huntMap.markers).sort().join(',');
+    if (currentIds !== cachedIds) {
+      Object.values(huntMap.markers).forEach(m => m.remove());
+      huntMap.markers = {};
+      state.stores.forEach(store => addHuntMarker(store));
+    } else {
+      Object.keys(huntMap.markers).forEach(id => updateHuntMarker(id));
+    }
+    setTimeout(() => huntMap.instance?.invalidateSize(), 60);
+    renderHuntSummary();
+    renderHuntStoreList();
+    return;
+  }
+
+  // First initialization
+  const lats = state.stores.map(s => s.latitude).filter(Boolean);
+  const lons = state.stores.map(s => s.longitude).filter(Boolean);
+  const lat = lats.reduce((a, b) => a + b, 0) / lats.length;
+  const lon = lons.reduce((a, b) => a + b, 0) / lons.length;
+
+  huntMap.instance = L.map('huntMapContainer').setView([lat, lon], 12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 19
+  }).addTo(huntMap.instance);
+
+  huntMap.initialized = true;
+  state.stores.forEach(store => addHuntMarker(store));
+  setTimeout(() => huntMap.instance?.invalidateSize(), 100);
+  renderHuntSummary();
+  renderHuntStoreList();
+}
+
+function checkStoreToday(storeId) {
+  const hunt = getHuntState();
+  if (hunt[storeId]?.checked) {
+    hunt[storeId] = { checked: false };
+  } else {
+    hunt[storeId] = { checked: true, checkedAt: new Date().toISOString() };
+  }
+  saveHuntState(hunt);
+  updateHuntMarker(storeId);
+  renderHuntSummary();
+  renderHuntStoreList();
+}
+
+function renderHuntSummary() {
+  const box = $('huntSummary');
+  if (!box) return;
+  const hunt = getHuntState();
+  const total = state.stores.length;
+  const checked = state.stores.filter(s => hunt[s.id]?.checked).length;
+  const remaining = total - checked;
+  const today = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+  box.innerHTML = `
+    <div class="hunt-summary-grid">
+      <div class="hunt-metric"><strong>${total}</strong><span>Nearby stores</span></div>
+      <div class="hunt-metric checked"><strong>${checked}</strong><span>Checked today</span></div>
+      <div class="hunt-metric"><strong>${remaining}</strong><span>Remaining</span></div>
+    </div>
+    <p class="small muted" style="margin-top:4px">${escapeHtml(today)} · ZIP ${escapeHtml(state.homeZip)}</p>`;
+}
+
+function toggleHuntNoteEdit(storeId) {
+  huntEditingStore = huntEditingStore === storeId ? null : storeId;
+  renderHuntStoreList();
+  if (huntEditingStore) {
+    const el = $(`hne_${huntEditingStore}`);
+    if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+  }
+}
+
+function saveStoreNoteEdit(storeId) {
+  const panel = $(`hne_${storeId}`);
+  if (!panel) return;
+  const presets = [...panel.querySelectorAll('input[type="checkbox"]:checked')].map(cb => cb.value);
+  const custom = panel.querySelector('.hunt-custom-input')?.value?.trim();
+  if (custom) presets.push(custom);
+  const allNotes = getStoreNotes();
+  allNotes[storeId] = presets;
+  saveStoreNotes(allNotes);
+  huntEditingStore = null;
+  updateHuntMarker(storeId);
+  renderHuntStoreList();
+}
+
+function renderHuntStoreList() {
+  const box = $('huntStoreList');
+  if (!box) return;
+  if (!state.stores.length) {
+    box.innerHTML = '<p class="muted">No stores loaded yet.</p>';
+    return;
+  }
+  const hunt = getHuntState();
+  const allNotes = getStoreNotes();
+  // Unchecked first, then checked; within each group sort by distance
+  const sorted = [...state.stores].sort((a, b) => {
+    const ca = hunt[a.id]?.checked ? 1 : 0;
+    const cb = hunt[b.id]?.checked ? 1 : 0;
+    if (ca !== cb) return ca - cb;
+    return (a.distanceMiles ?? 9999) - (b.distanceMiles ?? 9999);
+  });
+
+  box.innerHTML = sorted.map(store => {
+    const checked = hunt[store.id]?.checked;
+    const checkedAt = hunt[store.id]?.checkedAt;
+    const notes = allNotes[store.id] || [];
+    const editing = huntEditingStore === store.id;
+    const mapsUrl = `https://www.google.com/maps?q=${store.latitude},${store.longitude}`;
+    const timeStr = checkedAt
+      ? new Date(checkedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+    const existingCustom = notes.find(n => !NOTE_PRESETS.includes(n)) || '';
+
+    const noteChips = notes.length
+      ? `<div class="hunt-note-chips">${notes.map(n => `<span class="note-chip">${escapeHtml(n)}</span>`).join('')}</div>`
+      : '';
+
+    const editPanel = `
+      <div class="hunt-note-edit ${editing ? '' : 'hidden'}" id="hne_${store.id}">
+        <div class="note-preset-grid">
+          ${NOTE_PRESETS.map(p => `<label class="note-preset-label">
+            <input type="checkbox" value="${escapeHtml(p)}" ${notes.includes(p) ? 'checked' : ''}>
+            ${escapeHtml(p)}
+          </label>`).join('')}
+        </div>
+        <input class="hunt-custom-input" type="text"
+          placeholder="Custom note…"
+          value="${escapeHtml(existingCustom)}" />
+        <button class="teal" onclick="saveStoreNoteEdit('${store.id}')" style="margin-top:8px">Save Notes</button>
+      </div>`;
+
+    return `<div class="hunt-store-card ${checked ? 'checked' : ''}" id="hsc_${store.id}">
+      <div class="hunt-store-head">
+        <div>
+          <strong>${escapeHtml(store.name)}${store.storeNumber ? ' #' + escapeHtml(store.storeNumber) : ''}</strong>
+          <div class="small">${escapeHtml(store.address)}, ${escapeHtml(store.city)}, ${escapeHtml(store.state)}${Number.isFinite(store.distanceMiles) ? ' · ' + store.distanceMiles + ' mi' : ''}</div>
+        </div>
+        <span class="pill ${checked ? 'green' : ''}" style="white-space:nowrap;flex-shrink:0">
+          ${checked ? 'Checked' + (timeStr ? ' ' + timeStr : '') : 'Not checked'}
+        </span>
+      </div>
+      ${noteChips}
+      <div class="hunt-store-actions">
+        <button class="${checked ? 'secondary' : 'teal'}" onclick="checkStoreToday('${store.id}')">
+          ${checked ? 'Uncheck' : 'Mark Checked'}
+        </button>
+        <button class="secondary" onclick="toggleHuntNoteEdit('${store.id}')">
+          ${editing ? 'Cancel' : notes.length ? 'Edit Notes' : 'Add Notes'}
+        </button>
+        <a class="button-link secondary" href="${escapeHtml(mapsUrl)}" target="_blank" rel="noopener">Google Maps</a>
+      </div>
+      ${editPanel}
+    </div>`;
+  }).join('');
 }
 
 function bindEvents() {

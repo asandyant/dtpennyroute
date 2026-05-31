@@ -117,3 +117,28 @@ button.added-btn{background:#d9f5ea;color:#14543c;border:1px solid #9bd8bf;curso
   .run-item-img-wrap .item-img { width:100%; height:100px; }
   .category-chips { gap:5px; }
 }
+
+/* Hunt Map ----------------------------------------------------------------- */
+.map-card { padding:0 !important; overflow:hidden; }
+#huntMapContainer { height:420px; width:100%; display:block; }
+.hunt-summary-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:10px 0 4px; }
+.hunt-metric { background:#f6fafb; border:1px solid var(--line); border-radius:14px; padding:12px; text-align:center; }
+.hunt-metric strong { font-size:26px; display:block; color:var(--blue); }
+.hunt-metric.checked strong { color:var(--green); }
+.hunt-metric span { font-size:12px; color:var(--muted); }
+.hunt-store-card { border:1px solid var(--line); border-radius:18px; padding:14px; margin-bottom:10px; background:#fff; }
+.hunt-store-card.checked { border-color:#9bd8bf; background:#f4fdf8; }
+.hunt-store-head { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:8px; }
+.hunt-note-chips { display:flex; flex-wrap:wrap; gap:5px; margin:6px 0 8px; }
+.note-chip { background:#eef4f6; border:1px solid var(--line); border-radius:999px; padding:3px 9px; font-size:11px; font-weight:700; color:var(--blue); }
+.hunt-store-actions { display:flex; flex-wrap:wrap; gap:7px; align-items:center; }
+.hunt-note-edit { background:#f6fafb; border:1px solid var(--line); border-radius:14px; padding:12px; margin-top:10px; }
+.note-preset-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px 12px; margin-bottom:10px; }
+.note-preset-label { display:flex; align-items:center; gap:7px; font-size:13px; cursor:pointer; }
+.note-preset-label input[type="checkbox"] { width:auto; margin:0; cursor:pointer; }
+.hunt-custom-input { margin-top:4px; }
+@media(max-width:760px) {
+  #huntMapContainer { height:300px; }
+  .note-preset-grid { grid-template-columns:1fr; }
+  .hunt-store-head { flex-direction:column; }
+}
