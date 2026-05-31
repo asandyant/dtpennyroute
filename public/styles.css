@@ -118,7 +118,9 @@ button.added-btn{background:#d9f5ea;color:#14543c;border:1px solid #9bd8bf;curso
   .category-chips { gap:5px; }
 }
 
-/* Hunt Map ----------------------------------------------------------------- */
+/* Hunt Map (inside My Run tab) --------------------------------------------- */
+.hunt-section-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.hunt-section-head h3 { margin:0; }
 .map-card { padding:0 !important; overflow:hidden; }
 #huntMapContainer { height:420px; width:100%; display:block; }
 .hunt-summary-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:10px 0 4px; }

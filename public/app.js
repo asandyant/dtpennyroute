@@ -61,11 +61,10 @@ function setTab(tab) {
   document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.add('hidden'));
   $(`${tab}Tab`)?.classList.remove('hidden');
   if (tab === 'dashboard') renderDashboard();
-  if (tab === 'run') { loadHunts(); renderSelected(); renderRouteBuilder(); }
+  if (tab === 'run') { loadHunts(); renderSelected(); renderRouteBuilder(); setTimeout(initHuntMap, 0); }
   if (tab === 'check') { renderQuickSelectors(); renderCheckHelper(); buildRouteView(); renderStockRouteResults(); }
   if (tab === 'community') renderReports();
   if (tab === 'admin') initUploadSection();
-  if (tab === 'hunt') setTimeout(initHuntMap, 0);
 }
 
 function updateAccountUi() {
@@ -833,6 +832,15 @@ async function saveZip() {
   renderCheckHelper();
 }
 
+function toggleHuntMapSection() {
+  const card = $('huntMapCard');
+  const btn = $('huntMapToggle');
+  if (!card || !btn) return;
+  const nowHidden = card.classList.toggle('hidden');
+  btn.textContent = nowHidden ? 'Show Map' : 'Hide Map';
+  if (!nowHidden) setTimeout(() => huntMap.instance?.invalidateSize(), 60);
+}
+
 // ── Today's Hunt Map ─────────────────────────────────────────────────────────
 
 const NOTE_PRESETS = [
@@ -1101,6 +1109,7 @@ function bindEvents() {
   $('uploadSearch')?.addEventListener('input', filterUploadItems);
   $('uploadFileInput')?.addEventListener('change', handleUploadFileSelect);
   $('uploadPhotoBtn')?.addEventListener('click', adminUploadPhoto);
+  $('huntMapToggle')?.addEventListener('click', toggleHuntMapSection);
 }
 
 async function init() {

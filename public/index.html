@@ -32,7 +32,6 @@
       <button data-tab="items" class="tab-btn">Penny List</button>
       <button data-tab="run" class="tab-btn">My Run</button>
       <button data-tab="check" class="tab-btn">Build Route</button>
-      <button data-tab="hunt" class="tab-btn">Hunt Map</button>
       <button data-tab="community" class="tab-btn">Community</button>
       <button data-tab="account" class="tab-btn">Account</button>
       <button data-tab="admin" class="tab-btn hidden" id="adminTabButton">Admin</button>
@@ -101,6 +100,22 @@
       </div>
 
       <div class="card">
+        <div class="hunt-section-head">
+          <h3>Today's Hunt Route</h3>
+          <button class="secondary" id="huntMapToggle">Hide Map</button>
+        </div>
+        <p class="muted">Mark stores checked as you drive. Resets tomorrow, notes stay saved.</p>
+        <div id="huntSummary"></div>
+      </div>
+      <div class="card map-card" id="huntMapCard">
+        <div id="huntMapContainer"></div>
+      </div>
+      <div class="card">
+        <h4 style="margin:0 0 10px">Stores Near <span id="huntZipLabel">—</span></h4>
+        <div id="huntStoreList"></div>
+      </div>
+
+      <div class="card">
         <h3>Route Preview</h3>
         <p class="muted">Stores ranked by community report confidence, then distance. Nearby stores are live. Log results with the report buttons to improve scores.</p>
         <div id="routeBuilder"></div>
@@ -152,20 +167,7 @@
       </div>
     </section>
 
-    <section id="huntTab" class="tab-panel hidden">
-      <div class="card intro-card">
-        <h2>Today's Hunt Map</h2>
-        <p class="muted">Live nearby Dollar Tree stores on a map. Mark each store checked for today and add notes. Checked status resets each day. Notes persist.</p>
-        <div id="huntSummary"></div>
-      </div>
-      <div class="card map-card">
-        <div id="huntMapContainer"></div>
-      </div>
-      <div class="card">
-        <h3>Stores Near <span id="huntZipLabel">—</span></h3>
-        <div id="huntStoreList"></div>
-      </div>
-    </section>
+
 
     <section id="communityTab" class="tab-panel hidden">
       <div class="card">
