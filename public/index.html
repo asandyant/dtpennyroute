@@ -223,6 +223,28 @@
       </div>
 
       <div class="card">
+        <h2>Admin: Upload Item Photo</h2>
+        <p class="muted">Upload a real product photo from your phone or computer. Overrides any catalog image. Shows "Verified item photo" on the card in Penny List and My Run.</p>
+        <div class="grid two" style="align-items:start">
+          <div>
+            <label class="small" style="display:block;margin-bottom:4px">Search and select item</label>
+            <input id="uploadSearch" placeholder="Type SKU or description…" />
+            <select id="uploadItemSelect" size="8" style="margin-top:6px;border-radius:14px;padding:8px"></select>
+          </div>
+          <div>
+            <label class="small" style="display:block;margin-bottom:4px">Photo (jpg or png)</label>
+            <input id="uploadFileInput" type="file" accept="image/*" />
+            <div id="uploadPreview" style="margin-top:10px"></div>
+          </div>
+        </div>
+        <div class="actions" style="margin-top:12px">
+          <button id="uploadPhotoBtn">Upload Photo</button>
+        </div>
+        <div id="uploadStatus" class="small" style="margin-top:8px"></div>
+        <p class="small muted" style="margin-top:8px">Photos save to server storage. To persist across Render redeploys, enable the persistent disk in render.yaml (requires Starter plan — see comments in that file).</p>
+      </div>
+
+      <div class="card">
         <h2>Admin: Bulk Import (TSV or pipe-separated)</h2>
         <p class="muted">Paste rows in format: <code>dropDate | category | sku | description | searchTerms</code> (tab or pipe separated). First line can be a header row — it will be skipped automatically. Duplicate SKUs are merged, not duplicated.</p>
         <textarea id="adminImportRows" placeholder="2026-06-01&#9;Kitchenware&#9;401350&#9;BLU REACTIVE PRNT PLATE 10.5IN&#9;blue reactive print plate

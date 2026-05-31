@@ -64,6 +64,7 @@ function setTab(tab) {
   if (tab === 'run') { loadHunts(); renderSelected(); renderRouteBuilder(); }
   if (tab === 'check') { renderQuickSelectors(); renderCheckHelper(); buildRouteView(); renderStockRouteResults(); }
   if (tab === 'community') renderReports();
+  if (tab === 'admin') initUploadSection();
 }
 
 function updateAccountUi() {
@@ -147,6 +148,7 @@ function renderItems() {
             <div class="item-meta">
               <span class="pill">${escapeHtml(item.category)}</span>
               <span class="pill green">Confirmed Penny Item</span>
+              ${item.imageSource === 'admin_upload' ? `<span class="pill teal">Verified item photo</span>` : ''}
               ${item.sku ? `<span class="sku-badge">SKU ${escapeHtml(item.sku)}</span>` : ''}
               ${item.dropDate ? `<span class="drop-badge">Drop ${escapeHtml(item.dropDate)}</span>` : ''}
             </div>
@@ -255,6 +257,7 @@ function renderSelected() {
             <div class="run-item-title">${escapeHtml(item.description)}</div>
             <div class="run-item-meta">
               ${item.sku ? `<span class="sku-badge">SKU ${escapeHtml(item.sku)}</span>` : ''}
+              ${item.imageSource === 'admin_upload' ? `<span class="pill teal" style="font-size:11px;padding:3px 8px">Verified item photo</span>` : ''}
               <span class="term-chip" onclick="copyTermText('${escapeHtml(preferredSearchTerm(item))}')" title="Tap to copy">${escapeHtml(preferredSearchTerm(item))}</span>
             </div>
             <div class="run-report-buttons">
@@ -708,6 +711,100 @@ async function adminDebugImages() {
   if (btn) { btn.disabled = false; btn.textContent = 'Debug Image Status'; }
 }
 
+// ── Admin photo upload ───────────────────────────────────────────────────────
+
+let _uploadItemsCache = null;
+
+async function initUploadSection() {
+  if (!_uploadItemsCache) {
+    const data = await api('/api/items');
+    _uploadItemsCache = data.items;
+  }
+  filterUploadItems();
+}
+
+function filterUploadItems() {
+  const q = ($('uploadSearch')?.value || '').toLowerCase().trim();
+  const select = $('uploadItemSelect');
+  if (!select || !_uploadItemsCache) return;
+  const items = q
+    ? _uploadItemsCache.filter(i => i.description.toLowerCase().includes(q) || (i.sku || '').includes(q))
+    : _uploadItemsCache;
+  select.innerHTML = items.length
+    ? items.map(i => `<option value="${i.id}">${i.sku ? i.sku + ' — ' : ''}${escapeHtml(i.description)}</option>`).join('')
+    : '<option value="">No items match</option>';
+}
+
+function resizeImageToDataUrl(file, maxSize = 800) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = reject;
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onerror = reject;
+      img.onload = () => {
+        let { width, height } = img;
+        if (width > maxSize || height > maxSize) {
+          if (width >= height) { height = Math.round(height * maxSize / width); width = maxSize; }
+          else { width = Math.round(width * maxSize / height); height = maxSize; }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width; canvas.height = height;
+        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/jpeg', 0.85));
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+async function handleUploadFileSelect() {
+  const file = $('uploadFileInput')?.files?.[0];
+  const preview = $('uploadPreview');
+  if (!file || !preview) return;
+  preview.innerHTML = '<span class="small muted">Resizing image…</span>';
+  preview.dataset.dataUrl = '';
+  try {
+    const dataUrl = await resizeImageToDataUrl(file);
+    preview.innerHTML = `<img class="upload-preview-img" src="${escapeHtml(dataUrl)}" />`;
+    preview.dataset.dataUrl = dataUrl;
+  } catch(e) {
+    preview.innerHTML = '<span class="small" style="color:#b42318">Could not read image</span>';
+  }
+}
+
+async function adminUploadPhoto() {
+  const select = $('uploadItemSelect');
+  const preview = $('uploadPreview');
+  const status = $('uploadStatus');
+  const btn = $('uploadPhotoBtn');
+  const itemId = select?.value;
+  const dataUrl = preview?.dataset?.dataUrl;
+
+  if (!itemId) { if (status) status.textContent = 'Select an item first.'; return; }
+  if (!dataUrl) { if (status) status.textContent = 'Choose a photo first.'; return; }
+
+  if (btn) { btn.disabled = true; btn.textContent = 'Uploading…'; }
+  if (status) status.textContent = 'Uploading…';
+  try {
+    const data = await api(`/api/admin/items/${encodeURIComponent(itemId)}/photo`, {
+      method: 'POST',
+      body: JSON.stringify({ imageData: dataUrl })
+    });
+    if (status) status.textContent = `Saved. Photo attached to: ${data.item.description}`;
+    if (preview) { preview.innerHTML = ''; preview.dataset.dataUrl = ''; }
+    if ($('uploadFileInput')) $('uploadFileInput').value = '';
+    // Bust the cache so the updated item appears immediately
+    _uploadItemsCache = null;
+    await loadItems();
+    await initUploadSection();
+  } catch(e) {
+    if (status) status.textContent = 'Error: ' + e.message;
+  }
+  if (btn) { btn.disabled = false; btn.textContent = 'Upload Photo'; }
+}
+
 async function adminBulkImport() {
   const rows = $('adminImportRows').value.trim();
   if (!rows) { $('adminImportStatus').textContent = 'Paste rows first.'; return; }
@@ -748,6 +845,9 @@ function bindEvents() {
   $('adminEnrichImagesBtn')?.addEventListener('click', () => adminEnrichImages(false));
   $('adminEnrichForceBtn')?.addEventListener('click', () => adminEnrichImages(true));
   $('adminImageDebugBtn')?.addEventListener('click', adminDebugImages);
+  $('uploadSearch')?.addEventListener('input', filterUploadItems);
+  $('uploadFileInput')?.addEventListener('change', handleUploadFileSelect);
+  $('uploadPhotoBtn')?.addEventListener('click', adminUploadPhoto);
 }
 
 async function init() {

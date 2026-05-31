@@ -8,8 +8,9 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const DATA_DIR = process.env.STORAGE_PATH || process.env.DATA_DIR || path.join(__dirname, 'data');
 const DB_FILE = path.join(DATA_DIR, 'dtpennyroute-db.json');
+const UPLOADS_DIR = path.join(DATA_DIR, 'uploads');
 
-app.use(express.json({ limit: '2mb' }));
+app.use(express.json({ limit: '5mb' }));
 app.use(cookieSession({
   name: 'dtpr_session',
   keys: [process.env.SESSION_SECRET || 'dev-change-this-before-public-launch'],
@@ -60,6 +61,7 @@ function publicItem(item) {
 
 function ensureDataDir() {
   if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+  if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 }
 
 // Known catalog images baked in so they survive fresh Render deploys (ephemeral storage).
@@ -901,6 +903,64 @@ app.get('/api/admin/image-debug', requireAdmin, async (req, res) => {
     imageChecks: checks,
     allFound: withImage.map(i => ({ id: i.id, sku: i.sku, description: i.description.slice(0, 45), imageUrl: i.imageUrl }))
   });
+});
+
+// Serve admin-uploaded item photos. Tries the file on disk first; falls back to
+// base64 stored in the DB (survives if disk was never configured or was wiped).
+app.get('/api/images/:itemId', (req, res) => {
+  const itemId = req.params.itemId.replace(/[^a-z0-9_-]/gi, '');
+  if (!itemId) return res.status(400).end();
+
+  for (const ext of ['.jpg', '.jpeg', '.png', '.webp']) {
+    const fp = path.join(UPLOADS_DIR, itemId + ext);
+    if (fs.existsSync(fp)) {
+      const mime = ext === '.png' ? 'image/png' : ext === '.webp' ? 'image/webp' : 'image/jpeg';
+      res.setHeader('Content-Type', mime);
+      res.setHeader('Cache-Control', 'public, max-age=86400');
+      return res.sendFile(fp);
+    }
+  }
+
+  const db = readDb();
+  const item = db.items.find(i => i.id === itemId);
+  if (!item?.imageData) return res.status(404).end();
+
+  const [header, b64] = item.imageData.split(',');
+  const mime = header.match(/data:([^;]+)/)?.[1] || 'image/jpeg';
+  res.setHeader('Content-Type', mime);
+  res.setHeader('Cache-Control', 'public, max-age=86400');
+  res.end(Buffer.from(b64, 'base64'));
+});
+
+app.post('/api/admin/items/:itemId/photo', requireAdmin, (req, res) => {
+  const itemId = req.params.itemId.replace(/[^a-z0-9_-]/gi, '');
+  if (!itemId) return res.status(400).json({ error: 'Invalid item ID' });
+
+  const { imageData } = req.body;
+  if (!imageData || !imageData.startsWith('data:image/')) {
+    return res.status(400).json({ error: 'imageData must be a valid image DataURL' });
+  }
+
+  const db = readDb();
+  const item = db.items.find(i => i.id === itemId);
+  if (!item) return res.status(404).json({ error: 'Item not found' });
+
+  const mime = imageData.match(/data:([^;]+)/)?.[1] || 'image/jpeg';
+  const ext = mime.includes('png') ? '.png' : mime.includes('webp') ? '.webp' : '.jpg';
+  const [, b64] = imageData.split(',');
+
+  ensureDataDir();
+  fs.writeFileSync(path.join(UPLOADS_DIR, itemId + ext), Buffer.from(b64, 'base64'));
+
+  // Keep base64 in item as fallback in case disk is wiped or not configured.
+  item.imageData = imageData;
+  item.imageUrl = `/api/images/${itemId}`;
+  item.imageSource = 'admin_upload';
+  item.imageStatus = 'verified';
+
+  writeDb(db);
+  console.log(`Admin photo uploaded for ${itemId} (${item.description.slice(0, 40)})`);
+  res.json({ ok: true, item: publicItem(item) });
 });
 
 app.post('/api/admin/enrich-images', requireAdmin, async (req, res) => {
