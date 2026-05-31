@@ -58,3 +58,55 @@ button.added-btn{background:#d9f5ea;color:#14543c;border:1px solid #9bd8bf;curso
 .route-note { background:#f0f6fb; border:1px solid #bcd0e8; color:#0d2a45; padding:12px 14px; border-radius:14px; margin-bottom:12px; font-size:13px; font-weight:700; }
 .inside-note { display:inline-block; margin-top:8px; color:#163050; font-weight:700; }
 .item-card .added-btn { background:#2f7d54; color:white; border-color:#2f7d54; }
+
+/* Category chips */
+.category-chips { display:flex; flex-wrap:wrap; gap:7px; margin:4px 0; }
+.cat-chip { background:#eef4f6; border:1px solid var(--line); border-radius:999px; padding:7px 13px; font-size:13px; font-weight:700; color:var(--blue); cursor:pointer; white-space:nowrap; }
+.cat-chip:hover { background:#ddeef4; }
+.cat-chip.active { background:var(--blue); color:#fff; border-color:var(--blue); }
+
+/* Visual item cards */
+.item-card { background:#fff; border:1px solid var(--line); border-radius:22px; padding:0; overflow:hidden; box-shadow:0 6px 18px rgba(16,32,42,.05); }
+.item-card-inner { display:flex; gap:0; }
+.item-img-wrap { width:120px; min-width:120px; background:#f3f7f8; display:flex; align-items:stretch; }
+.item-img { width:120px; height:120px; object-fit:cover; display:block; }
+.item-img-placeholder { width:120px; min-height:110px; display:flex; align-items:center; justify-content:center; text-align:center; padding:10px; }
+.item-img-placeholder span { font-size:11px; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; line-height:1.3; }
+.item-card-body { flex:1; padding:14px 16px; min-width:0; }
+.item-title { font-size:16px; font-weight:900; line-height:1.2; margin-bottom:8px; }
+.item-meta { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+.sku-badge { background:#f0f4f6; border:1px solid var(--line); border-radius:8px; padding:3px 8px; font-size:12px; font-weight:700; color:var(--muted); }
+.drop-badge { background:#fff8e1; border:1px solid #f1d588; border-radius:8px; padding:3px 8px; font-size:12px; font-weight:700; color:#7a5200; }
+.search-terms-row { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
+.term-chip { background:#e8f4fb; border:1px solid #b5d8ee; border-radius:999px; padding:4px 10px; font-size:12px; font-weight:700; color:#0d3a5c; cursor:pointer; }
+.term-chip:hover { background:#d0eaf7; }
+.item-actions { display:flex; flex-wrap:wrap; gap:8px; }
+.item-quick-report { margin-top:10px; background:#fafcfd; border:1px dashed var(--line); border-radius:12px; padding:10px; }
+.qr-buttons { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+.qr-btn { padding:7px 11px; font-size:12px; }
+.link-btn { background:none; border:none; color:var(--teal); font-size:12px; font-weight:700; cursor:pointer; padding:4px 0; margin-top:4px; text-decoration:underline; }
+
+/* My Run grouped layout */
+.run-group { margin-bottom:16px; }
+.run-group-header { font-size:13px; font-weight:900; text-transform:uppercase; letter-spacing:.08em; color:var(--blue); background:#edf3f6; border:1px solid var(--line); border-radius:12px; padding:7px 12px; margin-bottom:8px; }
+.run-item-card { display:flex; gap:0; background:#fff; border:1px solid var(--line); border-radius:18px; overflow:hidden; margin-bottom:8px; }
+.run-item-img-wrap { width:80px; min-width:80px; background:#f3f7f8; display:flex; align-items:stretch; }
+.run-item-img-wrap .item-img { width:80px; height:80px; }
+.run-item-img-wrap .item-img-placeholder { width:80px; min-height:72px; }
+.run-item-img-wrap .item-img-placeholder span { font-size:10px; }
+.run-item-body { flex:1; padding:10px 12px; min-width:0; }
+.run-item-title { font-size:14px; font-weight:900; margin-bottom:6px; }
+.run-item-meta { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+.run-report-buttons { display:flex; flex-wrap:wrap; gap:6px; }
+.remove-btn { background:#ffeaea; color:#8a1f16; border-color:#f5b5ad; }
+
+@media(max-width:760px){
+  .item-card-inner { flex-direction:column; }
+  .item-img-wrap,.item-img,.item-img-placeholder { width:100%; min-width:unset; }
+  .item-img { width:100%; height:160px; }
+  .item-img-placeholder { min-height:80px; }
+  .run-item-card { flex-direction:column; }
+  .run-item-img-wrap,.run-item-img-wrap .item-img,.run-item-img-wrap .item-img-placeholder { width:100%; min-width:unset; }
+  .run-item-img-wrap .item-img { width:100%; height:100px; }
+  .category-chips { gap:5px; }
+}

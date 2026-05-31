@@ -12,7 +12,7 @@
       <div>
         <p class="eyebrow">Dollar Tree Penny Hunting</p>
         <h1>DTPennyRoute</h1>
-        <p class="tagline">Find penny items. Check nearby stock. Build the best route before wasting gas.</p>
+        <p class="tagline">Visual penny lists, product categories, search terms, live nearby Dollar Tree stores, and your personal hunt route.</p>
       </div>
       <div class="account-pill" id="accountPill">Guest Mode</div>
     </div>
@@ -40,15 +40,15 @@
   <main>
     <section id="dashboardTab" class="tab-panel">
       <div class="card intro-card">
-        <h2>Build My Penny Run</h2>
-        <p class="muted">Set your ZIP, add items from the Penny List, then tap Build My Penny Route. DTPennyRoute pulls live nearby Dollar Tree stores and ranks them by community scan reports, penny finds, and hunt results — no live inventory, honest data only.</p>
+        <h2>Build My Penny Route</h2>
+        <p class="muted">Set your ZIP, browse the Penny List, add items to My Run, then tap Build My Penny Route. Live nearby Dollar Tree stores are ranked by community scan reports and hunt results — honest data only, no fake inventory.</p>
         <div class="dashboard-grid">
           <div class="metric"><strong id="metricItems">0</strong><span>Penny items loaded</span></div>
           <div class="metric"><strong id="metricRun">0</strong><span>Items in My Run</span></div>
           <div class="metric"><strong id="metricReports">0</strong><span>Community reports</span></div>
         </div>
         <div class="actions">
-          <button onclick="setTab('items')">Search Penny List</button>
+          <button onclick="setTab('items')">Browse Penny List</button>
           <button class="teal" onclick="setTab('run')">View My Run</button>
           <button class="secondary" onclick="setTab('check')">Build My Penny Route</button>
         </div>
@@ -56,15 +56,15 @@
 
       <div class="card">
         <h3>Best Store To Try First</h3>
-        <p class="muted">The gas saver. Route Confidence scores update from your penny scans, app check results, normal-price scans, and empty-shelf reports.</p>
+        <p class="muted">Route Confidence scores update from your penny scans, app check results, normal-price scans, and empty-shelf reports. Nearby stores are live.</p>
         <div id="dashboardRoute"></div>
       </div>
 
       <div class="card">
         <h3>Simple workflow</h3>
         <div class="quick-steps big">
-          <div><strong>1</strong><span>Add penny items</span></div>
-          <div><strong>2</strong><span>Enter ZIP</span></div>
+          <div><strong>1</strong><span>Browse penny items</span></div>
+          <div><strong>2</strong><span>Enter your ZIP</span></div>
           <div><strong>3</strong><span>Build your route</span></div>
           <div><strong>4</strong><span>Hunt the best store first</span></div>
         </div>
@@ -74,12 +74,10 @@
     <section id="itemsTab" class="tab-panel hidden">
       <div class="card intro-card">
         <h2>Penny List</h2>
-        <p class="muted">Search the 6/1/26 drop plus earlier field-confirmed finds. Every starter item shows <strong>100 PennyScore</strong>.</p>
-        <div class="search-row">
-          <input id="itemSearch" placeholder="Search item, SKU, category, event #" />
-          <select id="categoryFilter"><option value="">All Categories</option></select>
-        </div>
-        <div id="itemCount" class="small"></div>
+        <p class="muted">Confirmed penny items for the 6/1/26 drop plus earlier field-confirmed finds. Tap a search term chip to copy it for the Dollar Tree app.</p>
+        <input id="itemSearch" placeholder="Search item, SKU, or search term" style="margin-bottom:10px" />
+        <div id="categoryChips" class="category-chips"></div>
+        <div id="itemCount" class="small" style="margin-top:8px"></div>
       </div>
       <div id="itemsList" class="list"></div>
     </section>
@@ -87,7 +85,7 @@
     <section id="runTab" class="tab-panel hidden">
       <div class="card run-card">
         <h2>My Penny Run</h2>
-        <p class="muted">Your shopping list for today. Add the items you want, then tap Build Route to rank nearby Dollar Tree stores for your ZIP.</p>
+        <p class="muted">Your hunt checklist, grouped by category. Use the report buttons after visiting each store. Reports improve Route Confidence scores.</p>
         <div class="search-row">
           <input id="huntName" placeholder="Run name" value="My Penny Run" />
           <button id="saveHuntBtn">Save Run</button>
@@ -96,13 +94,13 @@
       </div>
 
       <div class="card">
-        <h3>Items I’m Hunting</h3>
+        <h3>Items I'm Hunting</h3>
         <div id="selectedItems" class="selected-list"></div>
       </div>
 
       <div class="card">
         <h3>Route Preview</h3>
-        <p class="muted">Stores ranked by community report confidence, then distance. Log scan results and app checks with the report buttons to improve scores.</p>
+        <p class="muted">Stores ranked by community report confidence, then distance. Nearby stores are live. Log results with the report buttons to improve scores.</p>
         <div id="routeBuilder"></div>
       </div>
 
@@ -115,7 +113,7 @@
     <section id="checkTab" class="tab-panel hidden">
       <div class="card intro-card stock-hero">
         <h2>Build My Penny Route</h2>
-        <p class="muted">Add penny items to My Run, set your ZIP, then tap Build My Penny Route. Nearby Dollar Tree stores are pulled live. Route Confidence scores come from community scan reports, penny finds, and app check results — not live inventory.</p>
+        <p class="muted">Nearby Dollar Tree stores are live. Route Confidence scores are based on community scan reports and hunt results — not live inventory. "No reports yet" is honest, not broken.</p>
         <div class="route-controls">
           <div><strong>ZIP:</strong> <span id="routeZipLabel">08096</span></div>
           <div><strong>Items in run:</strong> <span id="routeItemCount">0</span></div>
@@ -126,13 +124,13 @@
 
       <div class="card">
         <h3>Route Confidence</h3>
-        <p class="muted">Nearby Dollar Tree stores are live. Route scores use community reports — penny scans, app check results, and hunt logs. Items with no reports yet show "No reports" — that's honest, not broken. Log yours with the buttons below.</p>
+        <p class="muted">Nearby Dollar Tree stores are live from the Dollar Tree store locator. In-store stock is not directly available — Route Confidence is based on your reports and community hunt results. Be the first to report for stores with no data yet.</p>
         <div id="stockRouteResults"></div>
       </div>
 
       <div class="card">
-        <h3>Manual Result / Community Report</h3>
-        <p class="muted">Use this after you check an item in the Dollar Tree app or scan it in store. Reports immediately improve the route score.</p>
+        <h3>Log a Result / Community Report</h3>
+        <p class="muted">Use this after checking the Dollar Tree app or scanning in store. Reports immediately improve the route score for this store.</p>
         <div class="grid two compact-grid">
           <select id="quickItem"></select>
           <select id="quickStore"></select>
@@ -142,10 +140,10 @@
           <button onclick="quickReport('in_stock')">App: In Stock</button>
           <button onclick="quickReport('limited_stock')">App: Limited</button>
           <button class="secondary" onclick="quickReport('out_of_stock')">App: Out</button>
-          <button class="secondary" onclick="quickReport('product_not_found')">App: Product Not Found</button>
+          <button class="secondary" onclick="quickReport('product_not_found')">App: Not Found</button>
           <button class="success" onclick="quickReport('penny')">Scanned $0.01</button>
           <button class="danger" onclick="quickReport('normal')">Normal Price</button>
-          <button class="secondary" onclick="quickReport('not_found')">Couldn’t Find</button>
+          <button class="secondary" onclick="quickReport('not_found')">Couldn't Find</button>
           <button class="secondary" onclick="quickReport('store_pulled')">Store Pulled</button>
         </div>
         <div id="quickStatus" class="notice hidden"></div>
@@ -155,7 +153,7 @@
     <section id="communityTab" class="tab-panel hidden">
       <div class="card">
         <h2>Community Reports</h2>
-        <p class="muted">Early version: reports save to the app database. Later we’ll add proof photos, receipt uploads, and trusted hunter scores.</p>
+        <p class="muted">Reports from penny hunters. These feed the Route Confidence scores. Later we'll add proof photos, receipt uploads, and trusted hunter scores.</p>
         <div id="reportsList"></div>
       </div>
     </section>
@@ -163,7 +161,7 @@
     <section id="accountTab" class="tab-panel hidden">
       <div class="card">
         <h2>Account</h2>
-        <p class="muted">Accounts are built in now so paid access, saved runs, and trusted reports can be added without rebuilding later. First account created becomes admin.</p>
+        <p class="muted">Accounts are built in so saved runs, trusted reports, and paid access can be added without rebuilding later. First account created becomes admin.</p>
         <div id="meBox" class="notice hidden"></div>
         <div class="grid two">
           <div>
@@ -193,15 +191,15 @@
     <section id="adminTab" class="tab-panel hidden">
       <div class="card">
         <h2>Admin: Add Penny Item</h2>
-        <p class="muted">Only the admin account can add items here. This is for new screenshots, TikTok/Facebook finds, and future AI imports.</p>
+        <p class="muted">Only the admin account can add items here.</p>
         <div class="grid two">
           <input id="adminSku" placeholder="SKU" />
-          <input id="adminCategory" placeholder="Category" />
+          <input id="adminCategory" placeholder="Category (e.g. Kitchenware)" />
           <input id="adminDescription" placeholder="Description" />
           <input id="adminSearchTerms" placeholder="Search terms, comma separated" />
           <input id="adminEvent" placeholder="Event #" />
-          <input id="adminDrop" placeholder="Drop date, example 2026-06-01" />
-          <input id="adminSource" placeholder="Source, example TikTok screenshot" />
+          <input id="adminDrop" placeholder="Drop date, e.g. 2026-06-01" />
+          <input id="adminSource" placeholder="Source" />
           <select id="adminConfidence">
             <option value="high">High confidence</option>
             <option value="field-confirmed">Field confirmed</option>
@@ -210,6 +208,15 @@
         </div>
         <button id="adminAddItemBtn">Add Item</button>
         <div id="adminStatus" class="small"></div>
+      </div>
+
+      <div class="card">
+        <h2>Admin: Bulk Import (TSV or pipe-separated)</h2>
+        <p class="muted">Paste rows in format: <code>dropDate | category | sku | description | searchTerms</code> (tab or pipe separated). First line can be a header row — it will be skipped automatically. Duplicate SKUs are merged, not duplicated.</p>
+        <textarea id="adminImportRows" placeholder="2026-06-01&#9;Kitchenware&#9;401350&#9;BLU REACTIVE PRNT PLATE 10.5IN&#9;blue reactive print plate
+2026-06-01&#9;Personal Care&#9;304352&#9;PURE SILK 3BL RZR 2CT&#9;pure silk razor"></textarea>
+        <button id="adminImportBtn" style="margin-top:10px">Import Rows</button>
+        <div id="adminImportStatus" class="small" style="margin-top:8px"></div>
       </div>
     </section>
   </main>

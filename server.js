@@ -18,25 +18,65 @@ app.use(cookieSession({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+const CATEGORY_NORMALIZE = {
+  'Home / Decor': 'Home Decor', 'Home / Candle': 'Home Decor', 'Home / Storage': 'Household',
+  'Beauty & Eyewear': 'Beauty', 'Beverages': 'Candy / Food', 'Beverage': 'Candy / Food',
+  'Books & Activity': 'Books / Activity', 'Candy-NonChoc/Seasonal': 'Candy / Food',
+  'Food / Candy': 'Candy / Food', 'Checkouts': 'Toys',
+  'Party Celebrations': 'Party / Gift Bags', 'Party Paper': 'Party / Gift Bags',
+  'Toys Everyday': 'Toys', 'Household Consumables': 'Household', 'Household Products': 'Household',
+  'Kitchenware': 'Kitchenware', 'Personal Care': 'Personal Care', 'Beauty': 'Beauty',
+  'Crafts': 'Crafts', 'Stationery': 'Stationery', 'Home Decor': 'Home Decor',
+  'Household': 'Household', 'Electronics': 'Electronics', 'Toys': 'Toys',
+  'Apparel': 'Apparel', 'Floral': 'Floral', 'Seasonal': 'Seasonal',
+  'Books / Activity': 'Books / Activity', 'Candy / Food': 'Candy / Food',
+  'Party / Gift Bags': 'Party / Gift Bags',
+};
+
+const PUBLIC_CATEGORIES = ['All','Kitchenware','Party / Gift Bags','Personal Care','Beauty',
+  'Candy / Food','Books / Activity','Crafts','Stationery','Home Decor','Household',
+  'Electronics','Toys','Apparel','Floral','Seasonal'];
+
+function normalizeCategory(raw) {
+  if (!raw) return 'Household';
+  const t = String(raw).trim();
+  return CATEGORY_NORMALIZE[t] || t;
+}
+
+function publicItem(item) {
+  return {
+    id: item.id,
+    sku: item.sku || '',
+    description: item.description,
+    category: normalizeCategory(item.category),
+    dropDate: item.dropDate || '',
+    status: item.status || 'active',
+    searchTerms: item.searchTerms || [],
+    imageUrl: item.imageUrl || null,
+    imageStatus: item.imageStatus || 'placeholder',
+  };
+}
+
 function ensureDataDir() {
   if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 }
 
 function seedItems() {
-  return [
-    { sku:'328203', description:'NAVY DBL GLD 8X10', category:'Home / Decor', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['navy gold 8x10','navy 8x10'] },
-    { sku:'359319', description:'BOXED CANDLE SOOTHING', category:'Home / Candle', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['boxed candle soothing','soothing candle'] },
-    { sku:'375667', description:'3OZ CLR DIAMND JAR W PVC LID', category:'Home / Storage', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['clear diamond jar','3 oz jar pvc lid'] },
+  const base = [
+    // --- original 40 items, normalized categories ---
+    { sku:'328203', description:'NAVY DBL GLD 8X10', category:'Household', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['navy gold 8x10','navy 8x10'] },
+    { sku:'359319', description:'BOXED CANDLE SOOTHING', category:'Home Decor', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['boxed candle soothing','soothing candle'] },
+    { sku:'375667', description:'3OZ CLR DIAMND JAR W PVC LID', category:'Household', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['clear diamond jar','3 oz jar pvc lid'] },
     { sku:'377016', description:'RAIN UMBRELLA 9.5', category:'Apparel', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['rain umbrella','umbrella'] },
-    { sku:'382583', description:'MDAY POWER BODY MASSAGER', category:'Beauty & Eyewear', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['power body massager','body massager'] },
-    { sku:'380864', description:'ESSENTIA WATER 500ML', category:'Beverages', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['essentia water','essentia 500ml'] },
-    { sku:'237438', description:'EDUCATIONAL SPINNER', category:'Books & Activity', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['educational spinner'] },
-    { sku:'357097', description:'PLAYSCHOOL PRE-K FLASH CARDS', category:'Books & Activity', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['playschool flash cards','pre k flash cards'] },
-    { sku:'357098', description:'MULTI LICENSED FLASH CARDS', category:'Books & Activity', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['licensed flash cards','flash cards'] },
-    { sku:'375902', description:'POP ART FOIL ADVANCED COLORING', category:'Books & Activity', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['pop art foil coloring','advanced coloring'] },
-    { sku:'387913', description:'ADVANCED COLORING BOOK 11X14', category:'Books & Activity', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['advanced coloring book','11x14 coloring book'] },
-    { sku:'341109', description:'WH SOUR TAFFY BARS LD 3.59Z E', category:'Candy-NonChoc/Seasonal', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['sour taffy bars','taffy bars'] },
-    { sku:'380107', description:'INVISIBLE LIGHT PEN CS 2IN1', category:'Checkouts', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['invisible light pen','2 in 1 pen'] },
+    { sku:'382583', description:'MDAY POWER BODY MASSAGER', category:'Beauty', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['power body massager','body massager'] },
+    { sku:'380864', description:'ESSENTIA WATER 500ML', category:'Candy / Food', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['essentia water','essentia 500ml'] },
+    { sku:'237438', description:'EDUCATIONAL SPINNER', category:'Books / Activity', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['educational spinner'] },
+    { sku:'357097', description:'PLAYSCHOOL PRE-K FLASH CARDS', category:'Books / Activity', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['playschool flash cards','pre k flash cards'] },
+    { sku:'357098', description:'MULTI LICENSED FLASH CARDS', category:'Books / Activity', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['licensed flash cards','flash cards'] },
+    { sku:'375902', description:'POP ART FOIL ADVANCED COLORING', category:'Books / Activity', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['pop art foil coloring','advanced coloring'] },
+    { sku:'387913', description:'ADVANCED COLORING BOOK 11X14', category:'Books / Activity', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['advanced coloring book','11x14 coloring book'] },
+    { sku:'341109', description:'WH SOUR TAFFY BARS LD 3.59Z E', category:'Candy / Food', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['sour taffy bars','taffy bars'] },
+    { sku:'380107', description:'INVISIBLE LIGHT PEN CS 2IN1', category:'Toys', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['invisible light pen','2 in 1 pen'] },
     { sku:'252595', description:'CRFTSQ CHERSH LOV & BLIVE STKR', category:'Crafts', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['cherish love believe sticker','crafter square sticker'] },
     { sku:'267670', description:'STENCIL BRUSH STRAIGHT HANDLE', category:'Crafts', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['stencil brush','straight handle stencil brush'] },
     { sku:'300761', description:'DNU FELT LETTER AND NUMBERS', category:'Crafts', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['felt letters numbers','felt letter and numbers'] },
@@ -44,32 +84,76 @@ function seedItems() {
     { sku:'378462', description:'SILVER AAA2 DOLLAR TREE TRAY', category:'Electronics', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['silver aaa batteries','aaa2 dollar tree tray'] },
     { sku:'344553', description:'PEACH FRUIT STEM ARTIFCL 21IN', category:'Floral', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['peach fruit stem','artificial peach stem'] },
     { sku:'252480', description:'MAGNETS KITCHEN THEMED', category:'Home Decor', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['kitchen magnets','kitchen themed magnets'] },
-    { sku:'367396', description:'BATHROOM CLEANER 3PK', category:'Household Consumables', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['bathroom cleaner 3pk','bathroom cleaner'] },
-    { sku:'355110', description:'SCRUB BUD DRY FLOOR CLOTH 15PK', category:'Household Products', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['scrub bud dry floor cloth','dry floor cloth'] },
+    { sku:'367396', description:'BATHROOM CLEANER 3PK', category:'Household', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['bathroom cleaner 3pk','bathroom cleaner'] },
+    { sku:'355110', description:'SCRUB BUD DRY FLOOR CLOTH 15PK', category:'Household', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['scrub bud dry floor cloth','dry floor cloth'] },
     { sku:'327645', description:'BLUE FLORAL MUG 12Z', category:'Kitchenware', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['blue floral mug','floral mug','12 oz mug'] },
     { sku:'343933', description:'SOFT GREEN DINNER PLT 10.5IN', category:'Kitchenware', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['soft green dinner plate','green dinner plate'] },
     { sku:'344034', description:'SOFT GREEN FLORAL PLATE 10.5', category:'Kitchenware', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['soft green floral plate','green floral plate'] },
-    { sku:'939567', description:'ROSE PETALS WHITE 300CT', category:'Party Celebrations', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['white rose petals','rose petals 300ct'] },
-    { sku:'219215', description:'GIFTBOX AO BUTTERFLY', category:'Party Paper', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['butterfly gift box','giftbox butterfly'] },
-    { sku:'219216', description:'GIFTBOX AO BASKET W/HANDLE', category:'Party Paper', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['basket gift box','gift box with handle'] },
-    { sku:'379958', description:'GIFTBAG XL BABY GENERAL', category:'Party Paper', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['xl baby gift bag','baby gift bag'] },
-    { sku:'380311', description:'GIFTBAG BOTTLE ALL OCC GEN', category:'Party Paper', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['bottle gift bag','all occasion bottle gift bag'] },
-    { sku:'382956', description:'GIFTBAG LRG AO JUVI', category:'Party Paper', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['large juvenile gift bag','juvi gift bag'] },
-    { sku:'383026', description:'GIFTBAG LG ALL OCCASION FLORA', category:'Party Paper', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['large floral gift bag','all occasion floral gift bag'] },
-    { sku:'383145', description:'CORAL 13X8 TRAY', category:'Party Paper', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['coral tray','13x8 tray'] },
+    { sku:'939567', description:'ROSE PETALS WHITE 300CT', category:'Party / Gift Bags', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['white rose petals','rose petals 300ct'] },
+    { sku:'219215', description:'GIFTBOX AO BUTTERFLY', category:'Party / Gift Bags', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['butterfly gift box','giftbox butterfly'] },
+    { sku:'219216', description:'GIFTBOX AO BASKET W/HANDLE', category:'Party / Gift Bags', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['basket gift box','gift box with handle'] },
+    { sku:'379958', description:'GIFTBAG XL BABY GENERAL', category:'Party / Gift Bags', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['xl baby gift bag','baby gift bag'] },
+    { sku:'380311', description:'GIFTBAG BOTTLE ALL OCC GEN', category:'Party / Gift Bags', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['bottle gift bag','all occasion bottle gift bag'] },
+    { sku:'382956', description:'GIFTBAG LRG AO JUVI', category:'Party / Gift Bags', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['large juvenile gift bag','juvi gift bag'] },
+    { sku:'383026', description:'GIFTBAG LG ALL OCCASION FLORA', category:'Party / Gift Bags', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['large floral gift bag','all occasion floral gift bag'] },
+    { sku:'383145', description:'CORAL 13X8 TRAY', category:'Party / Gift Bags', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['coral tray','13x8 tray'] },
     { sku:'304352', description:'PURE SILK 3BL RZR 2CT', category:'Personal Care', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['pure silk razor','pure silk razors'] },
     { sku:'355583', description:'AD WIG CAP 3PK', category:'Personal Care', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['wig cap 3pk','wig cap'] },
     { sku:'356211', description:'SC WAVE CAP 3PK', category:'Personal Care', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['wave cap 3pk','wave cap'] },
     { sku:'381309', description:'BIC SENSITIVE 3BLD 1PK', category:'Personal Care', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['bic sensitive razor','bic sensitive'] },
     { sku:'307619', description:'PROTECTIVE WRAP 4X300IN', category:'Stationery', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['protective wrap','4x300 protective wrap'] },
     { sku:'366951', description:'METAL PEARL BALLPOINT PEN 1PC', category:'Stationery', eventNumber:'40058', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['metal pearl ballpoint pen','pearl pen'] },
-    { sku:'317809', description:'BARBIE PURSES / SHOES / ACCS', category:'Toys Everyday', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['barbie purses shoes accessories','barbie accessories'] },
-    { sku:'', description:'POWER STICK ROLL-ON ALUMINUM FREE DEODORANT 1.8 OZ', category:'Beauty', eventNumber:'', dropDate:'2026-05-05', source:'internet list + field confirmed by Anthony', confidence:'field-confirmed', status:'active', searchTerms:['power stick deodorant','aluminum free deodorant'] },
-    { sku:'', description:'SASSY + CHIC NAIL POLISH 0.44 OZ COLORS 911 / 943', category:'Beauty', eventNumber:'', dropDate:'2026-05-05', source:'internet list + field confirmed by Anthony', confidence:'field-confirmed', status:'active', searchTerms:['sassy chic nail polish','nail polish 911','nail polish 943'] },
-    { sku:'', description:'BRAIN FREEZE FREEZE-DRIED CANDY 0.88 OZ', category:'Food / Candy', eventNumber:'', dropDate:'2026-05-05', source:'internet list + field confirmed by Anthony', confidence:'field-confirmed', status:'active', searchTerms:['freeze dried candy','brain freeze candy'] },
-    { sku:'', description:'COASTAL BAY CONFECTIONS BUBBLE GUM 5.5 OZ', category:'Food / Candy', eventNumber:'', dropDate:'2026-05-05', source:'internet list + field confirmed by Anthony', confidence:'field-confirmed', status:'active', searchTerms:['coastal bay bubble gum','bubble gum'] },
-    { sku:'', description:'TIC TAC CHEWY SOUR ADVENTURE CANDIES 2.8 OZ', category:'Food / Candy', eventNumber:'', dropDate:'2026-05-05', source:'internet list', confidence:'medium', status:'active', searchTerms:['tic tac chewy sour','sour adventure candies'] }
-  ].map((item, index) => ({ id: `item_${String(index + 1).padStart(4, '0')}`, ...item }));
+    { sku:'317809', description:'BARBIE PURSES / SHOES / ACCS', category:'Toys', eventNumber:'40059', dropDate:'2026-06-01', source:'6/1/26 screenshot', confidence:'high', status:'active', searchTerms:['barbie purses shoes accessories','barbie accessories'] },
+    // --- field-confirmed items (no SKU), normalized categories ---
+    { sku:'', description:'POWER STICK ROLL-ON ALUMINUM FREE DEODORANT 1.8 OZ', category:'Beauty', dropDate:'2026-05-05', source:'field confirmed', confidence:'field-confirmed', status:'active', searchTerms:['power stick deodorant','aluminum free deodorant'] },
+    { sku:'', description:'SASSY + CHIC NAIL POLISH 0.44 OZ COLORS 911 / 943', category:'Beauty', dropDate:'2026-05-05', source:'field confirmed', confidence:'field-confirmed', status:'active', searchTerms:['sassy chic nail polish','nail polish 911','nail polish 943'] },
+    { sku:'', description:'BRAIN FREEZE FREEZE-DRIED CANDY 0.88 OZ', category:'Candy / Food', dropDate:'2026-05-05', source:'field confirmed', confidence:'field-confirmed', status:'active', searchTerms:['freeze dried candy','brain freeze candy'] },
+    { sku:'', description:'COASTAL BAY CONFECTIONS BUBBLE GUM 5.5 OZ', category:'Candy / Food', dropDate:'2026-05-05', source:'field confirmed', confidence:'field-confirmed', status:'active', searchTerms:['coastal bay bubble gum','bubble gum'] },
+    { sku:'', description:'TIC TAC CHEWY SOUR ADVENTURE CANDIES 2.8 OZ', category:'Candy / Food', dropDate:'2026-05-05', source:'internet list', confidence:'medium', status:'active', searchTerms:['tic tac chewy sour','sour adventure candies'] },
+    // --- new items from 2026-06-01 TSV import ---
+    { sku:'401350', description:'BLU REACTIVE PRNT PLATE 10.5IN', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['blue reactive print plate'] },
+    { sku:'401307', description:'BLUE REACTIVE PRINT BOWL 6IN', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['blue reactive print bowl'] },
+    { sku:'401420', description:'BLUE REACTIVE PRNT PLATE 7.5IN', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['blue reactive print side plate'] },
+    { sku:'401344', description:'REACTIVE GLAZE MUG BLUE 12Z', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['reactive glaze blue mug'] },
+    { sku:'288908', description:'BLACK LINES BOWL 6IN', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['black lines bowl'] },
+    { sku:'288944', description:'BLACK LINES MUG 16OZ', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['black lines mug'] },
+    { sku:'288924', description:'BLACK LINES PLATE 10.5IN', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['black lines plate'] },
+    { sku:'288933', description:'BLACK LINES SIDE PLATE 7.5IN', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['black lines side plate'] },
+    { sku:'388382', description:'GRAY LINES PLATE 8IN', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['gray lines plate'] },
+    { sku:'388390', description:'GREY LINES PLATE 10.5', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['grey lines plate'] },
+    { sku:'405799', description:'GREY SWIRL MUG 12Z', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['grey swirl mug'] },
+    { sku:'405801', description:'GREY SWIRL PLATE 10.5IN', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['grey swirl plate'] },
+    { sku:'405806', description:'GREY SWIRL SIDE PLATE 7.5IN', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['grey swirl side plate'] },
+    { sku:'318526', description:'BLUE 2-TONE 8N PLATE', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['blue two tone plate'] },
+    { sku:'401413', description:'MATTE GLAZE 10.5IN PLATE', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['matte glaze plate'] },
+    { sku:'401404', description:'MATTE GLAZE DECAL BOWL 5.5IN', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['matte glaze decal bowl'] },
+    { sku:'401396', description:'MATTE GLAZE DECAL MUG 12Z', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['matte glaze decal mug'] },
+    { sku:'401424', description:'MATTE GLAZE DECAL PLATE 7.5IN', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['matte glaze decal side plate'] },
+    { sku:'343970', description:'SOFT GREEN FLORAL BOWL 6IN', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['soft green floral bowl'] },
+    { sku:'344033', description:'SOFT GREEN FLORAL MUG 12Z', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['soft green floral mug'] },
+    { sku:'397971', description:'BOWL BLUE HYDRANGEA 5.5IN', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['blue hydrangea bowl'] },
+    { sku:'397970', description:'MUG BLUE HYDRANGEA 14Z', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['blue hydrangea mug'] },
+    { sku:'397973', description:'PLATE BLUE HYDRANGEA 10.5IN', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['blue hydrangea plate'] },
+    { sku:'397969', description:'PLATE BLUE HYDRANGEA 7.5IN', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['blue hydrangea side plate'] },
+    { sku:'398459', description:'BLUE HYDRANGEA COOLER', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['blue hydrangea cooler'] },
+    { sku:'398456', description:'BLUE HYDRANGEA STEMLESS WINE', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['blue hydrangea stemless wine'] },
+    { sku:'346419', description:'BLUE FLORAL STMLESS WINE 16.8Z', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['blue floral stemless wine'] },
+    { sku:'308713', description:'SPRING FLING STM5S WINE 16.8Z', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['spring fling stemless wine'] },
+    { sku:'392169', description:'RCTV LOOK BLUE BOWL 6IN', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['reactive look blue bowl'] },
+    { sku:'392161', description:'RCTV LOOK BLUE MUG 14Z', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['reactive look blue mug'] },
+    { sku:'392157', description:'RCTV LOOK BLUE PLATE 10.5', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['reactive look blue plate'] },
+    { sku:'392154', description:'RCTV LOOK BLUE PLATE 7.5', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['reactive look blue side plate'] },
+    { sku:'392162', description:'RCTV LOOK GRY BOWL 6N', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['reactive look gray bowl'] },
+    { sku:'392168', description:'RCTV LOOK GRY MUG 14Z', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['reactive look gray mug'] },
+    { sku:'392159', description:'RCTV LOOK GRY PLATE 10.5', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['reactive look gray plate'] },
+    { sku:'392178', description:'RCTV LOOK GRY PLATE 7.5', category:'Kitchenware', dropDate:'2026-06-01', status:'active', searchTerms:['reactive look gray side plate'] },
+  ];
+  return base.map((item, index) => ({
+    id: `item_${String(index + 1).padStart(4, '0')}`,
+    imageUrl: null,
+    imageStatus: 'placeholder',
+    ...item,
+  }));
 }
 
 
@@ -85,8 +169,6 @@ const STORE_DIRECTORY = [
   { id:'store_sicklerville', storeNumber:'', name:'Dollar Tree - Sicklerville Area', address:'Sicklerville Area', city:'Sicklerville', state:'NJ', zip:'08081', latitude:39.7170, longitude:-74.9690 },
   { id:'store_cherry_hill', storeNumber:'', name:'Dollar Tree - Cherry Hill Area', address:'Cherry Hill Area', city:'Cherry Hill', state:'NJ', zip:'08002', latitude:39.9348, longitude:-75.0310 },
   { id:'store_mount_lauren', storeNumber:'', name:'Dollar Tree - Mount Laurel Area', address:'Mount Laurel Area', city:'Mount Laurel', state:'NJ', zip:'08054', latitude:39.9340, longitude:-74.8910 },
-
-  // New York / Queens starter stores for ZIP 11385 testing
   { id:'store_middle_village', storeNumber:'', name:'Dollar Tree - Middle Village', address:'7802 Metropolitan Avenue', city:'Middle Village', state:'NY', zip:'11379', latitude:40.7132, longitude:-73.8765 },
   { id:'store_maspeth_4587', storeNumber:'4587', name:'Dollar Tree - Maspeth / Grand Ave', address:'69-10 Grand Ave', city:'Maspeth', state:'NY', zip:'11378', latitude:40.7280, longitude:-73.8940 },
   { id:'store_woodside_tower', storeNumber:'', name:'Dollar Tree - Tower Square', address:'51-02 Northern Blvd', city:'Woodside', state:'NY', zip:'11377', latitude:40.7531, longitude:-73.9121 },
@@ -108,8 +190,6 @@ const ZIP_COORDS = {
   '08054': { latitude:39.9340, longitude:-74.8910 },
   '19148': { latitude:39.9170, longitude:-75.1570 },
   '19145': { latitude:39.9135, longitude:-75.1820 },
-
-  // NYC / Queens starter ZIPs
   '11385': { latitude:40.7044, longitude:-73.9018 },
   '11379': { latitude:40.7174, longitude:-73.8790 },
   '11378': { latitude:40.7245, longitude:-73.8990 },
@@ -154,24 +234,19 @@ function buildFallbackStoreLookup(zip) {
     liveConnected: false,
     message: mapped
       ? `Using starter store directory for ${cleanZip}. Live store lookup will retry on next request.`
-      : `ZIP ${cleanZip} is not in the starter directory. Showing nearest stores — add your ZIP area to get better coverage.`
+      : `ZIP ${cleanZip} is not in the starter directory. Showing nearest stores.`
   };
 }
 
 async function lookupDollarTreeStoresLive(zip) {
   // STORE LOCATOR: Yext powers locations.dollartree.com. The API key below is their
   // embedded Yext "live API key" (read-only, public in their JS bundle at
-  // locations.dollartree.com/assets/static/dollartree-CYzSknic.js). It returns the
-  // same store list that locations.dollartree.com shows. This is the default connector.
+  // locations.dollartree.com/assets/static/dollartree-CYzSknic.js).
   // Set STORE_PROVIDER=off to skip Yext and use only the static fallback directory.
   //
-  // STOCK STATUS (not connected): No accessible public API was found.
-  // - dollartree.com/ccstoreui/v1/stockStatus returns HTTP 204 (no data) for all SKU+store combos.
-  // - In-store inventory lives in a private POS system, not the web storefront.
-  // - sameday.dollartree.com (Instacart) requires user authentication.
-  // - The "In Stock / Limited Stock / Out of Stock / Product Not Found" that the DT
-  //   mobile app shows comes from a private authenticated API not accessible to third parties.
-  // See lookupDollarTreeItemStockLive() below for the stock side of this story.
+  // STOCK STATUS: No accessible public API exists. Live per-store stock lookup is not
+  // possible without authenticated access to Dollar Tree's internal inventory system.
+  // Community/manual reports are the correct data source.
 
   if (process.env.STORE_PROVIDER === 'off') return null;
 
@@ -296,8 +371,6 @@ function requireUser(req, res, next) {
 }
 
 function scoreItem(itemId, reports) {
-  // Starter database items are verified/known penny leads for this first launch.
-  // Community reports will make this dynamic again in a later update.
   return 100;
 }
 function scoreStore(storeId, reports) {
@@ -316,37 +389,17 @@ function scoreStore(storeId, reports) {
   return Math.max(0, Math.min(100, Math.round(score)));
 }
 
-
-
 function deterministicDemoStock(zip, store, item) {
   const seed = crypto.createHash('md5').update(`${zip}|${store.id}|${item.id}`).digest('hex');
   const n = parseInt(seed.slice(0, 2), 16) % 100;
-  if (n < 18) return { status: 'in_stock', confidence: 'demo', reason: 'Demo mode estimate only - not live Dollar Tree inventory.' };
-  if (n < 32) return { status: 'limited_stock', confidence: 'demo', reason: 'Demo mode estimate only - not live Dollar Tree inventory.' };
-  if (n < 45) return { status: 'out_of_stock', confidence: 'demo', reason: 'Demo mode estimate only - not live Dollar Tree inventory.' };
+  if (n < 18) return { status: 'in_stock', confidence: 'demo', reason: 'Demo mode estimate only.' };
+  if (n < 32) return { status: 'limited_stock', confidence: 'demo', reason: 'Demo mode estimate only.' };
+  if (n < 45) return { status: 'out_of_stock', confidence: 'demo', reason: 'Demo mode estimate only.' };
   return { status: 'no_data', confidence: 'demo', reason: 'No demo signal for this item/store.' };
 }
 
 async function lookupDollarTreeItemStockLive({ zip, store, item }) {
-  // INVESTIGATION RESULT (2026-05-30): No accessible public stock API exists.
-  //
-  // What was tested:
-  //   dollartree.com/ccstoreui/v1/stockStatus?skuId=377016&locationIds=9091
-  //     → HTTP 204 No Content for every SKU+store combination tested.
-  //       OCC tracks online-order inventory only; in-store stock is a separate system.
-  //   dollartree.com/ccstoreui/v1/products?q=displayName+co+"RAIN UMBRELLA"
-  //     → Works, returns product IDs. Confirms SKU 377016 = "RAIN UMBRELLA 9.5".
-  //       Product catalog only — no stock levels.
-  //   sameday.dollartree.com (Instacart-powered same-day delivery)
-  //     → Requires user authentication. Not callable from a backend.
-  //   Dollar Tree mobile app stock status (In Stock / Limited / Out / Not Found)
-  //     → Uses a private authenticated API. No accessible endpoint found.
-  //       No public subdomain (api., mobile., app., gateway., services.) responds.
-  //
-  // Bottom line: live per-store stock lookup is not possible without authenticated
-  // access to Dollar Tree's internal inventory system or Instacart's private API.
-  // Community/manual reports (the quickReport buttons) are the correct data source
-  // until Dollar Tree publishes a partner API or a clean authorized path is found.
+  // No accessible public stock API exists. Community reports are the correct data source.
   return null;
 }
 
@@ -358,14 +411,14 @@ function latestReportForItemStore(reports, itemId, storeId) {
 
 function reportToStockSignal(report) {
   if (!report) return null;
-  if (report.scanResult === 'penny') return { status: 'penny_found', confidence: 'community', reason: 'User/community report: scanned $0.01.' };
-  if (report.scanResult === 'normal') return { status: 'normal_price', confidence: 'community', reason: 'User/community report: scanned normal price.' };
-  if (report.appStatus === 'in_stock') return { status: 'in_stock', confidence: 'community', reason: 'User/community report: app showed in stock.' };
-  if (report.appStatus === 'limited_stock') return { status: 'limited_stock', confidence: 'community', reason: 'User/community report: app showed limited stock.' };
-  if (report.appStatus === 'out_of_stock') return { status: 'out_of_stock', confidence: 'community', reason: 'User/community report: app showed out of stock.' };
-  if (report.appStatus === 'product_not_found') return { status: 'product_not_found', confidence: 'community', reason: 'User/community report: product not found in app.' };
-  if (report.foundStatus === 'not_found') return { status: 'not_found', confidence: 'community', reason: 'User/community report: could not find item in store.' };
-  if (report.foundStatus === 'store_pulled') return { status: 'store_pulled', confidence: 'community', reason: 'User/community report: store pulled item.' };
+  if (report.scanResult === 'penny') return { status: 'penny_found', confidence: 'community', reason: 'Community report: scanned $0.01.' };
+  if (report.scanResult === 'normal') return { status: 'normal_price', confidence: 'community', reason: 'Community report: scanned normal price.' };
+  if (report.appStatus === 'in_stock') return { status: 'in_stock', confidence: 'community', reason: 'Community report: app showed in stock.' };
+  if (report.appStatus === 'limited_stock') return { status: 'limited_stock', confidence: 'community', reason: 'Community report: app showed limited stock.' };
+  if (report.appStatus === 'out_of_stock') return { status: 'out_of_stock', confidence: 'community', reason: 'Community report: app showed out of stock.' };
+  if (report.appStatus === 'product_not_found') return { status: 'product_not_found', confidence: 'community', reason: 'Community report: product not found in app.' };
+  if (report.foundStatus === 'not_found') return { status: 'not_found', confidence: 'community', reason: 'Community report: could not find item in store.' };
+  if (report.foundStatus === 'store_pulled') return { status: 'store_pulled', confidence: 'community', reason: 'Community report: store pulled item.' };
   return null;
 }
 
@@ -403,7 +456,7 @@ async function buildStockRun({ zip, itemIds }) {
       let signal = reportToStockSignal(report);
       if (!signal) signal = await lookupDollarTreeItemStockLive({ zip, store, item });
       if (!signal && provider === 'demo') signal = deterministicDemoStock(zip, store, item);
-      if (!signal) signal = { status: 'no_data', confidence: 'community', reason: 'No reports yet for this item at this store. Be the first to report.' };
+      if (!signal) signal = { status: 'no_data', confidence: 'community', reason: 'No reports yet. Be the first to report.' };
 
       const boost = stockScoreBoost(signal.status);
       if (signal.status !== 'no_data') checked += 1;
@@ -427,18 +480,10 @@ async function buildStockRun({ zip, itemIds }) {
     if (checked > 0) {
       const distancePenalty = Math.min(18, Math.round((store.distanceMiles || 0) * 1.2));
       worthTheDrive = Math.max(0, Math.min(100, Math.round(35 + score + positives * 6 - negatives * 6 - distancePenalty)));
-      scoreReason = `${checked} selected item(s) have stock/report data. ${positives} positive, ${negatives} negative.`;
+      scoreReason = `${checked} selected item(s) have report data. ${positives} positive, ${negatives} negative.`;
     }
 
-    route.push({
-      store,
-      worthTheDrive,
-      scoreReason,
-      checkedCount: checked,
-      positiveCount: positives,
-      negativeCount: negatives,
-      items: itemResults
-    });
+    route.push({ store, worthTheDrive, scoreReason, checkedCount: checked, positiveCount: positives, negativeCount: negatives, items: itemResults });
   }
 
   route.sort((a, b) => {
@@ -458,8 +503,8 @@ async function buildStockRun({ zip, itemIds }) {
     message: provider === 'demo'
       ? 'Demo mode — results show the routing workflow only, not real inventory.'
       : storesLive
-        ? 'Nearby stores are live from the Dollar Tree store locator. Route confidence scores are built from community scan reports and hunt results — not live inventory.'
-        : 'Using starter store directory. Route confidence scores are built from community scan reports and hunt results — not live inventory.',
+        ? 'Nearby stores are live from the Dollar Tree store locator. Route Confidence scores are built from community scan reports and hunt results — not live inventory.'
+        : 'Using starter store directory. Route Confidence scores are built from community scan reports and hunt results — not live inventory.',
     route
   };
 }
@@ -508,15 +553,15 @@ app.get('/api/items', (req, res) => {
   const q = String(req.query.q || '').toLowerCase().trim();
   const category = String(req.query.category || '').trim();
   const items = db.items
-    .filter(item => !q || [item.sku, item.description, item.category, item.eventNumber, ...(item.searchTerms || [])].join(' ').toLowerCase().includes(q))
-    .filter(item => !category || item.category === category)
-    .map(item => ({ ...item, pennyScore: scoreItem(item.id, db.reports) }));
+    .filter(item => item.status !== 'inactive')
+    .filter(item => !q || [item.sku, item.description, normalizeCategory(item.category), ...(item.searchTerms || [])].join(' ').toLowerCase().includes(q))
+    .filter(item => !category || category === 'All' || normalizeCategory(item.category) === category)
+    .map(item => ({ ...publicItem(item), pennyScore: scoreItem(item.id, db.reports) }));
   res.json({ items });
 });
 
 app.get('/api/categories', (req, res) => {
-  const db = readDb();
-  res.json({ categories: [...new Set(db.items.map(i => i.category))].sort() });
+  res.json({ categories: PUBLIC_CATEGORIES.filter(c => c !== 'All') });
 });
 
 app.get('/api/stores', async (req, res) => {
@@ -549,8 +594,6 @@ app.get('/api/stores/lookup', async (req, res) => {
   }
 });
 
-
-
 app.post('/api/stock/check-run', async (req, res) => {
   try {
     const zip = String(req.body.zip || '08096').replace(/\D/g, '').slice(0, 5) || '08096';
@@ -559,8 +602,8 @@ app.post('/api/stock/check-run', async (req, res) => {
     const result = await buildStockRun({ zip, itemIds });
     res.json(result);
   } catch (err) {
-    console.error('Stock check failed:', err);
-    res.status(500).json({ error: 'Stock check failed' });
+    console.error('Route build failed:', err);
+    res.status(500).json({ error: 'Route build failed' });
   }
 });
 
@@ -613,8 +656,6 @@ app.post('/api/hunts', (req, res) => {
   res.json({ hunt });
 });
 
-
-
 function requireAdmin(req, res, next) {
   const db = readDb();
   const user = db.users.find(u => u.id === req.session.userId);
@@ -628,10 +669,10 @@ app.post('/api/admin/items', requireAdmin, (req, res) => {
   if (!description || !category) return res.status(400).json({ error: 'Description and category are required' });
   const db = readDb();
   const item = {
-    id: crypto.randomUUID(),
+    id: `item_${String(db.items.length + 1).padStart(4, '0')}`,
     sku: String(sku || '').trim(),
     description: String(description || '').trim().toUpperCase(),
-    category: String(category || '').trim(),
+    category: normalizeCategory(String(category || '').trim()),
     eventNumber: String(eventNumber || '').trim(),
     dropDate: String(dropDate || '').trim(),
     source: String(source || 'manual admin add').trim(),
@@ -640,12 +681,115 @@ app.post('/api/admin/items', requireAdmin, (req, res) => {
     searchTerms: Array.isArray(searchTerms)
       ? searchTerms.map(t => String(t).trim()).filter(Boolean)
       : String(searchTerms || '').split(',').map(t => t.trim()).filter(Boolean),
+    imageUrl: null,
+    imageStatus: 'placeholder',
     createdAt: new Date().toISOString()
   };
   if (!item.searchTerms.length) item.searchTerms = [item.description.toLowerCase()];
   db.items.push(item);
   writeDb(db);
-  res.json({ item: { ...item, pennyScore: 100 } });
+  res.json({ item: { ...publicItem(item), pennyScore: 100 } });
+});
+
+app.post('/api/admin/import', requireAdmin, (req, res) => {
+  const rawText = String(req.body.rows || req.body.text || '').trim();
+  if (!rawText) return res.status(400).json({ error: 'No rows provided' });
+
+  const db = readDb();
+  const beforeCount = db.items.length;
+  const summary = { added: 0, updated: 0, skippedDuplicate: 0, possibleDuplicate: 0 };
+
+  const maxId = db.items.reduce((max, item) => {
+    const n = parseInt((item.id || '').replace('item_', ''));
+    return isNaN(n) ? max : Math.max(max, n);
+  }, 0);
+  let nextId = maxId + 1;
+
+  const lines = rawText.split('\n').map(l => l.trim()).filter(Boolean);
+  const seenSkusThisImport = new Set();
+
+  for (const line of lines) {
+    const sep = line.includes('\t') ? '\t' : '|';
+    const parts = line.split(sep).map(p => p.trim());
+    if (parts[0] === 'dropDate' || parts[0] === 'drop_date') continue;
+
+    const [dropDate, category, sku, description, searchTermsRaw] = parts;
+    if (!description) continue;
+
+    const cleanSku = String(sku || '').trim();
+    const cleanDesc = String(description || '').trim().toUpperCase();
+    const cleanCategory = normalizeCategory(String(category || '').trim());
+    const cleanDropDate = String(dropDate || '').trim();
+    const newTerms = String(searchTermsRaw || '').split(',').map(t => t.trim()).filter(Boolean);
+
+    // skip if we already processed this SKU in this import batch
+    if (cleanSku && seenSkusThisImport.has(cleanSku)) {
+      summary.skippedDuplicate++;
+      continue;
+    }
+    if (cleanSku) seenSkusThisImport.add(cleanSku);
+
+    // 1. Exact SKU match
+    if (cleanSku) {
+      const existing = db.items.find(i => i.sku === cleanSku);
+      if (existing) {
+        existing.category = cleanCategory || existing.category;
+        if (cleanDropDate) existing.dropDate = cleanDropDate;
+        const termSet = new Set(existing.searchTerms || []);
+        newTerms.forEach(t => termSet.add(t));
+        existing.searchTerms = [...termSet];
+        existing.imageUrl = existing.imageUrl || null;
+        existing.imageStatus = existing.imageStatus || 'placeholder';
+        summary.updated++;
+        continue;
+      }
+    }
+
+    // 2. Exact normalized description match
+    const normDesc = cleanDesc.toLowerCase().replace(/\s+/g, ' ');
+    const descMatch = db.items.find(i =>
+      (i.description || '').toLowerCase().replace(/\s+/g, ' ') === normDesc
+    );
+    if (descMatch) {
+      if (cleanSku && !descMatch.sku) descMatch.sku = cleanSku;
+      descMatch.category = cleanCategory || descMatch.category;
+      const termSet = new Set(descMatch.searchTerms || []);
+      newTerms.forEach(t => termSet.add(t));
+      descMatch.searchTerms = [...termSet];
+      summary.updated++;
+      continue;
+    }
+
+    // 3. New item
+    const newItem = {
+      id: `item_${String(nextId).padStart(4, '0')}`,
+      sku: cleanSku,
+      description: cleanDesc,
+      category: cleanCategory,
+      dropDate: cleanDropDate,
+      status: 'active',
+      searchTerms: newTerms.length ? newTerms : [cleanDesc.toLowerCase()],
+      imageUrl: null,
+      imageStatus: 'placeholder',
+      createdAt: new Date().toISOString()
+    };
+    db.items.push(newItem);
+    nextId++;
+    summary.added++;
+  }
+
+  writeDb(db);
+  res.json({
+    ok: true,
+    summary: {
+      totalBefore: beforeCount,
+      added: summary.added,
+      updated: summary.updated,
+      skippedDuplicate: summary.skippedDuplicate,
+      possibleDuplicate: summary.possibleDuplicate,
+      totalAfter: db.items.length
+    }
+  });
 });
 
 app.listen(PORT, () => {
