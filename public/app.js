@@ -154,7 +154,7 @@ function renderItems() {
             </div>
             <div class="search-terms-row">${terms.map(t => `<span class="term-chip" onclick="copyTermText('${escapeHtml(t)}')" title="Tap to copy">${escapeHtml(t)}</span>`).join('')}</div>
             <div class="item-actions">
-              <button class="${inRun ? 'added-btn' : 'teal'}" onclick="addToRun('${item.id}')">${inRun ? 'Added ✓' : 'Add to My Run'}</button>
+              <button class="${inRun ? 'added-btn' : 'teal'}" onclick="${inRun ? `removeFromRun('${item.id}')` : `addToRun('${item.id}')`}">${inRun ? 'Added ✓ — tap to remove' : 'Add to My Run'}</button>
               <button class="secondary" onclick="copyTerm('${item.id}')">Copy Search</button>
             </div>
             <div class="item-quick-report hidden" id="qr_${item.id}">
@@ -945,7 +945,11 @@ function initHuntMap() {
   if ($('huntZipLabel')) $('huntZipLabel').textContent = state.homeZip;
 
   if (typeof L === 'undefined') {
-    container.innerHTML = '<p class="muted" style="padding:20px">Map library failed to load. Check your internet connection.</p>';
+    container.innerHTML = `<div style="padding:16px;color:#8a1f16;background:#fff1ef;border-radius:12px">
+      <strong>Map could not load.</strong> The Leaflet library (leaflet.js) did not initialize.
+      Try a hard refresh (Shift+Reload). If this keeps happening, the file at
+      <code>/vendor/leaflet/leaflet.js</code> may not have deployed correctly.
+    </div>`;
     return;
   }
   if (!state.stores.length) {
