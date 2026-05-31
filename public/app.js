@@ -300,6 +300,7 @@ async function loadStores() {
   renderQuickSelectors();
   renderRouteBuilder();
   renderDashboard();
+  if (!$('runTab')?.classList.contains('hidden')) initHuntMap();
 }
 
 function renderQuickSelectors() {
@@ -925,7 +926,7 @@ function initHuntMap() {
     return;
   }
   if (!state.stores.length) {
-    container.innerHTML = '<p class="muted" style="padding:20px">Enter your ZIP above and tap Save ZIP to load nearby stores.</p>';
+    $('huntMapCard')?.classList.add('hidden');
     renderHuntSummary();
     renderHuntStoreList();
     return;
@@ -948,7 +949,10 @@ function initHuntMap() {
     return;
   }
 
-  // First initialization
+  // First initialization — make sure map is visible
+  $('huntMapCard')?.classList.remove('hidden');
+  $('huntMapToggle') && ($('huntMapToggle').textContent = 'Hide Map');
+
   const lats = state.stores.map(s => s.latitude).filter(Boolean);
   const lons = state.stores.map(s => s.longitude).filter(Boolean);
   const lat = lats.reduce((a, b) => a + b, 0) / lats.length;
@@ -983,6 +987,10 @@ function checkStoreToday(storeId) {
 function renderHuntSummary() {
   const box = $('huntSummary');
   if (!box) return;
+  if (!state.stores.length) {
+    box.innerHTML = '<p class="muted" style="margin:8px 0">Enter your ZIP above and tap <strong>Save ZIP</strong> to load nearby Dollar Tree stores.</p>';
+    return;
+  }
   const hunt = getHuntState();
   const total = state.stores.length;
   const checked = state.stores.filter(s => hunt[s.id]?.checked).length;
@@ -1078,7 +1086,7 @@ function renderHuntStoreList() {
       ${noteChips}
       <div class="hunt-store-actions">
         <button class="${checked ? 'secondary' : 'teal'}" onclick="checkStoreToday('${store.id}')">
-          ${checked ? 'Uncheck' : 'Mark Checked'}
+          ${checked ? 'Uncheck' : 'Mark Checked Today'}
         </button>
         <button class="secondary" onclick="toggleHuntNoteEdit('${store.id}')">
           ${editing ? 'Cancel' : notes.length ? 'Edit Notes' : 'Add Notes'}
