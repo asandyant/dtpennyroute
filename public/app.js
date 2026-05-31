@@ -663,22 +663,49 @@ async function adminEnrichImages(force = false) {
   if (status) status.textContent = 'Checking Dollar Tree product catalog for all penny items. This can take up to 60 seconds…';
   try {
     const data = await api('/api/admin/enrich-images', { method: 'POST', body: JSON.stringify({ force }) });
-    const parts = [
-      `Images found: ${data.found}`,
-      `Not in DT catalog: ${data.notFound}`,
-      `Already had image (skipped): ${data.skipped}`,
+    const db = await api('/api/admin/image-debug');
+    const lines = [
+      `✅ Done on THIS server (${escapeHtml(db.dbPath)})`,
+      `Images now saved on this server: ${db.withImage} of ${db.total} items`,
+      `New images added this run: ${data.found} | Not in DT catalog: ${data.notFound} | Skipped: ${data.skipped}`,
     ];
-    if (data.errors) parts.push(`Errors: ${data.errors}`);
-    if (data.foundItems?.length) {
-      parts.push('');
-      parts.push('Products matched: ' + data.foundItems.map(i => `${i.description} (${i.source === 'dollartree_search' ? 'search' : 'SKU'})`).join(' · '));
-    }
-    if (status) status.innerHTML = parts.map(p => p ? escapeHtml(p) : '<br>').join('<br>');
+    if (data.errors) lines.push(`Errors: ${data.errors}`);
+    if (data.foundItems?.length) lines.push('Added: ' + data.foundItems.map(i => escapeHtml(i.description)).join(' · '));
+    if (status) status.innerHTML = lines.join('<br>');
     await loadItems();
   } catch(e) {
     if (status) status.textContent = 'Error: ' + e.message;
   }
   if (btn) { btn.disabled = false; btn.textContent = force ? 'Force Refresh All' : 'Find Product Images'; }
+}
+
+async function adminDebugImages() {
+  const btn = $('adminImageDebugBtn');
+  const panel = $('adminImageDebugPanel');
+  if (btn) { btn.disabled = true; btn.textContent = 'Checking…'; }
+  try {
+    const d = await api('/api/admin/image-debug');
+    const checkRows = d.imageChecks.map(c => {
+      const color = c.ok ? '#157347' : '#b42318';
+      const label = c.ok ? `HTTP ${c.httpStatus} ✓` : `HTTP ${c.httpStatus} ✗`;
+      return `<div style="margin:6px 0;font-size:12px">
+        <strong style="color:${color}">${label}</strong> — SKU ${escapeHtml(c.sku)} ${escapeHtml(c.description)}<br>
+        <span style="color:#60707a;word-break:break-all">${escapeHtml(c.url)}</span>
+        ${c.ok ? `<br><img src="${escapeHtml(c.url)}" style="width:60px;height:60px;object-fit:cover;border-radius:6px;margin-top:4px" onerror="this.outerHTML='<span style=color:red>image failed to render</span>'" />` : ''}
+      </div>`;
+    }).join('');
+    panel.innerHTML = `
+      <div style="background:#f6fafb;border:1px solid #d8e1e6;border-radius:14px;padding:14px">
+        <strong>Image Debug — ${escapeHtml(d.dbPath)}</strong><br>
+        <span style="font-size:13px">Total items: ${d.total} &nbsp;|&nbsp; With image: <strong style="color:#157347">${d.withImage}</strong> &nbsp;|&nbsp; Missing image: <strong style="color:#b42318">${d.withoutImage}</strong></span>
+        <div style="margin-top:10px"><strong>First ${d.imageChecks.length} image URLs (live HTTP check):</strong>${checkRows || '<p style="color:#60707a">No images saved on this server yet.</p>'}</div>
+        ${d.allFound.length ? `<details style="margin-top:8px"><summary style="cursor:pointer;font-size:12px">All ${d.allFound.length} items with images</summary><div style="font-size:11px;margin-top:6px">${d.allFound.map(i => `<div>${escapeHtml(i.sku)} ${escapeHtml(i.description)}</div>`).join('')}</div></details>` : ''}
+      </div>`;
+    panel.classList.remove('hidden');
+  } catch(e) {
+    if (panel) { panel.textContent = 'Error: ' + e.message; panel.classList.remove('hidden'); }
+  }
+  if (btn) { btn.disabled = false; btn.textContent = 'Debug Image Status'; }
 }
 
 async function adminBulkImport() {
@@ -720,6 +747,7 @@ function bindEvents() {
   $('adminImportBtn')?.addEventListener('click', adminBulkImport);
   $('adminEnrichImagesBtn')?.addEventListener('click', () => adminEnrichImages(false));
   $('adminEnrichForceBtn')?.addEventListener('click', () => adminEnrichImages(true));
+  $('adminImageDebugBtn')?.addEventListener('click', adminDebugImages);
 }
 
 async function init() {

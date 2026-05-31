@@ -62,6 +62,29 @@ function ensureDataDir() {
   if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 }
 
+// Known catalog images baked in so they survive fresh Render deploys (ephemeral storage).
+// Keyed by SKU. Added to any item missing imageUrl on every readDb() call.
+const CATALOG_IMAGES = {
+  '357098': { imageUrl:'https://www.dollartree.com/ccstore/v1/images/?source=/file/v7273887660137256606/products/357098.jpg&height=300&width=300', imageSource:'dollartree_catalog', imageStatus:'found' },
+  '327645': { imageUrl:'https://www.dollartree.com/ccstore/v1/images/?source=/file/v1511361159241041779/products/327645.jpg&height=300&width=300', imageSource:'dollartree_catalog', imageStatus:'found' },
+  '219215': { imageUrl:'https://www.dollartree.com/ccstore/v1/images/?source=/file/v6586244193986378383/products/219215.jpg&height=300&width=300', imageSource:'dollartree_catalog', imageStatus:'found' },
+  '219216': { imageUrl:'https://www.dollartree.com/ccstore/v1/images/?source=/file/v3145439365837579490/products/219216.jpg&height=300&width=300', imageSource:'dollartree_catalog', imageStatus:'found' },
+  '380311': { imageUrl:'https://www.dollartree.com/ccstore/v1/images/?source=/file/v421417442193795234/products/380311.jpg&height=300&width=300', imageSource:'dollartree_catalog', imageStatus:'found' },
+  '304352': { imageUrl:'https://www.dollartree.com/ccstore/v1/images/?source=/file/v6361856915017689260/products/304352.jpg&height=300&width=300', imageSource:'dollartree_catalog', imageStatus:'found' },
+  '366951': { imageUrl:'https://www.dollartree.com/ccstore/v1/images/?source=/file/v275090998449662859/products/366951.jpg&height=300&width=300', imageSource:'dollartree_catalog', imageStatus:'found' },
+  '317809': { imageUrl:'https://www.dollartree.com/ccstore/v1/images/?source=/file/v5880353454024805519/products/317809.jpg&height=300&width=300', imageSource:'dollartree_catalog', imageStatus:'found' },
+  '288908': { imageUrl:'https://www.dollartree.com/ccstore/v1/images/?source=/file/v1013814252047511476/products/288908.jpg&height=300&width=300', imageSource:'dollartree_catalog', imageStatus:'found' },
+  '288944': { imageUrl:'https://www.dollartree.com/ccstore/v1/images/?source=/file/v4810555286131529090/products/288944.jpg&height=300&width=300', imageSource:'dollartree_catalog', imageStatus:'found' },
+  '288933': { imageUrl:'https://www.dollartree.com/ccstore/v1/images/?source=/file/v5621493087014936320/products/288933.jpg&height=300&width=300', imageSource:'dollartree_catalog', imageStatus:'found' },
+  '405806': { imageUrl:'https://www.dollartree.com/ccstore/v1/images/?source=/file/v4599289909609522815/products/405806.jpg&height=300&width=300', imageSource:'dollartree_catalog', imageStatus:'found' },
+  '397971': { imageUrl:'https://www.dollartree.com/ccstore/v1/images/?source=/file/v6343022812328445628/products/397971.jpg&height=300&width=300', imageSource:'dollartree_catalog', imageStatus:'found' },
+  '397970': { imageUrl:'https://www.dollartree.com/ccstore/v1/images/?source=/file/v6598619675851625507/products/397970.jpg&height=300&width=300', imageSource:'dollartree_catalog', imageStatus:'found' },
+  '397973': { imageUrl:'https://www.dollartree.com/ccstore/v1/images/?source=/file/v983181986095310221/products/397973.jpg&height=300&width=300', imageSource:'dollartree_catalog', imageStatus:'found' },
+  '397969': { imageUrl:'https://www.dollartree.com/ccstore/v1/images/?source=/file/v4738245737994941523/products/397969.jpg&height=300&width=300', imageSource:'dollartree_catalog', imageStatus:'found' },
+  '398459': { imageUrl:'https://www.dollartree.com/ccstore/v1/images/?source=/file/v8632750885701646387/products/398459.jpg&height=300&width=300', imageSource:'dollartree_catalog', imageStatus:'found' },
+  '398456': { imageUrl:'https://www.dollartree.com/ccstore/v1/images/?source=/file/v6095937345529743556/products/398456.jpg&height=300&width=300', imageSource:'dollartree_catalog', imageStatus:'found' },
+};
+
 function seedItems() {
   const base = [
     // --- original 40 items, normalized categories ---
@@ -395,7 +418,17 @@ function initialDb() {
 function readDb() {
   ensureDataDir();
   if (!fs.existsSync(DB_FILE)) writeDb(initialDb());
-  return JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
+  const db = JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
+  // Apply baked-in catalog images to any item that is missing one (covers fresh Render deploys).
+  let migrated = false;
+  for (const item of db.items) {
+    if (item.sku && !item.imageUrl && CATALOG_IMAGES[item.sku]) {
+      Object.assign(item, CATALOG_IMAGES[item.sku]);
+      migrated = true;
+    }
+  }
+  if (migrated) writeDb(db);
+  return db;
 }
 
 function writeDb(db) {
@@ -845,6 +878,28 @@ app.post('/api/admin/import', requireAdmin, (req, res) => {
       possibleDuplicate: summary.possibleDuplicate,
       totalAfter: db.items.length
     }
+  });
+});
+
+app.get('/api/admin/image-debug', requireAdmin, async (req, res) => {
+  const db = readDb();
+  const withImage = db.items.filter(i => i.imageUrl && i.imageStatus === 'found');
+  const without = db.items.filter(i => !i.imageUrl || i.imageStatus !== 'found');
+  const checks = await Promise.all(withImage.slice(0, 5).map(async item => {
+    try {
+      const r = await fetch(item.imageUrl, { method: 'HEAD', signal: AbortSignal.timeout(5000) });
+      return { sku: item.sku, description: item.description.slice(0, 40), url: item.imageUrl, httpStatus: r.status, ok: r.ok };
+    } catch (e) {
+      return { sku: item.sku, description: item.description.slice(0, 40), url: item.imageUrl, httpStatus: 'error', ok: false, error: e.message };
+    }
+  }));
+  res.json({
+    dbPath: DB_FILE,
+    total: db.items.length,
+    withImage: withImage.length,
+    withoutImage: without.length,
+    imageChecks: checks,
+    allFound: withImage.map(i => ({ id: i.id, sku: i.sku, description: i.description.slice(0, 45), imageUrl: i.imageUrl }))
   });
 });
 
