@@ -792,7 +792,10 @@ async function adminUploadPhoto() {
       method: 'POST',
       body: JSON.stringify({ imageData: dataUrl })
     });
-    if (status) status.textContent = `Saved. Photo attached to: ${data.item.description}`;
+    const where = data.storage === 'github'
+      ? `Saved to GitHub (permanent). URL: ${data.item.imageUrl}`
+      : `Saved locally (this server only — set GITHUB_TOKEN on Render for permanent storage). URL: ${data.item.imageUrl}`;
+    if (status) status.textContent = `Photo attached to: ${data.item.description} — ${where}`;
     if (preview) { preview.innerHTML = ''; preview.dataset.dataUrl = ''; }
     if ($('uploadFileInput')) $('uploadFileInput').value = '';
     // Bust the cache so the updated item appears immediately

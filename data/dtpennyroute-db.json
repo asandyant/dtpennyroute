@@ -45,7 +45,8 @@
         "soothing candle"
       ],
       "imageUrl": null,
-      "imageStatus": "not_found"
+      "imageStatus": "placeholder",
+      "imageSource": null
     },
     {
       "id": "item_0003",

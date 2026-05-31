@@ -10,16 +10,11 @@ services:
         value: production
       - key: STORAGE_PATH
         value: /opt/render/project/src/storage
-    # ── Persistent disk for admin-uploaded photos ────────────────────────────
-    # Without this disk, uploaded photos survive the current server run but are
-    # wiped on every redeploy (free plan uses ephemeral storage).
-    #
-    # To enable:
-    #   1. In the Render dashboard, upgrade this service to the Starter plan.
-    #   2. Uncomment the disk block below and redeploy.
-    #   Cost: ~$7/mo for Starter instance + $0.25/GB/mo for the disk (1 GB = $0.25/mo).
-    #
-    # disk:
-    #   name: dtpennyroute-storage
-    #   mountPath: /opt/render/project/src/storage
-    #   sizeGB: 1
+      - key: GITHUB_REPO
+        value: asandyant/dtpennyroute
+      - key: GITHUB_BRANCH
+        value: main
+      - key: GITHUB_TOKEN
+        sync: false   # Set this in the Render dashboard — never commit the token value.
+                      # Create a fine-grained PAT at github.com/settings/tokens with
+                      # "Contents: Read and Write" permission on this repo only.

@@ -905,8 +905,49 @@ app.get('/api/admin/image-debug', requireAdmin, async (req, res) => {
   });
 });
 
-// Serve admin-uploaded item photos. Tries the file on disk first; falls back to
-// base64 stored in the DB (survives if disk was never configured or was wiped).
+// Upload an image to the GitHub repo via the Contents API.
+// Returns the raw.githubusercontent.com URL on success, null on failure.
+// Falls back gracefully so local dev (no GITHUB_TOKEN) still works.
+async function uploadImageToGitHub(itemId, b64, ext) {
+  const token = process.env.GITHUB_TOKEN;
+  const repo = process.env.GITHUB_REPO || 'asandyant/dtpennyroute';
+  const branch = process.env.GITHUB_BRANCH || 'main';
+  if (!token) return null;
+
+  const filePath = `public/uploads/${itemId}${ext}`;
+  const apiUrl = `https://api.github.com/repos/${repo}/contents/${filePath}`;
+  const headers = {
+    'Authorization': `Bearer ${token}`,
+    'Accept': 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+    'Content-Type': 'application/json'
+  };
+
+  // Fetch existing SHA so we can overwrite the file if it already exists.
+  let sha;
+  try {
+    const check = await fetch(apiUrl, { headers, signal: AbortSignal.timeout(8000) });
+    if (check.ok) sha = (await check.json()).sha;
+  } catch (_) {}
+
+  const body = { message: `Upload item photo: ${itemId}`, content: b64, branch };
+  if (sha) body.sha = sha;
+
+  const res = await fetch(apiUrl, {
+    method: 'PUT', headers,
+    body: JSON.stringify(body),
+    signal: AbortSignal.timeout(20000)
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(`GitHub API ${res.status}: ${err.message || 'upload failed'}`);
+  }
+  const data = await res.json();
+  return data.content?.download_url ||
+    `https://raw.githubusercontent.com/${repo}/${branch}/${filePath}`;
+}
+
+// Fallback image server for local dev (no GITHUB_TOKEN). Tries disk, then DB base64.
 app.get('/api/images/:itemId', (req, res) => {
   const itemId = req.params.itemId.replace(/[^a-z0-9_-]/gi, '');
   if (!itemId) return res.status(400).end();
@@ -932,7 +973,7 @@ app.get('/api/images/:itemId', (req, res) => {
   res.end(Buffer.from(b64, 'base64'));
 });
 
-app.post('/api/admin/items/:itemId/photo', requireAdmin, (req, res) => {
+app.post('/api/admin/items/:itemId/photo', requireAdmin, async (req, res) => {
   const itemId = req.params.itemId.replace(/[^a-z0-9_-]/gi, '');
   if (!itemId) return res.status(400).json({ error: 'Invalid item ID' });
 
@@ -949,18 +990,33 @@ app.post('/api/admin/items/:itemId/photo', requireAdmin, (req, res) => {
   const ext = mime.includes('png') ? '.png' : mime.includes('webp') ? '.webp' : '.jpg';
   const [, b64] = imageData.split(',');
 
-  ensureDataDir();
-  fs.writeFileSync(path.join(UPLOADS_DIR, itemId + ext), Buffer.from(b64, 'base64'));
+  let imageUrl;
+  let storage;
 
-  // Keep base64 in item as fallback in case disk is wiped or not configured.
+  try {
+    imageUrl = await uploadImageToGitHub(itemId, b64, ext);
+    if (imageUrl) storage = 'github';
+  } catch (e) {
+    console.error('GitHub upload failed, falling back to disk:', e.message);
+  }
+
+  if (!imageUrl) {
+    // Local dev fallback — write to UPLOADS_DIR and serve via /api/images/:itemId
+    ensureDataDir();
+    fs.writeFileSync(path.join(UPLOADS_DIR, itemId + ext), Buffer.from(b64, 'base64'));
+    imageUrl = `/api/images/${itemId}`;
+    storage = 'local';
+  }
+
+  // Keep base64 in DB so /api/images/:itemId still works if GitHub is unavailable.
   item.imageData = imageData;
-  item.imageUrl = `/api/images/${itemId}`;
+  item.imageUrl = imageUrl;
   item.imageSource = 'admin_upload';
   item.imageStatus = 'verified';
 
   writeDb(db);
-  console.log(`Admin photo uploaded for ${itemId} (${item.description.slice(0, 40)})`);
-  res.json({ ok: true, item: publicItem(item) });
+  console.log(`Admin photo saved for ${itemId} via ${storage}: ${imageUrl}`);
+  res.json({ ok: true, item: publicItem(item), storage });
 });
 
 app.post('/api/admin/enrich-images', requireAdmin, async (req, res) => {
