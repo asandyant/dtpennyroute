@@ -280,7 +280,17 @@
     </section>
   </main>
 
+  <!-- Leaflet from local vendor (public/vendor/leaflet/leaflet.js) -->
   <script src="/vendor/leaflet/leaflet.js"></script>
+  <!-- Synchronous CDN fallback — only runs if local file failed to set window.L -->
+  <script>if(typeof L==='undefined'){document.write('<scr'+'ipt src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"><\/scr'+'ipt>');}</script>
+  <script>
+    // Debug: log Leaflet load status to browser console
+    (function(){
+      var ok = typeof L !== 'undefined';
+      console.log('[DTPennyRoute] Leaflet:', ok ? 'READY v' + L.version : 'FAILED — window.L undefined. Check /api/debug/leaflet');
+    })();
+  </script>
   <script src="app.js"></script>
 </body>
 </html>

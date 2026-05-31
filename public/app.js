@@ -945,10 +945,11 @@ function initHuntMap() {
   if ($('huntZipLabel')) $('huntZipLabel').textContent = state.homeZip;
 
   if (typeof L === 'undefined') {
-    container.innerHTML = `<div style="padding:16px;color:#8a1f16;background:#fff1ef;border-radius:12px">
-      <strong>Map could not load.</strong> The Leaflet library (leaflet.js) did not initialize.
-      Try a hard refresh (Shift+Reload). If this keeps happening, the file at
-      <code>/vendor/leaflet/leaflet.js</code> may not have deployed correctly.
+    container.innerHTML = `<div style="padding:16px;color:#8a1f16;background:#fff1ef;border-radius:12px;margin:8px 0">
+      <strong>Map could not load.</strong><br>
+      <span style="font-size:13px">window.L is undefined — Leaflet did not initialize.<br>
+      Try a hard refresh (hold the reload button on iPhone &rarr; Reload Without Content Blockers, or use Safari &rarr; Clear History).<br>
+      <a href="/api/debug/leaflet" target="_blank" style="color:#8a1f16">Check /api/debug/leaflet</a> to confirm the file is deployed.</span>
     </div>`;
     return;
   }
