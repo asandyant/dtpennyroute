@@ -357,19 +357,25 @@
     {
       "id": "item_0021",
       "sku": "367396",
-      "description": "BATHROOM CLEANER 3PK",
-      "category": "Household",
+      "description": "BATHROOM CLEANER CONCENTRATED PODS 3PK",
+      "category": "Household / Cleaning",
       "eventNumber": "40058",
       "dropDate": "2026-06-01",
-      "source": "6/1/26 screenshot",
-      "confidence": "high",
+      "source": "TikTok scanner proof screenshot",
+      "confidence": "field-confirmed",
+      "fieldConfirmed": true,
+      "pennyScore": 100,
+      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
       "status": "active",
       "searchTerms": [
         "bathroom cleaner 3pk",
-        "bathroom cleaner"
+        "bathroom cleaner",
+        "bathroom cleaner concentrated pods",
+        "bathroom cleaner 3 refills",
+        "cleaner pods shower tub"
       ],
       "imageUrl": null,
-      "imageStatus": "not_found"
+      "imageStatus": "needs_admin_upload"
     },
     {
       "id": "item_0022",
@@ -772,16 +778,22 @@
       "sku": "",
       "description": "TIC TAC CHEWY SOUR ADVENTURE CANDIES 2.8 OZ",
       "category": "Candy / Food",
-      "dropDate": "2026-05-05",
-      "source": "internet list",
-      "confidence": "medium",
+      "dropDate": "2026-06-01",
+      "source": "TikTok scanner proof screenshot",
+      "confidence": "field-confirmed",
+      "fieldConfirmed": true,
+      "pennyScore": 100,
+      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
       "status": "active",
       "searchTerms": [
         "tic tac chewy sour",
-        "sour adventure candies"
+        "sour adventure candies",
+        "tic tac chewy sour adventure",
+        "tic tac chewy 2.8 oz",
+        "sour adventure tic tac"
       ],
       "imageUrl": null,
-      "imageStatus": "not_found"
+      "imageStatus": "needs_admin_upload"
     },
     {
       "id": "item_0046",
@@ -1260,6 +1272,762 @@
       ],
       "imageUrl": null,
       "imageStatus": "not_found"
+    },
+    {
+      "id": "item_0082",
+      "sku": "",
+      "description": "PATRIOTIC STAR BOX 4PK",
+      "category": "Party / Seasonal",
+      "dropDate": "2026-06-01",
+      "source": "TikTok scanner proof screenshot",
+      "confidence": "field-confirmed",
+      "fieldConfirmed": true,
+      "pennyScore": 100,
+      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "status": "active",
+      "searchTerms": [
+        "patriotic star box",
+        "glitter star gift box",
+        "patriotic gift box"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0083",
+      "sku": "",
+      "description": "LUAU SIPPER 14Z",
+      "category": "Party / Summer",
+      "dropDate": "2026-06-01",
+      "source": "TikTok scanner proof screenshot",
+      "confidence": "field-confirmed",
+      "fieldConfirmed": true,
+      "pennyScore": 100,
+      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "status": "active",
+      "searchTerms": [
+        "luau sipper",
+        "tropical sipper cup",
+        "palm tree sipper"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0084",
+      "sku": "",
+      "description": "FLOWER LEI / PINK BEADED LEIS 40IN",
+      "category": "Party / Summer",
+      "dropDate": "2026-06-01",
+      "source": "TikTok scanner proof screenshot",
+      "confidence": "field-confirmed",
+      "fieldConfirmed": true,
+      "pennyScore": 100,
+      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "status": "active",
+      "searchTerms": [
+        "flower lei",
+        "pink flower lei",
+        "beaded leis 40 inch",
+        "luau lei"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0085",
+      "sku": "",
+      "description": "SLV NAUTICAL ICONS PK 6",
+      "category": "Decor / Seasonal",
+      "dropDate": "2026-06-01",
+      "source": "TikTok scanner proof screenshot",
+      "confidence": "field-confirmed",
+      "fieldConfirmed": true,
+      "pennyScore": 100,
+      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "status": "active",
+      "searchTerms": [
+        "silver nautical icons",
+        "nautical icons 6 pack",
+        "shore living nautical decorations"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0086",
+      "sku": "",
+      "description": "SHELL / MERMAID CUP WITH STRAW",
+      "category": "Kitchenware / Summer",
+      "dropDate": "2026-06-01",
+      "source": "TikTok scanner proof screenshot",
+      "confidence": "field-confirmed",
+      "fieldConfirmed": true,
+      "pennyScore": 100,
+      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "status": "active",
+      "searchTerms": [
+        "shell mermaid cup with straw",
+        "mermaid cup",
+        "shell cup",
+        "summer cup with straw"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0087",
+      "sku": "",
+      "description": "SUMMER DECALED ICE TEA TUMBLER",
+      "category": "Kitchenware / Summer",
+      "dropDate": "2026-06-01",
+      "source": "TikTok scanner proof screenshot",
+      "confidence": "field-confirmed",
+      "fieldConfirmed": true,
+      "pennyScore": 100,
+      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "status": "active",
+      "searchTerms": [
+        "summer decaled ice tea tumbler",
+        "ice tea tumbler",
+        "summer tumbler",
+        "popsicle tumbler"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0088",
+      "sku": "",
+      "description": "DISTRESSED SILVER METAL BANNER",
+      "category": "Decor / Seasonal",
+      "dropDate": "2026-06-01",
+      "source": "TikTok scanner proof screenshot",
+      "confidence": "field-confirmed",
+      "fieldConfirmed": true,
+      "pennyScore": 100,
+      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "status": "active",
+      "searchTerms": [
+        "distressed silver metal banner",
+        "metal banner",
+        "galvanized banner",
+        "shore living banner"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0089",
+      "sku": "",
+      "description": "COASTAL WOOD HANGER ASSORTED",
+      "category": "Decor / Seasonal",
+      "dropDate": "2026-06-01",
+      "source": "TikTok scanner proof screenshot",
+      "confidence": "field-confirmed",
+      "fieldConfirmed": true,
+      "pennyScore": 100,
+      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "status": "active",
+      "searchTerms": [
+        "coastal wood hanger",
+        "wood hanger assorted",
+        "shore living wood hanger",
+        "coastal decor"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0090",
+      "sku": "",
+      "description": "SHORE LIVING PINS / NAUTICAL PINS",
+      "category": "Decor / Seasonal",
+      "dropDate": "2026-06-01",
+      "source": "TikTok scanner proof screenshot",
+      "confidence": "field-confirmed",
+      "fieldConfirmed": true,
+      "pennyScore": 100,
+      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "status": "active",
+      "searchTerms": [
+        "shore living pins",
+        "nautical pins",
+        "starfish pins",
+        "sailboat pins",
+        "seahorse pins"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0091",
+      "sku": "",
+      "description": "NAPKIN SPRING FLING 18CT",
+      "category": "Party / Seasonal",
+      "dropDate": "2026-06-01",
+      "source": "TikTok scanner proof screenshot",
+      "confidence": "field-confirmed",
+      "fieldConfirmed": true,
+      "pennyScore": 100,
+      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "status": "active",
+      "searchTerms": [
+        "napkin spring fling 18ct",
+        "spring napkins",
+        "happy spring napkins",
+        "floral napkins"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0092",
+      "sku": "",
+      "description": "INCENSE STICKS HEART 40CT",
+      "category": "Home Fragrance",
+      "dropDate": "2026-06-01",
+      "source": "TikTok scanner proof screenshot",
+      "confidence": "field-confirmed",
+      "fieldConfirmed": true,
+      "pennyScore": 100,
+      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "status": "active",
+      "searchTerms": [
+        "incense sticks heart 40ct",
+        "heart incense sticks",
+        "incense 40 count"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0093",
+      "sku": "",
+      "description": "INCENSE STICKS BLESSINGS 40CT",
+      "category": "Home Fragrance",
+      "dropDate": "2026-06-01",
+      "source": "TikTok scanner proof screenshot",
+      "confidence": "field-confirmed",
+      "fieldConfirmed": true,
+      "pennyScore": 100,
+      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "status": "active",
+      "searchTerms": [
+        "incense sticks blessings 40ct",
+        "blessings incense",
+        "incense 40 count"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0094",
+      "sku": "",
+      "description": "INCENSE STICK 40CT BALANCE",
+      "category": "Home Fragrance",
+      "dropDate": "2026-06-01",
+      "source": "TikTok scanner proof screenshot",
+      "confidence": "field-confirmed",
+      "fieldConfirmed": true,
+      "pennyScore": 100,
+      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "status": "active",
+      "searchTerms": [
+        "incense stick balance 40ct",
+        "balance incense sticks",
+        "sandalwood incense"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0095",
+      "sku": "",
+      "description": "TODAY IS YOUR DAY LIPGLOSS 2PK",
+      "category": "Beauty",
+      "dropDate": "2026-06-01",
+      "source": "TikTok scanner proof screenshot",
+      "confidence": "field-confirmed",
+      "fieldConfirmed": true,
+      "pennyScore": 100,
+      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "status": "active",
+      "searchTerms": [
+        "today is your day lipgloss 2pk",
+        "lipgloss 2 pack",
+        "gloss lipgloss"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0096",
+      "sku": "",
+      "description": "SILICONE WITH WOOD MINI TOOLS",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "source": "TikTok scanner proof screenshot",
+      "confidence": "field-confirmed",
+      "fieldConfirmed": true,
+      "pennyScore": 100,
+      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "status": "active",
+      "searchTerms": [
+        "silicone with wood mini tools",
+        "mini kitchen tools",
+        "silicone wood tools"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0097",
+      "sku": "",
+      "description": "BIRD SIGN DECOR",
+      "category": "Decor / Seasonal",
+      "dropDate": "2026-06-01",
+      "source": "TikTok scanner proof screenshot",
+      "confidence": "field-confirmed",
+      "fieldConfirmed": true,
+      "pennyScore": 100,
+      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "status": "active",
+      "searchTerms": [
+        "bird sign decor",
+        "island time bird sign",
+        "toucan sign",
+        "tropical bird decor"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0098",
+      "sku": "",
+      "description": "FUR CLAW CLIPS",
+      "category": "Beauty / Accessories",
+      "dropDate": "2026-06-01",
+      "source": "TikTok scanner proof screenshot",
+      "confidence": "field-confirmed",
+      "fieldConfirmed": true,
+      "pennyScore": 100,
+      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "status": "active",
+      "searchTerms": [
+        "fur claw clips",
+        "fuzzy claw clips",
+        "hair claw clips"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0099",
+      "sku": "",
+      "description": "KELLOGGS CRAZY SOCKS",
+      "category": "Apparel",
+      "dropDate": "2026-06-01",
+      "source": "TikTok scanner proof screenshot",
+      "confidence": "field-confirmed",
+      "fieldConfirmed": true,
+      "pennyScore": 100,
+      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "status": "active",
+      "searchTerms": [
+        "kelloggs crazy socks",
+        "rice krispies crazy socks",
+        "cereal socks"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0100",
+      "sku": "",
+      "description": "DC SUPER FRIENDS DOUGH & MOLD",
+      "category": "Toys",
+      "dropDate": "2026-06-01",
+      "source": "TikTok scanner proof screenshot",
+      "confidence": "field-confirmed",
+      "fieldConfirmed": true,
+      "pennyScore": 100,
+      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "status": "active",
+      "searchTerms": [
+        "dc super friends dough and mold",
+        "super friends dough",
+        "superhero dough mold"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0101",
+      "sku": "",
+      "description": "VOTIVE SUN RIPE BERRY",
+      "category": "Candles / Home Fragrance",
+      "dropDate": "2026-06-01",
+      "source": "TikTok scanner proof screenshot",
+      "confidence": "field-confirmed",
+      "fieldConfirmed": true,
+      "pennyScore": 100,
+      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "status": "active",
+      "searchTerms": [
+        "votive sun ripe berry",
+        "sun ripe berry candle",
+        "luminessence votive"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0102",
+      "sku": "",
+      "description": "MONSTER TRUCKS 5 SURPRISE",
+      "category": "Toys",
+      "dropDate": "2026-06-01",
+      "source": "TikTok scanner proof screenshot",
+      "confidence": "field-confirmed",
+      "fieldConfirmed": true,
+      "pennyScore": 100,
+      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "status": "active",
+      "searchTerms": [
+        "monster trucks 5 surprise",
+        "5 surprise monster trucks",
+        "zuru monster trucks"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0103",
+      "sku": "",
+      "description": "FROZEN II SHAMPOO",
+      "category": "Personal Care",
+      "dropDate": "2026-06-01",
+      "source": "image candidate / photo note",
+      "confidence": "unconfirmed",
+      "fieldConfirmed": false,
+      "pennyScore": null,
+      "tags": ["image candidate", "needs photo"],
+      "status": "active",
+      "searchTerms": [
+        "frozen 2 shampoo",
+        "frozen ii shampoo",
+        "disney frozen shampoo"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0104",
+      "sku": "",
+      "description": "GREAT NORTHERN BEANS",
+      "category": "Candy / Food",
+      "dropDate": "2026-06-01",
+      "source": "image candidate / photo note",
+      "confidence": "unconfirmed",
+      "fieldConfirmed": false,
+      "pennyScore": null,
+      "tags": ["image candidate", "needs photo"],
+      "status": "active",
+      "searchTerms": [
+        "great northern beans",
+        "canned great northern beans"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0105",
+      "sku": "",
+      "description": "AMOPE GEL ACTIV HEEL PROTECTORS",
+      "category": "Personal Care",
+      "dropDate": "2026-06-01",
+      "source": "image candidate / photo note",
+      "confidence": "unconfirmed",
+      "fieldConfirmed": false,
+      "pennyScore": null,
+      "tags": ["image candidate", "needs photo"],
+      "status": "active",
+      "searchTerms": [
+        "amope gel activ heel protectors",
+        "heel protectors",
+        "amope heel"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0106",
+      "sku": "",
+      "description": "ANGEL OF MINE BABY ROOM AIR FRESHENER",
+      "category": "Household",
+      "dropDate": "2026-06-01",
+      "source": "image candidate / photo note",
+      "confidence": "unconfirmed",
+      "fieldConfirmed": false,
+      "pennyScore": null,
+      "tags": ["image candidate", "needs photo"],
+      "status": "active",
+      "searchTerms": [
+        "angel of mine baby room air freshener",
+        "baby room air freshener"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0107",
+      "sku": "",
+      "description": "AIR FRESH LAVENDER & PATCHOULI SCENTED CANDLE",
+      "category": "Candles / Home Fragrance",
+      "dropDate": "2026-06-01",
+      "source": "image candidate / photo note",
+      "confidence": "unconfirmed",
+      "fieldConfirmed": false,
+      "pennyScore": null,
+      "tags": ["image candidate", "needs photo"],
+      "status": "active",
+      "searchTerms": [
+        "air fresh lavender patchouli candle",
+        "lavender patchouli scented candle"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0108",
+      "sku": "",
+      "description": "AIR FRESH WATERFALL SCENTED CANDLE",
+      "category": "Candles / Home Fragrance",
+      "dropDate": "2026-06-01",
+      "source": "image candidate / photo note",
+      "confidence": "unconfirmed",
+      "fieldConfirmed": false,
+      "pennyScore": null,
+      "tags": ["image candidate", "needs photo"],
+      "status": "active",
+      "searchTerms": [
+        "air fresh waterfall candle",
+        "waterfall scented candle"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0109",
+      "sku": "",
+      "description": "GOOD & CLEAN DISINFECTANT WIPES",
+      "category": "Household / Cleaning",
+      "dropDate": "2026-06-01",
+      "source": "image candidate / photo note",
+      "confidence": "unconfirmed",
+      "fieldConfirmed": false,
+      "pennyScore": null,
+      "tags": ["image candidate", "needs photo"],
+      "status": "active",
+      "searchTerms": [
+        "good and clean disinfectant wipes",
+        "disinfectant wipes"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0110",
+      "sku": "",
+      "description": "ZEST SIMPLY OCEAN WAVE BODY WASH",
+      "category": "Personal Care",
+      "dropDate": "2026-06-01",
+      "source": "image candidate / photo note",
+      "confidence": "unconfirmed",
+      "fieldConfirmed": false,
+      "pennyScore": null,
+      "tags": ["image candidate", "needs photo"],
+      "status": "active",
+      "searchTerms": [
+        "zest simply ocean wave body wash",
+        "zest ocean wave"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0111",
+      "sku": "",
+      "description": "WHITE RAIN OCEAN MIST BODY WASH",
+      "category": "Personal Care",
+      "dropDate": "2026-06-01",
+      "source": "image candidate / photo note",
+      "confidence": "unconfirmed",
+      "fieldConfirmed": false,
+      "pennyScore": null,
+      "tags": ["image candidate", "needs photo"],
+      "status": "active",
+      "searchTerms": [
+        "white rain ocean mist body wash",
+        "white rain ocean mist"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0112",
+      "sku": "",
+      "description": "HOMELINE CASCADING WATERS AUTOMATIC SPRAY 2-PACK",
+      "category": "Household",
+      "dropDate": "2026-06-01",
+      "source": "image candidate / photo note",
+      "confidence": "unconfirmed",
+      "fieldConfirmed": false,
+      "pennyScore": null,
+      "tags": ["image candidate", "needs photo"],
+      "status": "active",
+      "searchTerms": [
+        "homeline cascading waters automatic spray",
+        "cascading waters spray 2 pack",
+        "automatic air freshener spray"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0113",
+      "sku": "",
+      "description": "MUIR GLEN TOMATO PUREE FIREFIGHTERS CAN",
+      "category": "Candy / Food",
+      "dropDate": "2026-06-01",
+      "source": "image candidate / photo note",
+      "confidence": "unconfirmed",
+      "fieldConfirmed": false,
+      "pennyScore": null,
+      "tags": ["image candidate", "needs photo"],
+      "status": "active",
+      "searchTerms": [
+        "muir glen tomato puree",
+        "muir glen firefighters can"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0114",
+      "sku": "",
+      "description": "FILLER PAPER 200 SHEETS",
+      "category": "Stationery",
+      "dropDate": "2026-06-01",
+      "source": "image candidate / photo note",
+      "confidence": "unconfirmed",
+      "fieldConfirmed": false,
+      "pennyScore": null,
+      "tags": ["image candidate", "needs photo"],
+      "status": "active",
+      "searchTerms": [
+        "filler paper 200 sheets",
+        "loose leaf paper 200"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0115",
+      "sku": "",
+      "description": "THINK POSITIVE / BE POSITIVE GRATITUDE JOURNAL",
+      "category": "Stationery",
+      "dropDate": "2026-06-01",
+      "source": "image candidate / photo note",
+      "confidence": "unconfirmed",
+      "fieldConfirmed": false,
+      "pennyScore": null,
+      "tags": ["image candidate", "needs photo"],
+      "status": "active",
+      "searchTerms": [
+        "think positive journal",
+        "be positive gratitude journal",
+        "gratitude journal"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0116",
+      "sku": "",
+      "description": "HOME COLLECTION RED DISH TOWELS",
+      "category": "Household",
+      "dropDate": "2026-06-01",
+      "source": "image candidate / photo note",
+      "confidence": "unconfirmed",
+      "fieldConfirmed": false,
+      "pennyScore": null,
+      "tags": ["image candidate", "needs photo"],
+      "status": "active",
+      "searchTerms": [
+        "home collection red dish towels",
+        "red dish towels"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0117",
+      "sku": "",
+      "description": "YOU ARE MY PERSON SIGN",
+      "category": "Home Decor",
+      "dropDate": "2026-06-01",
+      "source": "image candidate / photo note",
+      "confidence": "unconfirmed",
+      "fieldConfirmed": false,
+      "pennyScore": null,
+      "tags": ["image candidate", "needs photo"],
+      "status": "active",
+      "searchTerms": [
+        "you are my person sign",
+        "my person decor sign"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0118",
+      "sku": "",
+      "description": "HOME IS WHEREVER WE ARE TOGETHER SIGN",
+      "category": "Home Decor",
+      "dropDate": "2026-06-01",
+      "source": "image candidate / photo note",
+      "confidence": "unconfirmed",
+      "fieldConfirmed": false,
+      "pennyScore": null,
+      "tags": ["image candidate", "needs photo"],
+      "status": "active",
+      "searchTerms": [
+        "home is wherever we are together sign",
+        "home together sign"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
+    },
+    {
+      "id": "item_0119",
+      "sku": "",
+      "description": "SUNNY DAZE DECOR SIGN",
+      "category": "Home Decor",
+      "dropDate": "2026-06-01",
+      "source": "image candidate / photo note",
+      "confidence": "unconfirmed",
+      "fieldConfirmed": false,
+      "pennyScore": null,
+      "tags": ["image candidate", "needs photo"],
+      "status": "active",
+      "searchTerms": [
+        "sunny daze decor sign",
+        "sunny daze sign"
+      ],
+      "imageUrl": null,
+      "imageStatus": "needs_admin_upload"
     }
   ],
   "reports": [
