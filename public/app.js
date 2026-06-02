@@ -64,7 +64,7 @@ function setTab(tab) {
   if (tab === 'run') { loadHunts(); renderSelected(); renderRouteBuilder(); setTimeout(initHuntMap, 0); }
   if (tab === 'check') { renderQuickSelectors(); renderCheckHelper(); buildRouteView(); renderStockRouteResults(); }
   if (tab === 'community') renderReports();
-  if (tab === 'admin') { initUploadSection(); loadAdminImportSummary(); loadReviewQueue(); }
+  if (tab === 'admin') { initUploadSection(); loadAdminItemCounts(); loadAdminImportSummary(); loadReviewQueue(); }
 }
 
 function updateAccountUi() {
@@ -826,6 +826,40 @@ async function adminBulkImport() {
 // ── Batch Import Summary & DB Review Queue ──────────────────────────────────
 
 let _reviewQueueCache = null;
+
+async function loadAdminItemCounts() {
+  const el = $('adminCountDebug');
+  if (!el) return;
+  try {
+    const d = await api('/api/admin/item-counts');
+    const row = (label, val, color) =>
+      `<div style="background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center">
+        <div style="font-size:22px;font-weight:900;color:${color || 'var(--ink)'}">${val ?? '—'}</div>
+        <div style="font-size:11px;color:var(--muted);font-weight:700">${label}</div>
+      </div>`;
+    const catRows = Object.entries(d.categoryCounts || {})
+      .sort((a, b) => b[1] - a[1])
+      .map(([c, n]) => `<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #f0f0f0"><span class="small">${escapeHtml(c)}</span><strong class="small">${n}</strong></div>`)
+      .join('');
+    el.innerHTML = `
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:12px">
+        ${row('Total DB records', d.totalDbRecords, '#154e8c')}
+        ${row('Active items', d.activeItems, '#157347')}
+        ${row('Inactive', d.inactiveItems, '#6c757d')}
+        ${row('With photo', d.withPhoto, '#0f8b8d')}
+        ${row('Verified photo', d.verifiedPhoto, '#0f8b8d')}
+        ${row('Scanner confirmed', d.scannerConfirmed, '#0f8b8d')}
+        ${row('Review queue', d.reviewQueueTotal)}
+        ${row('Review pending', d.reviewQueuePending, d.reviewQueuePending > 0 ? '#b42318' : '#6c757d')}
+      </div>
+      <div style="background:#f6fafb;border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:8px">
+        <div class="small" style="font-weight:800;margin-bottom:6px">Storage mode: <code>${escapeHtml(d.storageMode)}</code> &nbsp;·&nbsp; Bundled DB: ${d.bundledDbExists ? '✓ present' : '✗ missing'}</div>
+        <div style="max-height:220px;overflow-y:auto">${catRows}</div>
+      </div>`;
+  } catch(e) {
+    if (el) el.innerHTML = `<span class="small" style="color:#b42318">Error: ${escapeHtml(e.message)}</span>`;
+  }
+}
 
 async function loadAdminImportSummary() {
   const el = $('adminImportSummary');
@@ -1595,6 +1629,7 @@ function bindEvents() {
   $('uploadSearch')?.addEventListener('input', filterUploadItems);
   $('uploadFileInput')?.addEventListener('change', handleUploadFileSelect);
   $('uploadPhotoBtn')?.addEventListener('click', adminUploadPhoto);
+  $('adminRefreshCountBtn')?.addEventListener('click', loadAdminItemCounts);
   $('adminRefreshImportBtn')?.addEventListener('click', loadAdminImportSummary);
   $('queueLoadBtn')?.addEventListener('click', handleQueueZipLoad);
   $('queueItemSearch')?.addEventListener('input', filterQueueItems);

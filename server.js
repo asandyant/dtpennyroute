@@ -32,6 +32,15 @@ const CATEGORY_NORMALIZE = {
   'Apparel': 'Apparel', 'Floral': 'Floral', 'Seasonal': 'Seasonal',
   'Books / Activity': 'Books / Activity', 'Candy / Food': 'Candy / Food',
   'Party / Gift Bags': 'Party / Gift Bags',
+  // Compound categories from batch imports — map to nearest public bucket
+  'Household / Cleaning': 'Household',
+  'Decor / Seasonal': 'Seasonal',
+  'Party / Seasonal': 'Seasonal',
+  'Party / Summer': 'Party / Gift Bags',
+  'Kitchenware / Summer': 'Kitchenware',
+  'Home Fragrance': 'Home Decor',
+  'Candles / Home Fragrance': 'Home Decor',
+  'Beauty / Accessories': 'Beauty',
 };
 
 const PUBLIC_CATEGORIES = ['All','Kitchenware','Party / Gift Bags','Personal Care','Beauty',
@@ -461,15 +470,66 @@ function readDb() {
   ensureDataDir();
   if (!fs.existsSync(DB_FILE)) writeDb(initialDb());
   const db = JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
+
+  let dirty = false;
+
   // Apply baked-in catalog images to any item that is missing one (covers fresh Render deploys).
-  let migrated = false;
   for (const item of db.items) {
     if (item.sku && !item.imageUrl && CATALOG_IMAGES[item.sku]) {
       Object.assign(item, CATALOG_IMAGES[item.sku]);
-      migrated = true;
+      dirty = true;
     }
   }
-  if (migrated) writeDb(db);
+
+  // When running on Render (STORAGE_PATH differs from ./data), merge any items
+  // that exist in the git-tracked data/dtpennyroute-db.json but are absent from
+  // the live storage DB. This propagates batch imports without wiping runtime data.
+  const bundledPath = path.join(__dirname, 'data', 'dtpennyroute-db.json');
+  const isRemoteStorage = DATA_DIR !== path.join(__dirname, 'data');
+  if (isRemoteStorage && fs.existsSync(bundledPath)) {
+    try {
+      const seed = JSON.parse(fs.readFileSync(bundledPath, 'utf8'));
+      const existingSkus = new Set(db.items.filter(i => i.sku).map(i => i.sku));
+      const existingDescs = new Set(db.items.map(i =>
+        (i.description || '').toUpperCase().replace(/\s+/g, ' ').trim()
+      ));
+      let added = 0;
+      for (const si of (seed.items || [])) {
+        const sku = si.sku || '';
+        const desc = (si.description || '').toUpperCase().replace(/\s+/g, ' ').trim();
+        if (!desc) continue;
+        if (sku && existingSkus.has(sku)) continue;
+        if (existingDescs.has(desc)) continue;
+        db.items.push({ ...si });
+        if (sku) existingSkus.add(sku);
+        existingDescs.add(desc);
+        added++;
+      }
+      // Merge batch import records and review queue metadata
+      const existingImportIds = new Set((db.batchImports || []).map(b => b.id));
+      for (const bi of (seed.batchImports || [])) {
+        if (!existingImportIds.has(bi.id)) {
+          db.batchImports = db.batchImports || [];
+          db.batchImports.push(bi);
+        }
+      }
+      const existingQueueIds = new Set((db.photoReviewQueue || []).map(q => q.id));
+      for (const qi of (seed.photoReviewQueue || [])) {
+        if (!existingQueueIds.has(qi.id)) {
+          db.photoReviewQueue = db.photoReviewQueue || [];
+          db.photoReviewQueue.push(qi);
+        }
+      }
+      if (added > 0) {
+        dirty = true;
+        console.log(`Seed merge: +${added} items from bundled DB`);
+      }
+    } catch (e) {
+      console.error('Seed merge error (non-fatal):', e.message);
+    }
+  }
+
+  if (dirty) writeDb(db);
   return db;
 }
 
@@ -1113,6 +1173,40 @@ app.post('/api/admin/enrich-images', requireAdmin, async (req, res) => {
   writeDb(db);
   console.log(`Image enrichment: ${summary.found} found, ${summary.notFound} not found, ${summary.skipped} skipped`);
   res.json({ ok: true, ...summary });
+});
+
+app.get('/api/admin/item-counts', requireAdmin, (req, res) => {
+  const db = readDb();
+  const all = db.items;
+  const active = all.filter(i => i.status !== 'inactive');
+  const inactive = all.filter(i => i.status === 'inactive');
+  const missingDesc = all.filter(i => !i.description || !i.description.trim());
+  const withPhoto = all.filter(i => i.imageUrl && i.imageStatus !== 'placeholder');
+  const verifiedPhoto = all.filter(i => i.imageSource === 'admin_upload' || i.imageSource === 'batch_import');
+  const scannerConfirmed = all.filter(i => i.fieldConfirmed === true);
+  const reviewQueueItems = (db.photoReviewQueue || []).length;
+  const reviewPending = (db.photoReviewQueue || []).filter(q => q.status === 'pending').length;
+
+  const catCounts = {};
+  active.forEach(i => {
+    const c = normalizeCategory(i.category);
+    catCounts[c] = (catCounts[c] || 0) + 1;
+  });
+
+  res.json({
+    totalDbRecords: all.length,
+    activeItems: active.length,
+    inactiveItems: inactive.length,
+    missingDescription: missingDesc.length,
+    withPhoto: withPhoto.length,
+    verifiedPhoto: verifiedPhoto.length,
+    scannerConfirmed: scannerConfirmed.length,
+    reviewQueueTotal: reviewQueueItems,
+    reviewQueuePending: reviewPending,
+    categoryCounts: catCounts,
+    storageMode: DATA_DIR === path.join(__dirname, 'data') ? 'local (data/)' : `remote (${DATA_DIR})`,
+    bundledDbExists: require('fs').existsSync(path.join(__dirname, 'data', 'dtpennyroute-db.json')),
+  });
 });
 
 app.get('/api/admin/batch-imports', requireAdmin, (req, res) => {

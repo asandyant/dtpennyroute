@@ -269,6 +269,15 @@
         <p class="small muted" style="margin-top:8px">Photos save to server storage. To persist across Render redeploys, enable the persistent disk in render.yaml (requires Starter plan — see comments in that file).</p>
       </div>
 
+      <div class="card">
+        <h2>Admin: Item Count Debug</h2>
+        <p class="muted">Live count breakdown straight from the server DB. Use this to diagnose count mismatches between local, Render, and the Penny List.</p>
+        <div id="adminCountDebug"><span class="small muted">Loading…</span></div>
+        <div class="actions" style="margin-top:10px">
+          <button class="secondary" id="adminRefreshCountBtn">Refresh Counts</button>
+        </div>
+      </div>
+
       <div class="card" id="adminImportSummaryCard">
         <h2>Admin: Batch Import Summary</h2>
         <p class="muted">Smart import results from the TikTok penny screenshots batch. Shows what was matched, added, and attached.</p>
