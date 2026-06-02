@@ -823,6 +823,294 @@ async function adminBulkImport() {
   } catch(e) { $('adminImportStatus').textContent = e.message; }
 }
 
+// ── Bulk Photo Review Queue ──────────────────────────────────────────────────
+
+const reviewQueue = {
+  zip: null,
+  entries: [],         // [{ filename, fullPath, status:'pending'|'approved'|'skipped'|'proof_only', assignedItemId, assignedDesc }]
+  currentIndex: 0,
+  currentDataUrl: null,
+};
+
+async function handleQueueZipLoad() {
+  const file = $('queueZipInput')?.files?.[0];
+  const statusEl = $('queueLoadStatus');
+  const loadBtn = $('queueLoadBtn');
+  if (!file) { if (statusEl) statusEl.textContent = 'Select a zip file first.'; return; }
+
+  if (typeof JSZip === 'undefined') {
+    if (statusEl) statusEl.textContent = 'JSZip library not available — check your internet connection and refresh.';
+    return;
+  }
+
+  if (statusEl) statusEl.textContent = 'Loading zip…';
+  if (loadBtn) { loadBtn.disabled = true; loadBtn.textContent = 'Loading…'; }
+
+  try {
+    const zip = await JSZip.loadAsync(file);
+    const entries = [];
+
+    for (const [fullPath, zipEntry] of Object.entries(zip.files)) {
+      if (zipEntry.dir) continue;
+      if (!/\.(jpe?g|png|gif|webp)$/i.test(fullPath)) continue;
+      entries.push({ filename: fullPath.split('/').pop() || fullPath, fullPath, status: 'pending', assignedItemId: null, assignedDesc: null });
+    }
+
+    entries.sort((a, b) => a.filename.localeCompare(b.filename, undefined, { numeric: true }));
+
+    if (!entries.length) {
+      if (statusEl) statusEl.textContent = 'No image files found in this zip.';
+      if (loadBtn) { loadBtn.disabled = false; loadBtn.textContent = 'Load Zip & Start Review'; }
+      return;
+    }
+
+    reviewQueue.zip = zip;
+    reviewQueue.entries = entries;
+    reviewQueue.currentIndex = 0;
+    reviewQueue.currentDataUrl = null;
+
+    if (!_uploadItemsCache) {
+      const data = await api('/api/items');
+      _uploadItemsCache = data.items;
+    }
+    filterQueueItems();
+
+    if ($('queueSummary')) $('queueSummary').innerHTML = '';
+    $('queueLoadSection')?.classList.add('hidden');
+    $('queueReviewSection')?.classList.remove('hidden');
+
+    await loadCurrentQueueImage();
+    renderQueueProgress();
+
+  } catch (e) {
+    if (statusEl) statusEl.textContent = 'Error loading zip: ' + e.message;
+  }
+
+  if (loadBtn) { loadBtn.disabled = false; loadBtn.textContent = 'Load Zip & Start Review'; }
+}
+
+function filterQueueItems() {
+  const q = ($('queueItemSearch')?.value || '').toLowerCase().trim();
+  const select = $('queueItemSelect');
+  if (!select || !_uploadItemsCache) return;
+  const items = q
+    ? _uploadItemsCache.filter(i =>
+        i.description.toLowerCase().includes(q) ||
+        (i.sku || '').includes(q) ||
+        (i.searchTerms || []).some(t => t.toLowerCase().includes(q))
+      )
+    : _uploadItemsCache;
+  select.innerHTML = items.length
+    ? items.map(i => `<option value="${i.id}">${i.sku ? i.sku + ' — ' : ''}${escapeHtml(i.description)}</option>`).join('')
+    : '<option value="">No items match</option>';
+}
+
+async function loadCurrentQueueImage() {
+  const entry = reviewQueue.entries[reviewQueue.currentIndex];
+  const previewEl = $('queueImagePreview');
+  const filenameEl = $('queueImageFilename');
+  const indexEl = $('queueImageIndex');
+  if (!entry || !reviewQueue.zip) return;
+
+  if (previewEl) previewEl.innerHTML = '<span class="small muted" style="padding:20px;display:block;text-align:center">Loading image…</span>';
+  if (filenameEl) filenameEl.textContent = entry.filename;
+  if (indexEl) indexEl.textContent = `${reviewQueue.currentIndex + 1} / ${reviewQueue.entries.length}`;
+
+  try {
+    const zipEntry = reviewQueue.zip.files[entry.fullPath];
+    if (!zipEntry) throw new Error('File not found in zip');
+    const blob = await zipEntry.async('blob');
+    const dataUrl = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = reject;
+      reader.onload = e => resolve(e.target.result);
+      reader.readAsDataURL(blob);
+    });
+    reviewQueue.currentDataUrl = dataUrl;
+    if (previewEl) {
+      previewEl.innerHTML = `<img src="${escapeHtml(dataUrl)}" style="max-width:100%;max-height:340px;border-radius:8px;object-fit:contain;display:block;margin:0 auto" alt="${escapeHtml(entry.filename)}" />`;
+    }
+  } catch (e) {
+    reviewQueue.currentDataUrl = null;
+    if (previewEl) previewEl.innerHTML = `<span class="small" style="color:#b42318;padding:16px;display:block">Could not load image: ${escapeHtml(e.message)}</span>`;
+  }
+  updateQueueActionStatus();
+}
+
+function renderQueueProgress() {
+  const el = $('queueProgress');
+  if (!el) return;
+  const total = reviewQueue.entries.length;
+  const approved = reviewQueue.entries.filter(e => e.status === 'approved').length;
+  const skipped = reviewQueue.entries.filter(e => e.status === 'skipped').length;
+  const proofOnly = reviewQueue.entries.filter(e => e.status === 'proof_only').length;
+  const pending = reviewQueue.entries.filter(e => e.status === 'pending').length;
+  const reviewed = total - pending;
+  const pct = total ? Math.round((reviewed / total) * 100) : 0;
+  el.innerHTML = `
+    <div style="display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin-bottom:6px;font-size:13px">
+      <strong style="font-size:14px">${reviewed} / ${total} reviewed</strong>
+      <span style="color:#157347;font-weight:700">✓ ${approved} approved</span>
+      <span style="color:#7c4dbd;font-weight:700">★ ${proofOnly} proof-only</span>
+      <span style="color:#60707a;font-weight:700">⊖ ${skipped} skipped</span>
+      ${pending > 0 ? `<span style="color:#60707a">${pending} remaining</span>` : '<span style="color:#157347;font-weight:700">All reviewed!</span>'}
+    </div>
+    <div style="background:#e5e7eb;border-radius:6px;height:6px;overflow:hidden">
+      <div style="background:var(--blue);height:100%;width:${pct}%;transition:width 0.3s;border-radius:6px"></div>
+    </div>`;
+  if (pending === 0) renderQueueSummary();
+}
+
+function updateQueueActionStatus() {
+  const entry = reviewQueue.entries[reviewQueue.currentIndex];
+  const el = $('queueActionStatus');
+  if (!el) return;
+  if (!entry || entry.status === 'pending') { el.textContent = ''; return; }
+  if (entry.status === 'approved') {
+    el.innerHTML = `<span style="color:#157347;font-weight:700">✓ Approved — attached to: ${escapeHtml(entry.assignedDesc || entry.assignedItemId || '')}</span>`;
+  } else if (entry.status === 'skipped') {
+    el.innerHTML = `<span style="color:#6c757d">⊖ Skipped</span>`;
+  } else if (entry.status === 'proof_only') {
+    el.innerHTML = `<span style="color:#7c4dbd">★ Marked as scanner proof only</span>`;
+  }
+}
+
+function resizeDataUrlForUpload(dataUrl, maxSize = 800) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onerror = reject;
+    img.onload = () => {
+      let { width, height } = img;
+      if (width > maxSize || height > maxSize) {
+        if (width >= height) { height = Math.round(height * maxSize / width); width = maxSize; }
+        else { width = Math.round(width * maxSize / height); height = maxSize; }
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = width; canvas.height = height;
+      canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+      resolve(canvas.toDataURL('image/jpeg', 0.85));
+    };
+    img.src = dataUrl;
+  });
+}
+
+async function reviewApprove() {
+  const btn = $('queueApproveBtn');
+  const statusEl = $('queueActionStatus');
+  const select = $('queueItemSelect');
+  const itemId = select?.value;
+
+  if (!itemId) { if (statusEl) statusEl.textContent = 'Select a penny item first.'; return; }
+  if (!reviewQueue.currentDataUrl) { if (statusEl) statusEl.textContent = 'Image not loaded yet — wait a moment.'; return; }
+
+  if (btn) { btn.disabled = true; btn.textContent = 'Uploading…'; }
+  if (statusEl) statusEl.textContent = 'Resizing and uploading…';
+
+  try {
+    const resized = await resizeDataUrlForUpload(reviewQueue.currentDataUrl, 800);
+    const data = await api(`/api/admin/items/${encodeURIComponent(itemId)}/photo`, {
+      method: 'POST',
+      body: JSON.stringify({ imageData: resized })
+    });
+
+    const entry = reviewQueue.entries[reviewQueue.currentIndex];
+    entry.status = 'approved';
+    entry.assignedItemId = itemId;
+    entry.assignedDesc = data.item?.description || itemId;
+
+    const where = data.storage === 'github' ? 'GitHub (permanent)' : 'local server';
+    if (statusEl) statusEl.innerHTML = `<span style="color:#157347;font-weight:700">✓ Attached to: <strong>${escapeHtml(data.item?.description || itemId)}</strong> — saved to ${where}</span>`;
+
+    _uploadItemsCache = null;
+    renderQueueProgress();
+    setTimeout(reviewAdvanceToNextPending, 900);
+  } catch (e) {
+    if (statusEl) statusEl.textContent = 'Error: ' + e.message;
+  }
+
+  if (btn) { btn.disabled = false; btn.textContent = 'Approve & Attach Photo'; }
+}
+
+function reviewSkip() {
+  const entry = reviewQueue.entries[reviewQueue.currentIndex];
+  if (entry) entry.status = 'skipped';
+  renderQueueProgress();
+  updateQueueActionStatus();
+  reviewAdvanceToNextPending();
+}
+
+function reviewMarkProof() {
+  const entry = reviewQueue.entries[reviewQueue.currentIndex];
+  if (entry) entry.status = 'proof_only';
+  renderQueueProgress();
+  updateQueueActionStatus();
+  reviewAdvanceToNextPending();
+}
+
+function reviewAdvanceToNextPending() {
+  const total = reviewQueue.entries.length;
+  let next = reviewQueue.currentIndex + 1;
+  while (next < total && reviewQueue.entries[next].status !== 'pending') next++;
+  if (next < total) {
+    reviewQueue.currentIndex = next;
+  } else {
+    let first = 0;
+    while (first < total && reviewQueue.entries[first].status !== 'pending') first++;
+    if (first < total) {
+      reviewQueue.currentIndex = first;
+    } else {
+      renderQueueSummary();
+      return;
+    }
+  }
+  loadCurrentQueueImage();
+  renderQueueProgress();
+}
+
+function reviewPrev() {
+  if (reviewQueue.currentIndex > 0) { reviewQueue.currentIndex--; loadCurrentQueueImage(); renderQueueProgress(); }
+}
+
+function reviewNext() {
+  if (reviewQueue.currentIndex < reviewQueue.entries.length - 1) { reviewQueue.currentIndex++; loadCurrentQueueImage(); renderQueueProgress(); }
+}
+
+function renderQueueSummary() {
+  const el = $('queueSummary');
+  if (!el) return;
+  const pending = reviewQueue.entries.filter(e => e.status === 'pending');
+  if (pending.length > 0) { el.innerHTML = ''; return; }
+
+  const approved = reviewQueue.entries.filter(e => e.status === 'approved');
+  const proofOnly = reviewQueue.entries.filter(e => e.status === 'proof_only');
+  const skipped = reviewQueue.entries.filter(e => e.status === 'skipped');
+  const approvedRows = approved.map(e =>
+    `<div style="padding-left:16px;font-size:12px;color:#60707a;line-height:1.7">${escapeHtml(e.filename)} → <strong style="color:#14532d">${escapeHtml(e.assignedDesc || e.assignedItemId || '')}</strong></div>`
+  ).join('');
+
+  el.innerHTML = `
+    <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:16px;padding:16px">
+      <strong style="color:#14532d;font-size:15px">Review complete!</strong>
+      <div style="margin-top:10px;line-height:2">
+        ${approved.length ? `<div style="color:#157347;font-weight:700">✓ ${approved.length} photo${approved.length !== 1 ? 's' : ''} approved and attached to penny items</div>${approvedRows}` : ''}
+        ${proofOnly.length ? `<div style="color:#7c4dbd;font-weight:700">★ ${proofOnly.length} marked as scanner proof only (not attached)</div>` : ''}
+        ${skipped.length ? `<div style="color:#6c757d;font-weight:700">⊖ ${skipped.length} skipped</div>` : ''}
+      </div>
+    </div>`;
+}
+
+function resetPhotoQueue() {
+  reviewQueue.zip = null;
+  reviewQueue.entries = [];
+  reviewQueue.currentIndex = 0;
+  reviewQueue.currentDataUrl = null;
+  $('queueLoadSection')?.classList.remove('hidden');
+  $('queueReviewSection')?.classList.add('hidden');
+  if ($('queueZipInput')) $('queueZipInput').value = '';
+  if ($('queueLoadStatus')) $('queueLoadStatus').textContent = '';
+  if ($('queueSummary')) $('queueSummary').innerHTML = '';
+}
+
 async function saveZip() {
   const zip = $('homeZip').value.trim();
   if (!/^\d{5}$/.test(zip)) { $('zipStatus').textContent = 'Enter a 5 digit ZIP.'; return; }
@@ -1213,6 +1501,14 @@ function bindEvents() {
   $('uploadSearch')?.addEventListener('input', filterUploadItems);
   $('uploadFileInput')?.addEventListener('change', handleUploadFileSelect);
   $('uploadPhotoBtn')?.addEventListener('click', adminUploadPhoto);
+  $('queueLoadBtn')?.addEventListener('click', handleQueueZipLoad);
+  $('queueItemSearch')?.addEventListener('input', filterQueueItems);
+  $('queueApproveBtn')?.addEventListener('click', reviewApprove);
+  $('queueProofBtn')?.addEventListener('click', reviewMarkProof);
+  $('queueSkipBtn')?.addEventListener('click', reviewSkip);
+  $('queuePrevBtn')?.addEventListener('click', reviewPrev);
+  $('queueNextBtn')?.addEventListener('click', reviewNext);
+  $('queueResetBtn')?.addEventListener('click', resetPhotoQueue);
   $('huntMapToggle')?.addEventListener('click', toggleHuntMapSection);
 }
 

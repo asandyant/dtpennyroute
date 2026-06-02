@@ -270,6 +270,58 @@
       </div>
 
       <div class="card">
+        <h2>Admin: Bulk Photo Review Queue</h2>
+        <p class="muted">Load a zip of screenshots or product photos, review each image one at a time, and attach clean product photos to the correct penny item. Scanner proofs, barcodes, and unusable images can be skipped or marked as proof-only. No auto-matching — you approve every attachment manually.</p>
+
+        <!-- Step 1: Load zip -->
+        <div id="queueLoadSection">
+          <label class="small" style="display:block;margin-bottom:4px">Select zip file (e.g. dtpennyroute_uploaded_screenshots_batch1.zip)</label>
+          <input id="queueZipInput" type="file" accept=".zip" style="margin-bottom:8px" />
+          <div class="actions">
+            <button id="queueLoadBtn">Load Zip &amp; Start Review</button>
+          </div>
+          <div id="queueLoadStatus" class="small" style="margin-top:8px"></div>
+        </div>
+
+        <!-- Step 2: Review panel (shown after zip is loaded) -->
+        <div id="queueReviewSection" class="hidden">
+          <div id="queueProgress" style="margin-bottom:14px"></div>
+
+          <div style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap">
+            <!-- Left: image preview + nav -->
+            <div style="flex:0 0 auto;max-width:100%">
+              <div id="queueImagePreview" style="width:280px;max-width:100%;background:#f3f7f8;border:1px solid var(--line);border-radius:16px;overflow:hidden;min-height:180px;display:flex;align-items:center;justify-content:center;padding:8px"></div>
+              <div id="queueImageFilename" class="small muted" style="margin-top:5px;text-align:center;max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div>
+              <div id="queueImageIndex" class="small" style="text-align:center;margin-top:2px;font-weight:800;color:var(--blue)"></div>
+              <div style="display:flex;gap:8px;margin-top:10px;justify-content:center">
+                <button class="secondary" id="queuePrevBtn">← Prev</button>
+                <button class="secondary" id="queueNextBtn">Next →</button>
+              </div>
+            </div>
+
+            <!-- Right: item search + action buttons -->
+            <div style="flex:1;min-width:220px">
+              <label class="small" style="display:block;margin-bottom:4px;font-weight:800">Attach to penny item:</label>
+              <input id="queueItemSearch" placeholder="Search SKU or description…" />
+              <select id="queueItemSelect" size="8" style="margin-top:6px;border-radius:14px;padding:8px;width:100%"></select>
+              <div class="actions" style="margin-top:12px">
+                <button id="queueApproveBtn" class="teal">Approve &amp; Attach Photo</button>
+                <button id="queueProofBtn" class="secondary">Mark as Proof Only</button>
+                <button id="queueSkipBtn" class="secondary">Skip</button>
+              </div>
+              <div id="queueActionStatus" class="small" style="margin-top:8px"></div>
+            </div>
+          </div>
+
+          <div id="queueSummary" style="margin-top:16px"></div>
+
+          <div style="margin-top:16px;border-top:1px solid var(--line);padding-top:12px">
+            <button class="secondary" id="queueResetBtn">Reset / Load Different Zip</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
         <h2>Admin: Bulk Import (TSV or pipe-separated)</h2>
         <p class="muted">Paste rows in format: <code>dropDate | category | sku | description | searchTerms</code> (tab or pipe separated). First line can be a header row — it will be skipped automatically. Duplicate SKUs are merged, not duplicated.</p>
         <textarea id="adminImportRows" placeholder="2026-06-01&#9;Kitchenware&#9;401350&#9;BLU REACTIVE PRNT PLATE 10.5IN&#9;blue reactive print plate
@@ -291,6 +343,8 @@
       console.log('[DTPennyRoute] Leaflet:', ok ? 'READY v' + L.version : 'FAILED — window.L undefined. Check /api/debug/leaflet');
     })();
   </script>
+  <!-- JSZip for bulk photo review queue (admin only) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
