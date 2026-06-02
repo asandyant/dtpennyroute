@@ -269,6 +269,26 @@
         <p class="small muted" style="margin-top:8px">Photos save to server storage. To persist across Render redeploys, enable the persistent disk in render.yaml (requires Starter plan — see comments in that file).</p>
       </div>
 
+      <div class="card" id="adminImportSummaryCard">
+        <h2>Admin: Batch Import Summary</h2>
+        <p class="muted">Smart import results from the TikTok penny screenshots batch. Shows what was matched, added, and attached.</p>
+        <div id="adminImportSummary"><span class="small muted">Loading…</span></div>
+        <div class="actions" style="margin-top:10px">
+          <button class="secondary" id="adminRefreshImportBtn">Refresh</button>
+        </div>
+      </div>
+
+      <div class="card" id="adminReviewQueueCard">
+        <h2>Admin: Photo Review Queue</h2>
+        <p class="muted">Images from the batch that need manual review — low confidence, blurry, or possible new items. Use the Bulk Photo Review Queue below to open the zip and inspect these files by name.</p>
+        <div style="margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="secondary" id="reviewQueueShowAll" onclick="renderReviewQueue('all')">All</button>
+          <button class="secondary" id="reviewQueueShowPending" onclick="renderReviewQueue('pending')">Pending</button>
+          <button class="secondary" id="reviewQueueShowDone" onclick="renderReviewQueue('done')">Done</button>
+        </div>
+        <div id="adminReviewQueueList"><span class="small muted">Loading…</span></div>
+      </div>
+
       <div class="card">
         <h2>Admin: Bulk Photo Review Queue</h2>
         <p class="muted">Load a zip of screenshots or product photos, review each image one at a time, and attach clean product photos to the correct penny item. Scanner proofs, barcodes, and unusable images can be skipped or marked as proof-only. No auto-matching — you approve every attachment manually.</p>

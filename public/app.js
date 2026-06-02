@@ -64,7 +64,7 @@ function setTab(tab) {
   if (tab === 'run') { loadHunts(); renderSelected(); renderRouteBuilder(); setTimeout(initHuntMap, 0); }
   if (tab === 'check') { renderQuickSelectors(); renderCheckHelper(); buildRouteView(); renderStockRouteResults(); }
   if (tab === 'community') renderReports();
-  if (tab === 'admin') initUploadSection();
+  if (tab === 'admin') { initUploadSection(); loadAdminImportSummary(); loadReviewQueue(); }
 }
 
 function updateAccountUi() {
@@ -823,6 +823,100 @@ async function adminBulkImport() {
   } catch(e) { $('adminImportStatus').textContent = e.message; }
 }
 
+// ── Batch Import Summary & DB Review Queue ──────────────────────────────────
+
+let _reviewQueueCache = null;
+
+async function loadAdminImportSummary() {
+  const el = $('adminImportSummary');
+  if (!el) return;
+  try {
+    const data = await api('/api/admin/batch-imports');
+    const imports = data.imports || [];
+    if (!imports.length) { el.innerHTML = '<p class="small muted">No batch imports recorded yet.</p>'; return; }
+    el.innerHTML = imports.map(imp => {
+      const s = imp.stats || {};
+      return `<div style="background:#f6fafb;border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px">
+        <div style="font-weight:800;font-size:14px;margin-bottom:6px">${escapeHtml(imp.name)}</div>
+        <div class="small muted" style="margin-bottom:8px">Processed: ${imp.processedAt ? new Date(imp.processedAt).toLocaleString() : '—'} &nbsp;·&nbsp; Source: ${escapeHtml(imp.zipFile || '')}</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px">
+          ${[
+            ['Images total', s.imagesTotal],
+            ['New items added', s.newItemsCreated, '#157347'],
+            ['Existing matched', s.existingItemsMatched],
+            ['Photos attached', s.photosAttached, '#157347'],
+            ['Scanner proofs', s.scannerProofsFound, '#0f8b8d'],
+            ['Admin review', s.adminReviewItems, '#b42318'],
+            ['Items before', s.itemsBefore],
+            ['Items after', s.itemsAfter, '#154e8c'],
+          ].map(([label, val, color]) => `<div style="background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center">
+            <div style="font-size:22px;font-weight:900;color:${color || 'var(--ink)'}">${val ?? '—'}</div>
+            <div style="font-size:11px;color:var(--muted);font-weight:700">${label}</div>
+          </div>`).join('')}
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    if (el) el.innerHTML = `<span class="small" style="color:#b42318">Error: ${escapeHtml(e.message)}</span>`;
+  }
+}
+
+let _reviewFilter = 'pending';
+
+async function loadReviewQueue() {
+  try {
+    const data = await api('/api/admin/photo-review-queue');
+    _reviewQueueCache = data.queue || [];
+    renderReviewQueue(_reviewFilter);
+  } catch(e) {
+    const el = $('adminReviewQueueList');
+    if (el) el.innerHTML = `<span class="small" style="color:#b42318">Error: ${escapeHtml(e.message)}</span>`;
+  }
+}
+
+function renderReviewQueue(filter) {
+  _reviewFilter = filter || 'pending';
+  const el = $('adminReviewQueueList');
+  if (!el || !_reviewQueueCache) return;
+  const items = _reviewFilter === 'all' ? _reviewQueueCache
+    : _reviewFilter === 'done' ? _reviewQueueCache.filter(e => e.status !== 'pending')
+    : _reviewQueueCache.filter(e => e.status === 'pending');
+  if (!items.length) {
+    el.innerHTML = `<p class="small muted">${_reviewFilter === 'pending' ? 'No pending items — all reviewed!' : 'No items.'}</p>`;
+    return;
+  }
+  const typeColor = { unclear:'#b42318', new_item_candidate:'#0f8b8d', blurry:'#6c757d' };
+  const typeLabel = { unclear:'Unclear', new_item_candidate:'New Item?', blurry:'Blurry' };
+  el.innerHTML = items.map(entry => `
+    <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px;background:${entry.status !== 'pending' ? '#f4fdf8' : '#fff'}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap">
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:800;font-size:13px;font-family:monospace">${escapeHtml(entry.filename)}</div>
+          <div style="margin-top:4px">
+            <span style="background:#eef4f6;color:${typeColor[entry.type]||'#60707a'};border-radius:999px;padding:3px 9px;font-size:11px;font-weight:800">${typeLabel[entry.type]||entry.type}</span>
+            <span style="background:#eef4f6;border-radius:999px;padding:3px 9px;font-size:11px;font-weight:700;margin-left:4px;color:${entry.status==='pending'?'#60707a':'#157347'}">${entry.status}</span>
+          </div>
+          <div class="small muted" style="margin-top:5px;line-height:1.4">${escapeHtml(entry.notes || '')}</div>
+        </div>
+        ${entry.status === 'pending' ? `<div style="display:flex;gap:6px;flex-shrink:0">
+          <button class="secondary" style="padding:6px 10px;font-size:12px" onclick="dismissReviewItem('${entry.id}','resolved')">Mark Done</button>
+          <button class="secondary" style="padding:6px 10px;font-size:12px" onclick="dismissReviewItem('${entry.id}','skipped')">Skip</button>
+        </div>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+async function dismissReviewItem(id, status) {
+  try {
+    await api(`/api/admin/photo-review-queue/${encodeURIComponent(id)}`, { method:'PATCH', body: JSON.stringify({ status }) });
+    if (_reviewQueueCache) {
+      const e = _reviewQueueCache.find(x => x.id === id);
+      if (e) e.status = status;
+    }
+    renderReviewQueue(_reviewFilter);
+  } catch(e) { alert('Error: ' + e.message); }
+}
+
 // ── Bulk Photo Review Queue ──────────────────────────────────────────────────
 
 const reviewQueue = {
@@ -1501,6 +1595,7 @@ function bindEvents() {
   $('uploadSearch')?.addEventListener('input', filterUploadItems);
   $('uploadFileInput')?.addEventListener('change', handleUploadFileSelect);
   $('uploadPhotoBtn')?.addEventListener('click', adminUploadPhoto);
+  $('adminRefreshImportBtn')?.addEventListener('click', loadAdminImportSummary);
   $('queueLoadBtn')?.addEventListener('click', handleQueueZipLoad);
   $('queueItemSearch')?.addEventListener('input', filterQueueItems);
   $('queueApproveBtn')?.addEventListener('click', reviewApprove);

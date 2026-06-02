@@ -1115,6 +1115,30 @@ app.post('/api/admin/enrich-images', requireAdmin, async (req, res) => {
   res.json({ ok: true, ...summary });
 });
 
+app.get('/api/admin/batch-imports', requireAdmin, (req, res) => {
+  const db = readDb();
+  res.json({ imports: db.batchImports || [] });
+});
+
+app.get('/api/admin/photo-review-queue', requireAdmin, (req, res) => {
+  const db = readDb();
+  res.json({ queue: db.photoReviewQueue || [] });
+});
+
+app.patch('/api/admin/photo-review-queue/:id', requireAdmin, (req, res) => {
+  const { id } = req.params;
+  const { status, notes } = req.body;
+  const db = readDb();
+  db.photoReviewQueue = db.photoReviewQueue || [];
+  const entry = db.photoReviewQueue.find(e => e.id === id);
+  if (!entry) return res.status(404).json({ error: 'Review item not found' });
+  if (status) entry.status = status;
+  if (notes) entry.notes = notes;
+  entry.reviewedAt = new Date().toISOString();
+  writeDb(db);
+  res.json({ ok: true, entry });
+});
+
 app.listen(PORT, () => {
   console.log(`DTPennyRoute running on port ${PORT}`);
   console.log(`Data file: ${DB_FILE}`);

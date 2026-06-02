@@ -365,7 +365,12 @@
       "confidence": "field-confirmed",
       "fieldConfirmed": true,
       "pennyScore": 100,
-      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "tags": [
+        "scanner proof",
+        "TikTok screenshot",
+        "field confirmed",
+        "penny confirmed"
+      ],
       "status": "active",
       "searchTerms": [
         "bathroom cleaner 3pk",
@@ -374,8 +379,9 @@
         "bathroom cleaner 3 refills",
         "cleaner pods shower tub"
       ],
-      "imageUrl": null,
-      "imageStatus": "needs_admin_upload"
+      "imageUrl": "/api/images/item_0021",
+      "imageStatus": "verified",
+      "imageSource": "batch_import"
     },
     {
       "id": "item_0022",
@@ -783,7 +789,12 @@
       "confidence": "field-confirmed",
       "fieldConfirmed": true,
       "pennyScore": 100,
-      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "tags": [
+        "scanner proof",
+        "TikTok screenshot",
+        "field confirmed",
+        "penny confirmed"
+      ],
       "status": "active",
       "searchTerms": [
         "tic tac chewy sour",
@@ -1283,7 +1294,12 @@
       "confidence": "field-confirmed",
       "fieldConfirmed": true,
       "pennyScore": 100,
-      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "tags": [
+        "scanner proof",
+        "TikTok screenshot",
+        "field confirmed",
+        "penny confirmed"
+      ],
       "status": "active",
       "searchTerms": [
         "patriotic star box",
@@ -1303,7 +1319,12 @@
       "confidence": "field-confirmed",
       "fieldConfirmed": true,
       "pennyScore": 100,
-      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "tags": [
+        "scanner proof",
+        "TikTok screenshot",
+        "field confirmed",
+        "penny confirmed"
+      ],
       "status": "active",
       "searchTerms": [
         "luau sipper",
@@ -1323,7 +1344,12 @@
       "confidence": "field-confirmed",
       "fieldConfirmed": true,
       "pennyScore": 100,
-      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "tags": [
+        "scanner proof",
+        "TikTok screenshot",
+        "field confirmed",
+        "penny confirmed"
+      ],
       "status": "active",
       "searchTerms": [
         "flower lei",
@@ -1344,7 +1370,12 @@
       "confidence": "field-confirmed",
       "fieldConfirmed": true,
       "pennyScore": 100,
-      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "tags": [
+        "scanner proof",
+        "TikTok screenshot",
+        "field confirmed",
+        "penny confirmed"
+      ],
       "status": "active",
       "searchTerms": [
         "silver nautical icons",
@@ -1364,7 +1395,12 @@
       "confidence": "field-confirmed",
       "fieldConfirmed": true,
       "pennyScore": 100,
-      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "tags": [
+        "scanner proof",
+        "TikTok screenshot",
+        "field confirmed",
+        "penny confirmed"
+      ],
       "status": "active",
       "searchTerms": [
         "shell mermaid cup with straw",
@@ -1385,7 +1421,12 @@
       "confidence": "field-confirmed",
       "fieldConfirmed": true,
       "pennyScore": 100,
-      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "tags": [
+        "scanner proof",
+        "TikTok screenshot",
+        "field confirmed",
+        "penny confirmed"
+      ],
       "status": "active",
       "searchTerms": [
         "summer decaled ice tea tumbler",
@@ -1406,7 +1447,12 @@
       "confidence": "field-confirmed",
       "fieldConfirmed": true,
       "pennyScore": 100,
-      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "tags": [
+        "scanner proof",
+        "TikTok screenshot",
+        "field confirmed",
+        "penny confirmed"
+      ],
       "status": "active",
       "searchTerms": [
         "distressed silver metal banner",
@@ -1427,7 +1473,12 @@
       "confidence": "field-confirmed",
       "fieldConfirmed": true,
       "pennyScore": 100,
-      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "tags": [
+        "scanner proof",
+        "TikTok screenshot",
+        "field confirmed",
+        "penny confirmed"
+      ],
       "status": "active",
       "searchTerms": [
         "coastal wood hanger",
@@ -1448,7 +1499,12 @@
       "confidence": "field-confirmed",
       "fieldConfirmed": true,
       "pennyScore": 100,
-      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "tags": [
+        "scanner proof",
+        "TikTok screenshot",
+        "field confirmed",
+        "penny confirmed"
+      ],
       "status": "active",
       "searchTerms": [
         "shore living pins",
@@ -1470,7 +1526,12 @@
       "confidence": "field-confirmed",
       "fieldConfirmed": true,
       "pennyScore": 100,
-      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "tags": [
+        "scanner proof",
+        "TikTok screenshot",
+        "field confirmed",
+        "penny confirmed"
+      ],
       "status": "active",
       "searchTerms": [
         "napkin spring fling 18ct",
@@ -1491,7 +1552,12 @@
       "confidence": "field-confirmed",
       "fieldConfirmed": true,
       "pennyScore": 100,
-      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "tags": [
+        "scanner proof",
+        "TikTok screenshot",
+        "field confirmed",
+        "penny confirmed"
+      ],
       "status": "active",
       "searchTerms": [
         "incense sticks heart 40ct",
@@ -1511,7 +1577,12 @@
       "confidence": "field-confirmed",
       "fieldConfirmed": true,
       "pennyScore": 100,
-      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "tags": [
+        "scanner proof",
+        "TikTok screenshot",
+        "field confirmed",
+        "penny confirmed"
+      ],
       "status": "active",
       "searchTerms": [
         "incense sticks blessings 40ct",
@@ -1531,7 +1602,12 @@
       "confidence": "field-confirmed",
       "fieldConfirmed": true,
       "pennyScore": 100,
-      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "tags": [
+        "scanner proof",
+        "TikTok screenshot",
+        "field confirmed",
+        "penny confirmed"
+      ],
       "status": "active",
       "searchTerms": [
         "incense stick balance 40ct",
@@ -1551,7 +1627,12 @@
       "confidence": "field-confirmed",
       "fieldConfirmed": true,
       "pennyScore": 100,
-      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "tags": [
+        "scanner proof",
+        "TikTok screenshot",
+        "field confirmed",
+        "penny confirmed"
+      ],
       "status": "active",
       "searchTerms": [
         "today is your day lipgloss 2pk",
@@ -1571,7 +1652,12 @@
       "confidence": "field-confirmed",
       "fieldConfirmed": true,
       "pennyScore": 100,
-      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "tags": [
+        "scanner proof",
+        "TikTok screenshot",
+        "field confirmed",
+        "penny confirmed"
+      ],
       "status": "active",
       "searchTerms": [
         "silicone with wood mini tools",
@@ -1591,7 +1677,12 @@
       "confidence": "field-confirmed",
       "fieldConfirmed": true,
       "pennyScore": 100,
-      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "tags": [
+        "scanner proof",
+        "TikTok screenshot",
+        "field confirmed",
+        "penny confirmed"
+      ],
       "status": "active",
       "searchTerms": [
         "bird sign decor",
@@ -1612,7 +1703,12 @@
       "confidence": "field-confirmed",
       "fieldConfirmed": true,
       "pennyScore": 100,
-      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "tags": [
+        "scanner proof",
+        "TikTok screenshot",
+        "field confirmed",
+        "penny confirmed"
+      ],
       "status": "active",
       "searchTerms": [
         "fur claw clips",
@@ -1632,7 +1728,12 @@
       "confidence": "field-confirmed",
       "fieldConfirmed": true,
       "pennyScore": 100,
-      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "tags": [
+        "scanner proof",
+        "TikTok screenshot",
+        "field confirmed",
+        "penny confirmed"
+      ],
       "status": "active",
       "searchTerms": [
         "kelloggs crazy socks",
@@ -1652,7 +1753,12 @@
       "confidence": "field-confirmed",
       "fieldConfirmed": true,
       "pennyScore": 100,
-      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "tags": [
+        "scanner proof",
+        "TikTok screenshot",
+        "field confirmed",
+        "penny confirmed"
+      ],
       "status": "active",
       "searchTerms": [
         "dc super friends dough and mold",
@@ -1672,7 +1778,12 @@
       "confidence": "field-confirmed",
       "fieldConfirmed": true,
       "pennyScore": 100,
-      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "tags": [
+        "scanner proof",
+        "TikTok screenshot",
+        "field confirmed",
+        "penny confirmed"
+      ],
       "status": "active",
       "searchTerms": [
         "votive sun ripe berry",
@@ -1692,15 +1803,21 @@
       "confidence": "field-confirmed",
       "fieldConfirmed": true,
       "pennyScore": 100,
-      "tags": ["scanner proof", "TikTok screenshot", "field confirmed", "penny confirmed"],
+      "tags": [
+        "scanner proof",
+        "TikTok screenshot",
+        "field confirmed",
+        "penny confirmed"
+      ],
       "status": "active",
       "searchTerms": [
         "monster trucks 5 surprise",
         "5 surprise monster trucks",
         "zuru monster trucks"
       ],
-      "imageUrl": null,
-      "imageStatus": "needs_admin_upload"
+      "imageUrl": "/api/images/item_0102",
+      "imageStatus": "verified",
+      "imageSource": "batch_import"
     },
     {
       "id": "item_0103",
@@ -1712,15 +1829,19 @@
       "confidence": "unconfirmed",
       "fieldConfirmed": false,
       "pennyScore": null,
-      "tags": ["image candidate", "needs photo"],
+      "tags": [
+        "image candidate",
+        "needs photo"
+      ],
       "status": "active",
       "searchTerms": [
         "frozen 2 shampoo",
         "frozen ii shampoo",
         "disney frozen shampoo"
       ],
-      "imageUrl": null,
-      "imageStatus": "needs_admin_upload"
+      "imageUrl": "/api/images/item_0103",
+      "imageStatus": "verified",
+      "imageSource": "batch_import"
     },
     {
       "id": "item_0104",
@@ -1732,14 +1853,18 @@
       "confidence": "unconfirmed",
       "fieldConfirmed": false,
       "pennyScore": null,
-      "tags": ["image candidate", "needs photo"],
+      "tags": [
+        "image candidate",
+        "needs photo"
+      ],
       "status": "active",
       "searchTerms": [
         "great northern beans",
         "canned great northern beans"
       ],
-      "imageUrl": null,
-      "imageStatus": "needs_admin_upload"
+      "imageUrl": "/api/images/item_0104",
+      "imageStatus": "verified",
+      "imageSource": "batch_import"
     },
     {
       "id": "item_0105",
@@ -1751,19 +1876,23 @@
       "confidence": "unconfirmed",
       "fieldConfirmed": false,
       "pennyScore": null,
-      "tags": ["image candidate", "needs photo"],
+      "tags": [
+        "image candidate",
+        "needs photo"
+      ],
       "status": "active",
       "searchTerms": [
         "amope gel activ heel protectors",
         "heel protectors",
         "amope heel"
       ],
-      "imageUrl": null,
-      "imageStatus": "needs_admin_upload"
+      "imageUrl": "/api/images/item_0105",
+      "imageStatus": "verified",
+      "imageSource": "batch_import"
     },
     {
       "id": "item_0106",
-      "sku": "",
+      "sku": "378417",
       "description": "ANGEL OF MINE BABY ROOM AIR FRESHENER",
       "category": "Household",
       "dropDate": "2026-06-01",
@@ -1771,14 +1900,18 @@
       "confidence": "unconfirmed",
       "fieldConfirmed": false,
       "pennyScore": null,
-      "tags": ["image candidate", "needs photo"],
+      "tags": [
+        "image candidate",
+        "needs photo"
+      ],
       "status": "active",
       "searchTerms": [
         "angel of mine baby room air freshener",
         "baby room air freshener"
       ],
-      "imageUrl": null,
-      "imageStatus": "needs_admin_upload"
+      "imageUrl": "/api/images/item_0106",
+      "imageStatus": "verified",
+      "imageSource": "batch_import"
     },
     {
       "id": "item_0107",
@@ -1790,14 +1923,18 @@
       "confidence": "unconfirmed",
       "fieldConfirmed": false,
       "pennyScore": null,
-      "tags": ["image candidate", "needs photo"],
+      "tags": [
+        "image candidate",
+        "needs photo"
+      ],
       "status": "active",
       "searchTerms": [
         "air fresh lavender patchouli candle",
         "lavender patchouli scented candle"
       ],
-      "imageUrl": null,
-      "imageStatus": "needs_admin_upload"
+      "imageUrl": "/api/images/item_0107",
+      "imageStatus": "verified",
+      "imageSource": "batch_import"
     },
     {
       "id": "item_0108",
@@ -1809,14 +1946,18 @@
       "confidence": "unconfirmed",
       "fieldConfirmed": false,
       "pennyScore": null,
-      "tags": ["image candidate", "needs photo"],
+      "tags": [
+        "image candidate",
+        "needs photo"
+      ],
       "status": "active",
       "searchTerms": [
         "air fresh waterfall candle",
         "waterfall scented candle"
       ],
-      "imageUrl": null,
-      "imageStatus": "needs_admin_upload"
+      "imageUrl": "/api/images/item_0108",
+      "imageStatus": "verified",
+      "imageSource": "batch_import"
     },
     {
       "id": "item_0109",
@@ -1828,14 +1969,18 @@
       "confidence": "unconfirmed",
       "fieldConfirmed": false,
       "pennyScore": null,
-      "tags": ["image candidate", "needs photo"],
+      "tags": [
+        "image candidate",
+        "needs photo"
+      ],
       "status": "active",
       "searchTerms": [
         "good and clean disinfectant wipes",
         "disinfectant wipes"
       ],
-      "imageUrl": null,
-      "imageStatus": "needs_admin_upload"
+      "imageUrl": "/api/images/item_0109",
+      "imageStatus": "verified",
+      "imageSource": "batch_import"
     },
     {
       "id": "item_0110",
@@ -1847,14 +1992,18 @@
       "confidence": "unconfirmed",
       "fieldConfirmed": false,
       "pennyScore": null,
-      "tags": ["image candidate", "needs photo"],
+      "tags": [
+        "image candidate",
+        "needs photo"
+      ],
       "status": "active",
       "searchTerms": [
         "zest simply ocean wave body wash",
         "zest ocean wave"
       ],
-      "imageUrl": null,
-      "imageStatus": "needs_admin_upload"
+      "imageUrl": "/api/images/item_0110",
+      "imageStatus": "verified",
+      "imageSource": "batch_import"
     },
     {
       "id": "item_0111",
@@ -1866,14 +2015,18 @@
       "confidence": "unconfirmed",
       "fieldConfirmed": false,
       "pennyScore": null,
-      "tags": ["image candidate", "needs photo"],
+      "tags": [
+        "image candidate",
+        "needs photo"
+      ],
       "status": "active",
       "searchTerms": [
         "white rain ocean mist body wash",
         "white rain ocean mist"
       ],
-      "imageUrl": null,
-      "imageStatus": "needs_admin_upload"
+      "imageUrl": "/api/images/item_0111",
+      "imageStatus": "verified",
+      "imageSource": "batch_import"
     },
     {
       "id": "item_0112",
@@ -1885,15 +2038,19 @@
       "confidence": "unconfirmed",
       "fieldConfirmed": false,
       "pennyScore": null,
-      "tags": ["image candidate", "needs photo"],
+      "tags": [
+        "image candidate",
+        "needs photo"
+      ],
       "status": "active",
       "searchTerms": [
         "homeline cascading waters automatic spray",
         "cascading waters spray 2 pack",
         "automatic air freshener spray"
       ],
-      "imageUrl": null,
-      "imageStatus": "needs_admin_upload"
+      "imageUrl": "/api/images/item_0112",
+      "imageStatus": "verified",
+      "imageSource": "batch_import"
     },
     {
       "id": "item_0113",
@@ -1905,14 +2062,18 @@
       "confidence": "unconfirmed",
       "fieldConfirmed": false,
       "pennyScore": null,
-      "tags": ["image candidate", "needs photo"],
+      "tags": [
+        "image candidate",
+        "needs photo"
+      ],
       "status": "active",
       "searchTerms": [
         "muir glen tomato puree",
         "muir glen firefighters can"
       ],
-      "imageUrl": null,
-      "imageStatus": "needs_admin_upload"
+      "imageUrl": "/api/images/item_0113",
+      "imageStatus": "verified",
+      "imageSource": "batch_import"
     },
     {
       "id": "item_0114",
@@ -1924,14 +2085,18 @@
       "confidence": "unconfirmed",
       "fieldConfirmed": false,
       "pennyScore": null,
-      "tags": ["image candidate", "needs photo"],
+      "tags": [
+        "image candidate",
+        "needs photo"
+      ],
       "status": "active",
       "searchTerms": [
         "filler paper 200 sheets",
         "loose leaf paper 200"
       ],
-      "imageUrl": null,
-      "imageStatus": "needs_admin_upload"
+      "imageUrl": "/api/images/item_0114",
+      "imageStatus": "verified",
+      "imageSource": "batch_import"
     },
     {
       "id": "item_0115",
@@ -1943,15 +2108,19 @@
       "confidence": "unconfirmed",
       "fieldConfirmed": false,
       "pennyScore": null,
-      "tags": ["image candidate", "needs photo"],
+      "tags": [
+        "image candidate",
+        "needs photo"
+      ],
       "status": "active",
       "searchTerms": [
         "think positive journal",
         "be positive gratitude journal",
         "gratitude journal"
       ],
-      "imageUrl": null,
-      "imageStatus": "needs_admin_upload"
+      "imageUrl": "/api/images/item_0115",
+      "imageStatus": "verified",
+      "imageSource": "batch_import"
     },
     {
       "id": "item_0116",
@@ -1963,14 +2132,18 @@
       "confidence": "unconfirmed",
       "fieldConfirmed": false,
       "pennyScore": null,
-      "tags": ["image candidate", "needs photo"],
+      "tags": [
+        "image candidate",
+        "needs photo"
+      ],
       "status": "active",
       "searchTerms": [
         "home collection red dish towels",
         "red dish towels"
       ],
-      "imageUrl": null,
-      "imageStatus": "needs_admin_upload"
+      "imageUrl": "/api/images/item_0116",
+      "imageStatus": "verified",
+      "imageSource": "batch_import"
     },
     {
       "id": "item_0117",
@@ -1982,14 +2155,18 @@
       "confidence": "unconfirmed",
       "fieldConfirmed": false,
       "pennyScore": null,
-      "tags": ["image candidate", "needs photo"],
+      "tags": [
+        "image candidate",
+        "needs photo"
+      ],
       "status": "active",
       "searchTerms": [
         "you are my person sign",
         "my person decor sign"
       ],
-      "imageUrl": null,
-      "imageStatus": "needs_admin_upload"
+      "imageUrl": "/api/images/item_0117",
+      "imageStatus": "verified",
+      "imageSource": "batch_import"
     },
     {
       "id": "item_0118",
@@ -2001,14 +2178,18 @@
       "confidence": "unconfirmed",
       "fieldConfirmed": false,
       "pennyScore": null,
-      "tags": ["image candidate", "needs photo"],
+      "tags": [
+        "image candidate",
+        "needs photo"
+      ],
       "status": "active",
       "searchTerms": [
         "home is wherever we are together sign",
         "home together sign"
       ],
-      "imageUrl": null,
-      "imageStatus": "needs_admin_upload"
+      "imageUrl": "/api/images/item_0118",
+      "imageStatus": "verified",
+      "imageSource": "batch_import"
     },
     {
       "id": "item_0119",
@@ -2020,14 +2201,2136 @@
       "confidence": "unconfirmed",
       "fieldConfirmed": false,
       "pennyScore": null,
-      "tags": ["image candidate", "needs photo"],
+      "tags": [
+        "image candidate",
+        "needs photo"
+      ],
       "status": "active",
       "searchTerms": [
         "sunny daze decor sign",
         "sunny daze sign"
       ],
+      "imageUrl": "/api/images/item_0119",
+      "imageStatus": "needs_review",
+      "imageSource": "batch_import"
+    },
+    {
+      "id": "item_0120",
+      "sku": "383200",
+      "description": "SLV DECK MDF WALL PLAQUE",
+      "category": "Home Decor",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "silver deck mdf wall plaque",
+        "wall plaque"
+      ],
       "imageUrl": null,
-      "imageStatus": "needs_admin_upload"
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.767Z"
+    },
+    {
+      "id": "item_0121",
+      "sku": "383210",
+      "description": "WAVY METAL WALL DECO",
+      "category": "Home Decor",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "wavy metal wall deco",
+        "metal wall decoration"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.767Z"
+    },
+    {
+      "id": "item_0122",
+      "sku": "383213",
+      "description": "SLV TRI BD HANG DECOR",
+      "category": "Home Decor",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "silver tri bead hanging decor",
+        "hanging bead decor"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.767Z"
+    },
+    {
+      "id": "item_0123",
+      "sku": "383214",
+      "description": "SLV HANGING MEDALLION DECOR",
+      "category": "Home Decor",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "silver hanging medallion decor",
+        "medallion wall decor"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.767Z"
+    },
+    {
+      "id": "item_0124",
+      "sku": "383220",
+      "description": "SLV CSTL MDF WALL 3D PLAQUE",
+      "category": "Home Decor",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "silver coastal mdf wall 3d plaque",
+        "coastal wall plaque 3d"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.767Z"
+    },
+    {
+      "id": "item_0125",
+      "sku": "381824",
+      "description": "GSCENTS WAX ORNGBLSSM HNY 8CT",
+      "category": "Household",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "scents wax orange blossom honey 8ct",
+        "orange blossom honey wax melts"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.767Z"
+    },
+    {
+      "id": "item_0126",
+      "sku": "164334",
+      "description": "ESSNTLS JUMBO CLOTHESPINS ASTD",
+      "category": "Household",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "essentials jumbo clothespins assorted",
+        "jumbo clothespins"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.768Z"
+    },
+    {
+      "id": "item_0127",
+      "sku": "288110",
+      "description": "MICROFIBER DUSTER & MOP PAD",
+      "category": "Household",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "microfiber duster mop pad",
+        "duster and mop"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.768Z"
+    },
+    {
+      "id": "item_0128",
+      "sku": "336550",
+      "description": "TOTE WITH GROMMET MEDIUM GREY",
+      "category": "Household",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "tote with grommet medium grey",
+        "grey tote bag grommet"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.768Z"
+    },
+    {
+      "id": "item_0129",
+      "sku": "354995",
+      "description": "TOTE W/GROMMET MEDIUM MINT",
+      "category": "Household",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "tote with grommet medium mint",
+        "mint tote bag"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.768Z"
+    },
+    {
+      "id": "item_0130",
+      "sku": "354996",
+      "description": "TOTE W/GROMMET MEDIUM NAVY",
+      "category": "Household",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "tote with grommet medium navy",
+        "navy tote bag"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.768Z"
+    },
+    {
+      "id": "item_0131",
+      "sku": "361710",
+      "description": "BASKET W/HANDLE BLACK SMALL",
+      "category": "Household",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "basket with handle black small",
+        "black basket handle"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.768Z"
+    },
+    {
+      "id": "item_0132",
+      "sku": "376462",
+      "description": "ESSNTLS WOOD CLOTHESPINS 54PK",
+      "category": "Household",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "essentials wood clothespins 54 pack",
+        "wooden clothespins 54"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.768Z"
+    },
+    {
+      "id": "item_0133",
+      "sku": "378668",
+      "description": "COLLAPSIBLE STRG PRNTD ASTD SF",
+      "category": "Household",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "collapsible storage printed assorted",
+        "storage cube collapsible"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.768Z"
+    },
+    {
+      "id": "item_0134",
+      "sku": "382654",
+      "description": "PRINTED TRAY SHORE LIVING ASTD",
+      "category": "Household",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "printed tray shore living assorted",
+        "shore living serving tray"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.768Z"
+    },
+    {
+      "id": "item_0135",
+      "sku": "335357",
+      "description": "PVC SOAP SAVER 2PK",
+      "category": "Household",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "pvc soap saver 2 pack",
+        "soap dish saver pvc"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.768Z"
+    },
+    {
+      "id": "item_0136",
+      "sku": "364241",
+      "description": "BCH CHR TOWEL CLIPS CS 2PK",
+      "category": "Household",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "beach chair towel clips 2 pack",
+        "towel clips beach chair"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.768Z"
+    },
+    {
+      "id": "item_0137",
+      "sku": "327652",
+      "description": "BLUE FLORAL SALAD PLATE 7.5IN",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "blue floral salad plate 7.5 inch",
+        "blue floral side plate"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.768Z"
+    },
+    {
+      "id": "item_0138",
+      "sku": "327661",
+      "description": "BLUE FLORAL BOWL 6IN",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "blue floral bowl 6 inch",
+        "blue floral bowl"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.768Z"
+    },
+    {
+      "id": "item_0139",
+      "sku": "370484",
+      "description": "SLV HIGH BALL GLASS 16Z",
+      "category": "Kitchenware",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "silver high ball glass 16oz",
+        "highball glass 16oz"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.768Z"
+    },
+    {
+      "id": "item_0140",
+      "sku": "180112",
+      "description": "CUTERLY LIGHT GOLD ASTD",
+      "category": "Party / Gift Bags",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "cutlery light gold assorted",
+        "gold plastic cutlery"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.768Z"
+    },
+    {
+      "id": "item_0141",
+      "sku": "237310",
+      "description": "METALLIC RED NECKLACE 5CT",
+      "category": "Party / Gift Bags",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "metallic red necklace 5 count",
+        "red metallic bead necklace"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.768Z"
+    },
+    {
+      "id": "item_0142",
+      "sku": "237319",
+      "description": "METALLIC NECKLACE BLUE 5CT",
+      "category": "Party / Gift Bags",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "metallic blue necklace 5 count",
+        "blue metallic necklace"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.768Z"
+    },
+    {
+      "id": "item_0143",
+      "sku": "237326",
+      "description": "MAROON NECKLACE 5CT",
+      "category": "Party / Gift Bags",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "maroon necklace 5 count",
+        "burgundy bead necklace"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.768Z"
+    },
+    {
+      "id": "item_0144",
+      "sku": "195835",
+      "description": "ROLL WRAP BIRTHDAY 15 SQ FT",
+      "category": "Party / Gift Bags",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "roll wrap birthday 15 square feet",
+        "birthday wrapping paper roll"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.768Z"
+    },
+    {
+      "id": "item_0145",
+      "sku": "196180",
+      "description": "GIFTBAG SMALL KRAFT BROWN 3PK",
+      "category": "Party / Gift Bags",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "gift bag small kraft brown 3 pack",
+        "kraft brown gift bags small"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0146",
+      "sku": "197694",
+      "description": "ROLL WRAP BIRTHDAY A",
+      "category": "Party / Gift Bags",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "roll wrap birthday",
+        "birthday wrap"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0147",
+      "sku": "197697",
+      "description": "ROLL WRAP BIRTHDAY B",
+      "category": "Party / Gift Bags",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "birthday roll wrap assorted",
+        "wrapping paper birthday"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0148",
+      "sku": "301937",
+      "description": "SMALL BRGUNDY KRAFT GFTBAG 3PK",
+      "category": "Party / Gift Bags",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "small burgundy kraft gift bag 3 pack",
+        "burgundy kraft bags"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0149",
+      "sku": "327625",
+      "description": "PLATES 10.25 CLR DOT DCL",
+      "category": "Party / Gift Bags",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "plates 10.25 clear dot decal",
+        "clear dot plates"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0150",
+      "sku": "344011",
+      "description": "CURLY BOWS 3CT",
+      "category": "Party / Gift Bags",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "curly bows 3 count",
+        "gift bows curly ribbon"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0151",
+      "sku": "379952",
+      "description": "GIFTBAG LG BABY GENERAL",
+      "category": "Party / Gift Bags",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "gift bag large baby general",
+        "large baby shower gift bag"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0152",
+      "sku": "380229",
+      "description": "GIFTBAG XL BABY",
+      "category": "Party / Gift Bags",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "gift bag xl baby extra large",
+        "xl baby gift bag"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0153",
+      "sku": "380234",
+      "description": "GIFTBAG XL BRIDAL",
+      "category": "Party / Gift Bags",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "gift bag xl bridal extra large",
+        "bridal gift bag xl"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0154",
+      "sku": "380249",
+      "description": "LARGE BIRTHDAY CONFETTI HAPPY",
+      "category": "Party / Gift Bags",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "large birthday confetti happy",
+        "happy birthday confetti pack"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0155",
+      "sku": "382823",
+      "description": "GIFTBAG SM AO FLORAL VERTI 3PK",
+      "category": "Party / Gift Bags",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "gift bag small all occasion floral vertical 3 pack",
+        "floral gift bags 3pk"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0156",
+      "sku": "383015",
+      "description": "GIFT BAG XL BABY VERT",
+      "category": "Party / Gift Bags",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "gift bag xl baby vertical",
+        "xl baby bag vertical design"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0157",
+      "sku": "383146",
+      "description": "CORAL PLASTIC SCOOP SETS",
+      "category": "Party / Gift Bags",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "coral plastic scoop set",
+        "party scoops coral"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0158",
+      "sku": "383165",
+      "description": "BRIGHT MINT 14IN ROUND TRAY",
+      "category": "Party / Gift Bags",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "bright mint 14 inch round tray",
+        "mint party tray"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0159",
+      "sku": "383166",
+      "description": "CORAL 14IN ROUND TRAY",
+      "category": "Party / Gift Bags",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "coral 14 inch round tray",
+        "coral round serving tray"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0160",
+      "sku": "383176",
+      "description": "BRIGHT MINT PLASTIC SCOOP SETS",
+      "category": "Party / Gift Bags",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "bright mint plastic scoop set",
+        "mint party scoops"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0161",
+      "sku": "312485",
+      "description": "BATH BMB HEART 3PK",
+      "category": "Personal Care",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "bath bomb heart 3 pack",
+        "heart bath bombs 3pk"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0162",
+      "sku": "329819",
+      "description": "FACIAL WIPES-HIBISCUS ROSE",
+      "category": "Personal Care",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "facial wipes hibiscus rose",
+        "hibiscus rose face wipes"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0163",
+      "sku": "333561",
+      "description": "COMB-IN TEMP HAIR COLOR PDQ",
+      "category": "Personal Care",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "comb in temporary hair color",
+        "temp hair color comb"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0164",
+      "sku": "333562",
+      "description": "SEMI PERMANENT HAIR COLOR",
+      "category": "Personal Care",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "semi permanent hair color",
+        "semi-permanent hair dye"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0165",
+      "sku": "333609",
+      "description": "SG ORANGE SHEET MASK 1CT",
+      "category": "Personal Care",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "sg orange sheet mask",
+        "orange face sheet mask"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0166",
+      "sku": "340498",
+      "description": "MJM CHARCOAL SEAWEED FACE MSK",
+      "category": "Personal Care",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "charcoal seaweed face mask",
+        "mjm charcoal seaweed mask"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0167",
+      "sku": "367265",
+      "description": "YS CICA SHEET MASK",
+      "category": "Personal Care",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "cica sheet mask",
+        "ys cica face mask"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0168",
+      "sku": "367358",
+      "description": "MS RETINOL ANTI AGING SHT MASK",
+      "category": "Personal Care",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "retinol anti aging sheet mask",
+        "retinol face mask"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0169",
+      "sku": "367359",
+      "description": "MS CHARCOAL DTOX FCL SHT MASK",
+      "category": "Personal Care",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "charcoal detox face sheet mask",
+        "charcoal detox mask"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.769Z"
+    },
+    {
+      "id": "item_0170",
+      "sku": "368377",
+      "description": "BOLERO HAND CREAM 4OZ",
+      "category": "Personal Care",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "bolero hand cream 4oz",
+        "hand lotion bolero 4oz"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0171",
+      "sku": "370426",
+      "description": "GBC HYDROGEL FACE MASKS ASTD",
+      "category": "Personal Care",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "hydrogel face masks assorted",
+        "gel face mask hydrogel"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0172",
+      "sku": "381725",
+      "description": "BOL BB&SHWR TAB VANILLA HONEY",
+      "category": "Personal Care",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "bath bomb shower tab vanilla honey",
+        "vanilla honey shower tab"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0173",
+      "sku": "382638",
+      "description": "MDAY CARNATION FIZZER 7PC",
+      "category": "Personal Care",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "mother's day carnation fizzer 7 pack",
+        "carnation bath fizzer"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0174",
+      "sku": "382764",
+      "description": "BP MDAY BATH SOAK W FLORAL",
+      "category": "Personal Care",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "bath soak mothers day with flowers",
+        "floral bath soak"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0175",
+      "sku": "382767",
+      "description": "SS BP FRUITY SOAPS ASTD",
+      "category": "Personal Care",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "fruity soaps assorted",
+        "fruity bath soaps"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0176",
+      "sku": "382768",
+      "description": "BP PINEAPPLE BATH BOMB",
+      "category": "Personal Care",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "pineapple bath bomb",
+        "bath bomb pineapple"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0177",
+      "sku": "217563",
+      "description": "STUDIO ELF SHIMMER LIP GLS DRM",
+      "category": "Beauty",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "studio elf shimmer lip gloss",
+        "shimmer lip gloss drama"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0178",
+      "sku": "347413",
+      "description": "IONI BROW GEL CLR SCULPTING",
+      "category": "Beauty",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "ioni brow gel clear sculpting",
+        "brow gel sculpting"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0179",
+      "sku": "382584",
+      "description": "MDAY VIBRATING FACIAL MASSAGER",
+      "category": "Beauty",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "mother's day vibrating facial massager",
+        "vibrating face massager"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0180",
+      "sku": "212220",
+      "description": "CRAYOLA CLASSIC 16PK CRAYONS",
+      "category": "Books / Activity",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "crayola classic 16 pack crayons",
+        "crayons 16 pack"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0181",
+      "sku": "279567",
+      "description": "LEARNING ACTIVITY WORKBOOK",
+      "category": "Books / Activity",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "learning activity workbook",
+        "kids activity workbook"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0182",
+      "sku": "306872",
+      "description": "DR SEUSS LASER CUT SHARPENER",
+      "category": "Books / Activity",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "dr seuss laser cut sharpener",
+        "pencil sharpener dr seuss"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0183",
+      "sku": "320685",
+      "description": "LARGE PRINT WORDSEARCH 96PG",
+      "category": "Books / Activity",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "large print word search 96 page",
+        "large print wordsearch book"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0184",
+      "sku": "331603",
+      "description": "BLANK BOOKS-8X8 4PK",
+      "category": "Books / Activity",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "blank books 8x8 4 pack",
+        "blank journal 4 pack 8x8"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0185",
+      "sku": "355956",
+      "description": "PBS ARTHUR 6X6 BOARD BOOK",
+      "category": "Books / Activity",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "pbs arthur 6x6 board book",
+        "arthur board book kids"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0186",
+      "sku": "357103",
+      "description": "JUMBO GLUE STICKS 2 PACK",
+      "category": "Crafts",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "jumbo glue sticks 2 pack",
+        "large glue stick"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0187",
+      "sku": "357118",
+      "description": "KIDS KLEENEARTH 5IN SCISSOR",
+      "category": "Books / Activity",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "kids kleenearth 5 inch scissors",
+        "eco friendly kids scissors"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0188",
+      "sku": "366831",
+      "description": "INSP GIFT BOOKS MOTHERS DAY",
+      "category": "Books / Activity",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "inspirational gift books mothers day",
+        "mothers day book gift"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0189",
+      "sku": "367147",
+      "description": "SMALL POP-UP PLAYHOUSES",
+      "category": "Toys",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "small pop up playhouse",
+        "popup playhouse toy"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0190",
+      "sku": "381934",
+      "description": "DOLLAR TREE CRITTER CLUB ASTD",
+      "category": "Books / Activity",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "dollar tree critter club assorted",
+        "critter club book assorted"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0191",
+      "sku": "237370",
+      "description": "CRFTSQ CORRUGATED WORDS STICKR",
+      "category": "Crafts",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "crafters square corrugated word stickers",
+        "corrugated letters stickers"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0192",
+      "sku": "268192",
+      "description": "CRFTSQ PMPKN ORNG ARYLC PNT 3Z",
+      "category": "Crafts",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "crafters square orange acrylic paint 3oz",
+        "pumpkin orange paint"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0193",
+      "sku": "270343",
+      "description": "CRFTSQ STENCIL SHEET ASTD",
+      "category": "Crafts",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "crafters square stencil sheet assorted",
+        "stencil sheets crafts"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0194",
+      "sku": "296412",
+      "description": "CRFTSQ STICKERS ETCHD GLSS ASTD",
+      "category": "Crafts",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "crafters square etched glass stickers",
+        "etched glass sticker craft"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0195",
+      "sku": "318064",
+      "description": "ACRYLIC YARN",
+      "category": "Crafts",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "acrylic yarn",
+        "craft yarn"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0196",
+      "sku": "327852",
+      "description": "CRFTSQ PALETTE SHEETS 15CT",
+      "category": "Crafts",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "crafters square palette sheets 15 count",
+        "paint palette sheets"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0197",
+      "sku": "329495",
+      "description": "CL JUST YARN ACRYLIC EMBER",
+      "category": "Crafts",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "just yarn acrylic ember",
+        "ember acrylic yarn craft"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0198",
+      "sku": "333086",
+      "description": "CRFTSQ WOOD BLACKBOARD ASTD",
+      "category": "Crafts",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "crafters square wood blackboard assorted",
+        "wood chalkboard sign"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.770Z"
+    },
+    {
+      "id": "item_0199",
+      "sku": "337357",
+      "description": "CRFTSQ FLRL GEM MNDR STKR ASTD",
+      "category": "Crafts",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "crafters square floral gem meander sticker assorted",
+        "floral gem sticker sheet"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.771Z"
+    },
+    {
+      "id": "item_0200",
+      "sku": "343531",
+      "description": "FABRIC CUTS 18X21 IN PDQ SLIDL",
+      "category": "Crafts",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "fabric cuts 18x21 inch",
+        "fat quarter fabric cuts"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.771Z"
+    },
+    {
+      "id": "item_0201",
+      "sku": "344472",
+      "description": "DRM RAINBOW MACRAME CRAFT KIT",
+      "category": "Crafts",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "dream rainbow macrame craft kit",
+        "macrame kit rainbow diy"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.771Z"
+    },
+    {
+      "id": "item_0202",
+      "sku": "361100",
+      "description": "MET GREEN ACRYLIC PAINT 3Z",
+      "category": "Crafts",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "metallic green acrylic paint 3oz",
+        "green metallic craft paint"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.771Z"
+    },
+    {
+      "id": "item_0203",
+      "sku": "375273",
+      "description": "FIVE COLUMN COLUMNAR PAD",
+      "category": "Stationery",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "five column columnar pad",
+        "accounting columnar pad"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.771Z"
+    },
+    {
+      "id": "item_0204",
+      "sku": "375274",
+      "description": "RETRACTABLE ERASERS 2PC",
+      "category": "Stationery",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "retractable erasers 2 piece",
+        "click eraser retractable"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.771Z"
+    },
+    {
+      "id": "item_0205",
+      "sku": "375325",
+      "description": "TIME CARD 50SH 8.9X3.4IN",
+      "category": "Stationery",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "time card 50 sheets",
+        "employee time cards"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.771Z"
+    },
+    {
+      "id": "item_0206",
+      "sku": "178402",
+      "description": "POSTER TACK 2 OZ",
+      "category": "Stationery",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40058",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "poster tack 2 oz",
+        "adhesive putty poster"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.771Z"
+    },
+    {
+      "id": "item_0207",
+      "sku": "110144",
+      "description": "ORIGAMI PLAY SETS",
+      "category": "Toys",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "origami play sets",
+        "origami paper kit"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.771Z"
+    },
+    {
+      "id": "item_0208",
+      "sku": "171851",
+      "description": "ART KIT SAND BOTTLE MAKEUROWN",
+      "category": "Toys",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "art kit sand bottle make your own",
+        "sand art bottle diy"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.771Z"
+    },
+    {
+      "id": "item_0209",
+      "sku": "279861",
+      "description": "SQUEEZE BEADS BALL PDQ",
+      "category": "Toys",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "squeeze beads ball",
+        "squish bead ball toy"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.771Z"
+    },
+    {
+      "id": "item_0210",
+      "sku": "336401",
+      "description": "BRB FARM UNICORN ASTD",
+      "category": "Toys",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "barbie farm unicorn assorted",
+        "barbie unicorn toy"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.771Z"
+    },
+    {
+      "id": "item_0211",
+      "sku": "339115",
+      "description": "BRB DREAMTOPIA ACCS ASTD",
+      "category": "Toys",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "barbie dreamtopia accessories assorted",
+        "dreamtopia barbie set"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.771Z"
+    },
+    {
+      "id": "item_0212",
+      "sku": "383662",
+      "description": "BO CYLINDER PROJECTOR PDQ",
+      "category": "Toys",
+      "dropDate": "2026-06-01",
+      "eventNumber": "40059",
+      "source": "price change report",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "cylinder projector toy pdq",
+        "mini projector toy kids"
+      ],
+      "imageUrl": null,
+      "imageSource": null,
+      "imageStatus": "placeholder",
+      "tags": [
+        "price change report"
+      ],
+      "createdAt": "2026-06-02T00:41:37.771Z"
+    },
+    {
+      "id": "item_0213",
+      "sku": "",
+      "description": "NONSLIP SHELF LINER 12X72IN",
+      "category": "Household",
+      "dropDate": "2026-06-01",
+      "eventNumber": "",
+      "source": "TikTok penny haul Part 2 - product photo confirmed",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "nonslip shelf liner 12x72",
+        "non slip shelf liner",
+        "cabinet liner non-adhesive"
+      ],
+      "imageUrl": "/api/images/item_0213",
+      "imageSource": "batch_import",
+      "imageStatus": "verified",
+      "tags": [
+        "batch import",
+        "photo confirmed"
+      ],
+      "createdAt": "2026-06-02T00:41:37.771Z"
+    },
+    {
+      "id": "item_0214",
+      "sku": "",
+      "description": "LUMINESSENCE GREEN TEA AND BAMBOO WAX MELTS 6PC",
+      "category": "Candles / Home Fragrance",
+      "dropDate": "2026-06-01",
+      "eventNumber": "",
+      "source": "TikTok penny haul Part 2 - product photo confirmed",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "luminessence green tea bamboo wax melts 6",
+        "wax melts green tea bamboo",
+        "scented wax melts 6 count"
+      ],
+      "imageUrl": "/api/images/item_0214",
+      "imageSource": "batch_import",
+      "imageStatus": "verified",
+      "tags": [
+        "batch import",
+        "photo confirmed"
+      ],
+      "createdAt": "2026-06-02T00:41:37.771Z"
+    },
+    {
+      "id": "item_0215",
+      "sku": "",
+      "description": "CAREUS NASAL STRIPS 8CT",
+      "category": "Personal Care",
+      "dropDate": "2026-06-01",
+      "eventNumber": "",
+      "source": "TikTok penny haul Part 2 - product photo confirmed",
+      "confidence": "high",
+      "status": "active",
+      "searchTerms": [
+        "careus nasal strips 8 count",
+        "nasal breathing strips",
+        "anti snoring strips careus"
+      ],
+      "imageUrl": "/api/images/item_0215",
+      "imageSource": "batch_import",
+      "imageStatus": "verified",
+      "tags": [
+        "batch import",
+        "photo confirmed"
+      ],
+      "createdAt": "2026-06-02T00:41:37.771Z"
     }
   ],
   "reports": [
@@ -2273,6 +4576,126 @@
       "latitude": 39.7849,
       "longitude": -75.055,
       "distanceMiles": 4.7
+    }
+  ],
+  "photoReviewQueue": [
+    {
+      "id": "review_001",
+      "filename": "batch1_035.jpeg",
+      "type": "unclear",
+      "notes": "Back label of pink gradient box (Old Williamsburgh Candle Corp). Could not identify scent/product from back label alone. Front photo needed.",
+      "status": "pending",
+      "addedAt": "2026-06-02T00:41:37.776Z"
+    },
+    {
+      "id": "review_002",
+      "filename": "batch1_036.jpeg",
+      "type": "new_item_candidate",
+      "notes": "Novelty dinosaur (teal stegosaurus) pen on pink card. Dollar Tree Huge Penny Haul Part 2. Possible penny item — confirm item name and add to list.",
+      "status": "pending",
+      "addedAt": "2026-06-02T00:41:37.776Z"
+    },
+    {
+      "id": "review_003",
+      "filename": "batch1_037.jpeg",
+      "type": "new_item_candidate",
+      "notes": "Novelty avocado pen (avocado charm, pink handle) on pink card. Dollar Tree Huge Penny Haul Part 2. Possible penny item.",
+      "status": "pending",
+      "addedAt": "2026-06-02T00:41:37.776Z"
+    },
+    {
+      "id": "review_004",
+      "filename": "batch1_038.jpeg",
+      "type": "new_item_candidate",
+      "notes": "Novelty rainbow pen (rainbow charm, light blue handle). Dollar Tree Huge Penny Haul Part 2. Possible penny item.",
+      "status": "pending",
+      "addedAt": "2026-06-02T00:41:37.776Z"
+    },
+    {
+      "id": "review_005",
+      "filename": "batch1_041.jpeg",
+      "type": "new_item_candidate",
+      "notes": "Two items on table: (1) \"Enjoy the Little Things in Life\" stemless wine glass with blue script, (2) solid dark navy ceramic mug. Both from TikTok haul — confirm if penny items.",
+      "status": "pending",
+      "addedAt": "2026-06-02T00:41:37.776Z"
+    },
+    {
+      "id": "review_006",
+      "filename": "batch1_061.jpeg",
+      "type": "new_item_candidate",
+      "notes": "Multiple women's flip flops/sandals on hangers: watermelon stripe, lemon print, orange print, tie-dye, tropical leaf. Multiple possible new items.",
+      "status": "pending",
+      "addedAt": "2026-06-02T00:41:37.776Z"
+    },
+    {
+      "id": "review_007",
+      "filename": "batch1_063.jpeg",
+      "type": "unclear",
+      "notes": "Product back label only — Shanghai Care US Medical Product Co Ltd, barcode 6970285515787, SKU 554897 2305. Product type unknown without front.",
+      "status": "pending",
+      "addedAt": "2026-06-02T00:41:37.776Z"
+    },
+    {
+      "id": "review_008",
+      "filename": "batch1_065.jpeg",
+      "type": "unclear",
+      "notes": "Product back label only — Greenbrier International Inc, barcode 6392774327974, SKU 259399 2009. Could not identify product.",
+      "status": "pending",
+      "addedAt": "2026-06-02T00:41:37.776Z"
+    },
+    {
+      "id": "review_009",
+      "filename": "batch1_066.jpeg",
+      "type": "blurry",
+      "notes": "Blurry photo of toothbrushes with tray & holder 6-pack in clear bag. Possible new item — photo too blurry to add confidently.",
+      "status": "pending",
+      "addedAt": "2026-06-02T00:41:37.776Z"
+    },
+    {
+      "id": "review_010",
+      "filename": "batch1_067.jpeg",
+      "type": "blurry",
+      "notes": "Very blurry multi-item table shot — multiple products visible including packaging for personal care items. Too blurry to identify.",
+      "status": "pending",
+      "addedAt": "2026-06-02T00:41:37.776Z"
+    },
+    {
+      "id": "review_011",
+      "filename": "batch1_077.jpeg",
+      "type": "new_item_candidate",
+      "notes": "Women's Juncture brand flip flop hang tag: size M (7/8), SKU 288635 2317, UPC 195464098684. New apparel item from Penny Haul Part 2.",
+      "status": "pending",
+      "addedAt": "2026-06-02T00:41:37.776Z"
+    },
+    {
+      "id": "review_012",
+      "filename": "batch1_080.jpeg",
+      "type": "blurry",
+      "notes": "Blurry action shot of Juncture KIDS flip flops. Different item from the adult version (077). Needs clean photo.",
+      "status": "pending",
+      "addedAt": "2026-06-02T00:41:37.776Z"
+    }
+  ],
+  "batchImports": [
+    {
+      "id": "batch1_tiktok",
+      "name": "TikTok penny screenshots batch 1",
+      "zipFile": "dtpennyroute_uploaded_screenshots_batch1.zip",
+      "processedAt": "2026-06-02T00:41:37.776Z",
+      "stats": {
+        "imagesTotal": 92,
+        "scannerProofsFound": 22,
+        "productPhotosUsable": 23,
+        "priceChangeReportPages": 6,
+        "appScreenshotsSkipped": 10,
+        "existingItemsMatched": 0,
+        "existingItemsUpdated": 1,
+        "newItemsCreated": 96,
+        "photosAttached": 22,
+        "adminReviewItems": 12,
+        "itemsBefore": 119,
+        "itemsAfter": 215
+      }
     }
   ]
 }
