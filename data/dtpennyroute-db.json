@@ -379,9 +379,9 @@
         "bathroom cleaner 3 refills",
         "cleaner pods shower tub"
       ],
-      "imageUrl": "/api/images/item_0021",
+      "imageUrl": "https://raw.githubusercontent.com/asandyant/dtpennyroute/main/public/uploads/item_0021.jpeg",
       "imageStatus": "verified",
-      "imageSource": "batch_import"
+      "imageSource": "admin_upload"
     },
     {
       "id": "item_0022",
@@ -1815,9 +1815,9 @@
         "5 surprise monster trucks",
         "zuru monster trucks"
       ],
-      "imageUrl": "/api/images/item_0102",
+      "imageUrl": "https://raw.githubusercontent.com/asandyant/dtpennyroute/main/public/uploads/item_0102.jpeg",
       "imageStatus": "verified",
-      "imageSource": "batch_import"
+      "imageSource": "admin_upload"
     },
     {
       "id": "item_0103",
@@ -1839,9 +1839,9 @@
         "frozen ii shampoo",
         "disney frozen shampoo"
       ],
-      "imageUrl": "/api/images/item_0103",
+      "imageUrl": "https://raw.githubusercontent.com/asandyant/dtpennyroute/main/public/uploads/item_0103.jpeg",
       "imageStatus": "verified",
-      "imageSource": "batch_import"
+      "imageSource": "admin_upload"
     },
     {
       "id": "item_0104",
@@ -1862,9 +1862,9 @@
         "great northern beans",
         "canned great northern beans"
       ],
-      "imageUrl": "/api/images/item_0104",
+      "imageUrl": "https://raw.githubusercontent.com/asandyant/dtpennyroute/main/public/uploads/item_0104.jpeg",
       "imageStatus": "verified",
-      "imageSource": "batch_import"
+      "imageSource": "admin_upload"
     },
     {
       "id": "item_0105",
@@ -1886,9 +1886,9 @@
         "heel protectors",
         "amope heel"
       ],
-      "imageUrl": "/api/images/item_0105",
+      "imageUrl": "https://raw.githubusercontent.com/asandyant/dtpennyroute/main/public/uploads/item_0105.jpeg",
       "imageStatus": "verified",
-      "imageSource": "batch_import"
+      "imageSource": "admin_upload"
     },
     {
       "id": "item_0106",
@@ -1909,9 +1909,9 @@
         "angel of mine baby room air freshener",
         "baby room air freshener"
       ],
-      "imageUrl": "/api/images/item_0106",
+      "imageUrl": "https://raw.githubusercontent.com/asandyant/dtpennyroute/main/public/uploads/item_0106.jpeg",
       "imageStatus": "verified",
-      "imageSource": "batch_import"
+      "imageSource": "admin_upload"
     },
     {
       "id": "item_0107",
@@ -1932,9 +1932,9 @@
         "air fresh lavender patchouli candle",
         "lavender patchouli scented candle"
       ],
-      "imageUrl": "/api/images/item_0107",
+      "imageUrl": "https://raw.githubusercontent.com/asandyant/dtpennyroute/main/public/uploads/item_0107.jpeg",
       "imageStatus": "verified",
-      "imageSource": "batch_import"
+      "imageSource": "admin_upload"
     },
     {
       "id": "item_0108",
@@ -1955,9 +1955,9 @@
         "air fresh waterfall candle",
         "waterfall scented candle"
       ],
-      "imageUrl": "/api/images/item_0108",
+      "imageUrl": "https://raw.githubusercontent.com/asandyant/dtpennyroute/main/public/uploads/item_0108.jpeg",
       "imageStatus": "verified",
-      "imageSource": "batch_import"
+      "imageSource": "admin_upload"
     },
     {
       "id": "item_0109",
@@ -1978,9 +1978,9 @@
         "good and clean disinfectant wipes",
         "disinfectant wipes"
       ],
-      "imageUrl": "/api/images/item_0109",
+      "imageUrl": "https://raw.githubusercontent.com/asandyant/dtpennyroute/main/public/uploads/item_0109.jpeg",
       "imageStatus": "verified",
-      "imageSource": "batch_import"
+      "imageSource": "admin_upload"
     },
     {
       "id": "item_0110",
@@ -2001,9 +2001,9 @@
         "zest simply ocean wave body wash",
         "zest ocean wave"
       ],
-      "imageUrl": "/api/images/item_0110",
+      "imageUrl": "https://raw.githubusercontent.com/asandyant/dtpennyroute/main/public/uploads/item_0110.jpeg",
       "imageStatus": "verified",
-      "imageSource": "batch_import"
+      "imageSource": "admin_upload"
     },
     {
       "id": "item_0111",
@@ -2024,9 +2024,9 @@
         "white rain ocean mist body wash",
         "white rain ocean mist"
       ],
-      "imageUrl": "/api/images/item_0111",
+      "imageUrl": "https://raw.githubusercontent.com/asandyant/dtpennyroute/main/public/uploads/item_0111.jpeg",
       "imageStatus": "verified",
-      "imageSource": "batch_import"
+      "imageSource": "admin_upload"
     },
     {
       "id": "item_0112",
@@ -2048,9 +2048,9 @@
         "cascading waters spray 2 pack",
         "automatic air freshener spray"
       ],
-      "imageUrl": "/api/images/item_0112",
+      "imageUrl": "https://raw.githubusercontent.com/asandyant/dtpennyroute/main/public/uploads/item_0112.jpeg",
       "imageStatus": "verified",
-      "imageSource": "batch_import"
+      "imageSource": "admin_upload"
     },
     {
       "id": "item_0113",
@@ -2071,9 +2071,9 @@
         "muir glen tomato puree",
         "muir glen firefighters can"
       ],
-      "imageUrl": "/api/images/item_0113",
+      "imageUrl": "https://raw.githubusercontent.com/asandyant/dtpennyroute/main/public/uploads/item_0113.jpeg",
       "imageStatus": "verified",
-      "imageSource": "batch_import"
+      "imageSource": "admin_upload"
     },
     {
       "id": "item_0114",
@@ -2094,9 +2094,9 @@
         "filler paper 200 sheets",
         "loose leaf paper 200"
       ],
-      "imageUrl": "/api/images/item_0114",
+      "imageUrl": "https://raw.githubusercontent.com/asandyant/dtpennyroute/main/public/uploads/item_0114.jpeg",
       "imageStatus": "verified",
-      "imageSource": "batch_import"
+      "imageSource": "admin_upload"
     },
     {
       "id": "item_0115",
@@ -2118,9 +2118,9 @@
         "be positive gratitude journal",
         "gratitude journal"
       ],
-      "imageUrl": "/api/images/item_0115",
+      "imageUrl": "https://raw.githubusercontent.com/asandyant/dtpennyroute/main/public/uploads/item_0115.jpeg",
       "imageStatus": "verified",
-      "imageSource": "batch_import"
+      "imageSource": "admin_upload"
     },
     {
       "id": "item_0116",
@@ -2141,9 +2141,9 @@
         "home collection red dish towels",
         "red dish towels"
       ],
-      "imageUrl": "/api/images/item_0116",
+      "imageUrl": "https://raw.githubusercontent.com/asandyant/dtpennyroute/main/public/uploads/item_0116.jpeg",
       "imageStatus": "verified",
-      "imageSource": "batch_import"
+      "imageSource": "admin_upload"
     },
     {
       "id": "item_0117",
@@ -2164,9 +2164,9 @@
         "you are my person sign",
         "my person decor sign"
       ],
-      "imageUrl": "/api/images/item_0117",
+      "imageUrl": "https://raw.githubusercontent.com/asandyant/dtpennyroute/main/public/uploads/item_0117.jpeg",
       "imageStatus": "verified",
-      "imageSource": "batch_import"
+      "imageSource": "admin_upload"
     },
     {
       "id": "item_0118",
@@ -2187,9 +2187,9 @@
         "home is wherever we are together sign",
         "home together sign"
       ],
-      "imageUrl": "/api/images/item_0118",
+      "imageUrl": "https://raw.githubusercontent.com/asandyant/dtpennyroute/main/public/uploads/item_0118.jpeg",
       "imageStatus": "verified",
-      "imageSource": "batch_import"
+      "imageSource": "admin_upload"
     },
     {
       "id": "item_0119",
@@ -2210,7 +2210,7 @@
         "sunny daze decor sign",
         "sunny daze sign"
       ],
-      "imageUrl": "/api/images/item_0119",
+      "imageUrl": "https://raw.githubusercontent.com/asandyant/dtpennyroute/main/public/uploads/item_0119.jpeg",
       "imageStatus": "needs_review",
       "imageSource": "batch_import"
     },
@@ -4275,8 +4275,8 @@
         "non slip shelf liner",
         "cabinet liner non-adhesive"
       ],
-      "imageUrl": "/api/images/item_0213",
-      "imageSource": "batch_import",
+      "imageUrl": "https://raw.githubusercontent.com/asandyant/dtpennyroute/main/public/uploads/item_0213.jpeg",
+      "imageSource": "admin_upload",
       "imageStatus": "verified",
       "tags": [
         "batch import",
@@ -4299,8 +4299,8 @@
         "wax melts green tea bamboo",
         "scented wax melts 6 count"
       ],
-      "imageUrl": "/api/images/item_0214",
-      "imageSource": "batch_import",
+      "imageUrl": "https://raw.githubusercontent.com/asandyant/dtpennyroute/main/public/uploads/item_0214.jpeg",
+      "imageSource": "admin_upload",
       "imageStatus": "verified",
       "tags": [
         "batch import",
@@ -4323,8 +4323,8 @@
         "nasal breathing strips",
         "anti snoring strips careus"
       ],
-      "imageUrl": "/api/images/item_0215",
-      "imageSource": "batch_import",
+      "imageUrl": "https://raw.githubusercontent.com/asandyant/dtpennyroute/main/public/uploads/item_0215.jpeg",
+      "imageSource": "admin_upload",
       "imageStatus": "verified",
       "tags": [
         "batch import",

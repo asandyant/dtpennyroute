@@ -992,23 +992,38 @@ app.post('/api/admin/import', requireAdmin, (req, res) => {
 
 app.get('/api/admin/image-debug', requireAdmin, async (req, res) => {
   const db = readDb();
-  const withImage = db.items.filter(i => i.imageUrl && i.imageStatus === 'found');
-  const without = db.items.filter(i => !i.imageUrl || i.imageStatus !== 'found');
-  const checks = await Promise.all(withImage.slice(0, 5).map(async item => {
+  const all = db.items;
+  const withUrl   = all.filter(i => i.imageUrl);
+  const ghUrls    = withUrl.filter(i => i.imageUrl.includes('raw.githubusercontent.com') || i.imageUrl.includes('github.com'));
+  const localUrls = withUrl.filter(i => i.imageUrl.startsWith('/api/images/') || i.imageUrl.startsWith('/uploads/'));
+  const catalogUrls = withUrl.filter(i => i.imageUrl.includes('dollartree.com'));
+  const otherUrls = withUrl.filter(i => !ghUrls.includes(i) && !localUrls.includes(i) && !catalogUrls.includes(i));
+  const missing   = all.filter(i => !i.imageUrl);
+  const verified  = all.filter(i => i.imageSource === 'admin_upload' && i.imageStatus === 'verified');
+
+  // HEAD-check first 10 non-catalog URLs (GitHub + local)
+  const toCheck = [...ghUrls, ...localUrls].slice(0, 10);
+  const checks = await Promise.all(toCheck.map(async item => {
     try {
       const r = await fetch(item.imageUrl, { method: 'HEAD', signal: AbortSignal.timeout(5000) });
-      return { sku: item.sku, description: item.description.slice(0, 40), url: item.imageUrl, httpStatus: r.status, ok: r.ok };
+      return { id: item.id, description: item.description.slice(0, 40), url: item.imageUrl, httpStatus: r.status, ok: r.ok };
     } catch (e) {
-      return { sku: item.sku, description: item.description.slice(0, 40), url: item.imageUrl, httpStatus: 'error', ok: false, error: e.message };
+      return { id: item.id, description: item.description.slice(0, 40), url: item.imageUrl, httpStatus: 'error', ok: false, error: e.message };
     }
   }));
+
   res.json({
     dbPath: DB_FILE,
-    total: db.items.length,
-    withImage: withImage.length,
-    withoutImage: without.length,
+    total: all.length,
+    withImageUrl: withUrl.length,
+    githubRawUrls: ghUrls.length,
+    localApiUrls: localUrls.length,
+    dollartreeCatalog: catalogUrls.length,
+    otherUrls: otherUrls.length,
+    missingImage: missing.length,
+    verifiedPhotos: verified.length,
     imageChecks: checks,
-    allFound: withImage.map(i => ({ id: i.id, sku: i.sku, description: i.description.slice(0, 45), imageUrl: i.imageUrl }))
+    firstTenUrls: withUrl.slice(0, 10).map(i => ({ id: i.id, description: i.description.slice(0, 40), imageUrl: i.imageUrl, imageSource: i.imageSource, imageStatus: i.imageStatus })),
   });
 });
 

@@ -691,21 +691,36 @@ async function adminDebugImages() {
   if (btn) { btn.disabled = true; btn.textContent = 'Checking…'; }
   try {
     const d = await api('/api/admin/image-debug');
-    const checkRows = d.imageChecks.map(c => {
+    const statRow = (label, val, color) =>
+      `<span style="margin-right:14px">
+        ${label}: <strong style="color:${color || 'var(--ink)'}">${val}</strong>
+      </span>`;
+    const checkRows = (d.imageChecks || []).map(c => {
       const color = c.ok ? '#157347' : '#b42318';
       const label = c.ok ? `HTTP ${c.httpStatus} ✓` : `HTTP ${c.httpStatus} ✗`;
-      return `<div style="margin:6px 0;font-size:12px">
-        <strong style="color:${color}">${label}</strong> — SKU ${escapeHtml(c.sku)} ${escapeHtml(c.description)}<br>
-        <span style="color:#60707a;word-break:break-all">${escapeHtml(c.url)}</span>
-        ${c.ok ? `<br><img src="${escapeHtml(c.url)}" style="width:60px;height:60px;object-fit:cover;border-radius:6px;margin-top:4px" onerror="this.outerHTML='<span style=color:red>image failed to render</span>'" />` : ''}
+      const isGH = (c.url || '').includes('raw.githubusercontent.com');
+      return `<div style="margin:6px 0;font-size:12px;border-left:3px solid ${color};padding-left:8px">
+        <strong style="color:${color}">${label}</strong> — ${escapeHtml(c.description)}
+        <span style="font-size:10px;background:${isGH?'#e7f7f2':'#fff1ef'};border-radius:4px;padding:1px 5px;margin-left:4px">${isGH?'GitHub':'local'}</span><br>
+        <span style="color:#60707a;font-size:11px;word-break:break-all">${escapeHtml(c.url)}</span>
+        ${c.ok ? `<br><img src="${escapeHtml(c.url)}" style="width:60px;height:60px;object-fit:cover;border-radius:6px;margin-top:4px" onerror="this.outerHTML='<span style=color:red>broken</span>'" />` : ''}
       </div>`;
     }).join('');
     panel.innerHTML = `
       <div style="background:#f6fafb;border:1px solid #d8e1e6;border-radius:14px;padding:14px">
-        <strong>Image Debug — ${escapeHtml(d.dbPath)}</strong><br>
-        <span style="font-size:13px">Total items: ${d.total} &nbsp;|&nbsp; With image: <strong style="color:#157347">${d.withImage}</strong> &nbsp;|&nbsp; Missing image: <strong style="color:#b42318">${d.withoutImage}</strong></span>
-        <div style="margin-top:10px"><strong>First ${d.imageChecks.length} image URLs (live HTTP check):</strong>${checkRows || '<p style="color:#60707a">No images saved on this server yet.</p>'}</div>
-        ${d.allFound.length ? `<details style="margin-top:8px"><summary style="cursor:pointer;font-size:12px">All ${d.allFound.length} items with images</summary><div style="font-size:11px;margin-top:6px">${d.allFound.map(i => `<div>${escapeHtml(i.sku)} ${escapeHtml(i.description)}</div>`).join('')}</div></details>` : ''}
+        <strong style="font-size:13px">Image Storage Debug</strong>
+        <div style="font-size:12px;margin:8px 0;flex-wrap:wrap;line-height:2">
+          ${statRow('Total items', d.total)}
+          ${statRow('With imageUrl', d.withImageUrl, '#154e8c')}
+          ${statRow('GitHub raw', d.githubRawUrls, '#157347')}
+          ${statRow('DollarTree catalog', d.dollartreeCatalog, '#0f8b8d')}
+          ${statRow('Local /api/images/', d.localApiUrls, d.localApiUrls > 0 ? '#b42318' : '#157347')}
+          ${statRow('Missing image', d.missingImage, '#6c757d')}
+          ${statRow('Verified photos', d.verifiedPhotos, '#0f8b8d')}
+        </div>
+        <div style="margin-top:10px"><strong>HTTP check — first ${(d.imageChecks||[]).length} non-catalog URLs:</strong>
+          ${checkRows || '<p style="color:#60707a;font-size:12px">No uploaded images found.</p>'}
+        </div>
       </div>`;
     panel.classList.remove('hidden');
   } catch(e) {
